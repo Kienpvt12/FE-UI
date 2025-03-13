@@ -1,0 +1,112 @@
+
+/* phần video */
+.video-container {
+    max-width: 900px;
+    margin: auto;
+    background-color: #181818;
+    padding: 10px;
+    border-radius: 10px;
+}
+iframe {
+    width: 100%;
+    height: 500px;
+    border-radius: 5px;
+}
+.btn-custom {
+    background-color: #ffffff !important;
+    color: white;
+    border: 1px solid #333;
+}
+.btn-custom:hover {
+    background-color: #ff0b0b;
+}
+
+/* danh sách tập */
+.episode {
+    padding: 0 !important;
+    color: white;
+}
+
+.episode-list {
+    background-color: #121212;
+    padding: 15px;
+    border-radius: 5px;
+}
+.episode-list .btn {
+    color: white;
+    background-color: #222;
+    border: none;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 0;
+    line-height: 40px;
+}
+.episode-list .btn:hover {
+    background-color: #333;
+}
+.episode-list .btn.active {
+    background-color: #d9534f;
+    color: white;
+}
+
+/* Thông tin phim */
+.Movie-information {
+    padding: 0 !important;
+    color: white;
+}
+
+.information {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.poster-move img {
+    border-radius: 10px !important;
+}
+
+.movie-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Viền nhẹ */
+}
+
+
+/* Lớp overlay */
+.movie-overlay {
+    position: relative;
+    background: rgba(0, 0, 0, 0.199); /* Nền tối nhẹ */
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    z-index: 1;
+}
+
+/* Chỉnh màu chữ tiêu đề */
+.movie-title {
+    color: #c8ff00;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Chỉnh màu chữ mô tả */
+.movie-desc {
+    font-size: 16px;
+}
+
+/* Chỉnh màu đánh giá sao */
+.rating {
+    color: gold;
+    font-size: 18px;
+}
+
+/* Thông tin thêm */
+.movie-info {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
