@@ -267,6 +267,7 @@
 .rating {
     color: #6df23f;
     font-weight: bold;
+    font-size: 13px !important;
 }
 
 .date, .year {

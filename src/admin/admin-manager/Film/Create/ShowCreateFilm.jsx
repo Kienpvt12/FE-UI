@@ -1,5 +1,5 @@
-import Navbar from '../../components/js/navbar';
-import Siderbar from '../../components/js/siderbar';
+import Navbar from '../../../components/js/navbar';
+import Siderbar from '../../../components/js/siderbar';
 import CreateFilm from './js/CreateFilm'
 
 function ShowCreateFilm() {

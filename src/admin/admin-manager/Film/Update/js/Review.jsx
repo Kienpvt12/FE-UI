@@ -1,6 +1,4 @@
 import '../css/updatefilm.css'
-import React, { useState } from "react";
-import Select from "react-select";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -11,20 +9,20 @@ function Review() {
         <>
             <div className="admin-main-content p-4">
 
-                <div class="d-flex justify-content-between mb-3">
-                    <button class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</button>
-                    <button class="btn btn-primary"><i class="fas fa-save"></i> Cập nhật</button>
+                <div className="d-flex justify-content-between mb-3">
+                    <button className="btn btn-secondary"><i className="fas fa-arrow-left"></i> Quay lại</button>
+                    <button className="btn btn-primary"><i className="fas fa-save"></i> Cập nhật</button>
                 </div>
 
                 <div className="card p-4 shadow-sm mt-4">
                     <ul className="nav nav-tabs mb-3">
-                        <li class="nav-item">
-                            <span class="nav-link" onClick={() => navigate('/admin/update-Film')}>Thông tin phim</span>
+                        <li className="nav-item">
+                            <span className="nav-link" onClick={() => navigate('/admin/update-Film')}>Thông tin phim</span>
                         </li>
-                        <li class="nav-item">
-                            <span class="nav-link" onClick={() => navigate('/admin/update-Film/update-episode-list')} >Danh sách video phim</span>
+                        <li className="nav-item">
+                            <span className="nav-link" onClick={() => navigate('/admin/update-Film/update-episode-list')} >Danh sách video phim</span>
                         </li>
-                        <li class="nav-item">
+                        <li className="nav-item">
                             <span className="nav-link active" onClick={() => navigate('/admin/update-Film/update-review')}>Review</span>
                         </li>
                     </ul>

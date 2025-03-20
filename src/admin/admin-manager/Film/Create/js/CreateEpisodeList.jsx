@@ -1,5 +1,4 @@
-import '../css/updatefilm.css'
-import React, { useState } from "react";
+import '../css/createfilm.css'
 import Select from "react-select";
 import { useNavigate } from 'react-router-dom';
 
@@ -17,12 +16,12 @@ function CreateEpisodeList() {
                 </div>
 
                 <div className="card p-4 shadow-sm mt-4">
-                <ul class="nav nav-tabs mb-3">
-                        <li class="nav-item">
-                            <span class="nav-link" onClick={() => navigate('/admin/update-Film')}>Thông tin phim</span>
+                <ul className="nav nav-tabs mb-3">
+                        <li className="nav-item">
+                            <span className="nav-link" onClick={() => navigate('/admin/create-Film')}>Thông tin phim</span>
                         </li>
-                        <li class="nav-item">
-                            <span class="nav-link active" onClick={() => navigate('/admin/update-Film/update-episode-list')} >Danh sách video phim</span>
+                        <li className="nav-item">
+                            <span className="nav-link active" onClick={() => navigate('/admin/Create-Film/create-episode')} >Danh sách video phim</span>
                         </li>
                     </ul>
 

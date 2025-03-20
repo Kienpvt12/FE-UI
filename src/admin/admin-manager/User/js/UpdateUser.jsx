@@ -1,5 +1,6 @@
 import '../cs/createuser.css'
 import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
 import { useRef } from "react";
 
 function UpdateUser() {
@@ -7,7 +8,15 @@ function UpdateUser() {
 
     const fileInputRef = useRef(null);
     const UpateAvata = () => {
-        fileInputRef.current.click(); // Khi bấm vào ảnh, mở file input
+        fileInputRef.current.click();
+    };
+    // Xử lý khi chọn ảnh
+    const [selectedImage, setSelectedImage] = useState(null);
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setSelectedImage(URL.createObjectURL(file));
+        }
     };
 
     return (
@@ -62,10 +71,24 @@ function UpdateUser() {
                             {/* <!-- Avatar --> */}
                             <div className="input-create mb-3 text-center">
                                 <label className="form-label d-block">Avatar</label>
-                                <div className="update-avatar-container" onClick={UpateAvata}>
-                                    <input type="file" ref={fileInputRef} />
-                                    <img src="../f9486eb3ce64ea88043728ffe70f0ba1.jpg" alt="avatar" />
+                                <div className="update-avatar-container" onClick={UpateAvata} style={{ cursor: "pointer" }}>
+                                    {/* Hiển thị ảnh hoặc ảnh mặc định */}
+                                    {selectedImage ? (
+                                        <img src={selectedImage} alt="avatar" className="avatar-preview" />
+                                    ) : (
+                                        <img src="../f9486eb3ce64ea88043728ffe70f0ba1.jpg" alt="avatar" />
+                                    )}
                                 </div>
+
+                                {/* Input file ẩn */}
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    accept="image/*"
+                                    className="form-control mt-2"
+                                    style={{ display: "none" }}
+                                    onChange={handleImageChange}
+                                />
                             </div>
                         </form>
                     </div>

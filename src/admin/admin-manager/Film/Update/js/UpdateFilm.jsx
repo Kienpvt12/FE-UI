@@ -38,49 +38,48 @@ function UpdateFilm() {
 
 
     const data = { title: "Phim ABC", releaseYear: 2020 };
-    const datafaketheloai = { value: 1, label: "Kinh dị" };
 
 
     return (
         <>
-            <div class="admin-main-content p-4">
+            <div className="admin-main-content p-4">
                 {/* <!-- Header --> */}
-                <div class="d-flex justify-content-between mb-3">
-                    <button class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</button>
-                    <button class="btn btn-primary"><i class="fas fa-save"></i> Cập nhật</button>
+                <div className="d-flex justify-content-between mb-3">
+                    <button className="btn btn-secondary"><i className="fas fa-arrow-left"></i> Quay lại</button>
+                    <button className="btn btn-primary"><i className="fas fa-save"></i> Cập nhật</button>
                 </div>
 
                 {/* <!-- Card thông tin phim --> */}
-                <div class="card p-4 shadow-sm mt-4">
-                    <ul class="nav nav-tabs mb-3">
-                        <li class="nav-item">
-                            <span class="nav-link active" onClick={() => navigate('/admin/update-Film')}>Thông tin phim</span>
+                <div className="card p-4 shadow-sm mt-4">
+                    <ul className="nav nav-tabs mb-3">
+                        <li className="nav-item">
+                            <span className="nav-link active" onClick={() => navigate('/admin/update-Film')}>Thông tin phim</span>
                         </li>
-                        <li class="nav-item">
-                            <span class="nav-link" onClick={() => navigate('/admin/update-Film/update-episode-list')} >Danh sách video phim</span>
+                        <li className="nav-item">
+                            <span className="nav-link" onClick={() => navigate('/admin/update-Film/update-episode-list')} >Danh sách video phim</span>
                         </li>
-                        <li class="nav-item">
+                        <li className="nav-item">
                             <span className="nav-link" onClick={() => navigate('/admin/update-Film/update-review')}>Review</span>
                         </li>
                     </ul>
 
                     <form>
-                        <div class="row">
+                        <div className="row">
                             {/* <!-- Cột trái: Nhập thông tin phim --> */}
-                            <div class="col-md-8">
-                                <div class="mb-3">
-                                    <label class="form-label">Tên phim</label>
-                                    <input type="text" class="form-control" />
+                            <div className="col-md-8">
+                                <div className="mb-3">
+                                    <label className="form-label">Tên phim</label>
+                                    <input type="text" className="form-control" />
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Mô tả ngắn</label>
-                                    <textarea class="form-control" rows="4">Tác phẩm dựa theo những sự kiện kỳ quái có thật ở Fukushima...</textarea>
+                                <div className="mb-3">
+                                    <label className="form-label">Mô tả ngắn</label>
+                                    <textarea className="form-control" rows="4">Tác phẩm dựa theo những sự kiện kỳ quái có thật ở Fukushima...</textarea>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Đạo diễn</label>
-                                    <input type="text" class="form-control" placeholder="Nhập tên đạo diễn" />
+                                <div className="mb-3">
+                                    <label className="form-label">Đạo diễn</label>
+                                    <input type="text" className="form-control" placeholder="Nhập tên đạo diễn" />
                                 </div>
 
                                 {/* Thể loại - Multi Select */}
@@ -153,7 +152,6 @@ function UpdateFilm() {
                                         width="150"
                                         alt="Ảnh bìa phim"
                                     />
-
                                     {/* Input file để chọn ảnh */}
                                     <input
                                         type="file"

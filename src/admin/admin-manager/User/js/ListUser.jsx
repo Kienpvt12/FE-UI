@@ -36,7 +36,7 @@ function ListUser () {
                             <td>huong@gmail.com</td>
                             <td>0988888887</td>
                             <td><span className="badge bg-secondary">USER</span></td>
-                            <td><span className="badge bg-success"><i class="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i class="fa-solid fa-trash"></i></span></td>
+                            <td><span className="badge bg-success"><i className="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i className="fa-solid fa-trash"></i></span></td>
                         </tr>
                         <tr>
                             <td><img className='list-avata-user' src="../f9486eb3ce64ea88043728ffe70f0ba1.jpg" alt="avatar" /></td>
@@ -44,7 +44,7 @@ function ListUser () {
                             <td>man@gmail.com</td>
                             <td>---</td>
                             <td><span className="badge bg-secondary">USER</span></td>
-                            <td><span className="badge bg-success"><i class="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i class="fa-solid fa-trash"></i></span></td>
+                            <td><span className="badge bg-success"><i className="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i className="fa-solid fa-trash"></i></span></td>
                         </tr>
                         <tr>
                             <td><img className='list-avata-user' src="../f9486eb3ce64ea88043728ffe70f0ba1.jpg" alt="avatar" /></td>
@@ -52,7 +52,7 @@ function ListUser () {
                             <td>bui.nhien19tb@gmail.com</td>
                             <td>0988842515</td>
                             <td><span className="badge bg-secondary">USER</span></td>
-                            <td><span className="badge bg-success"><i class="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i class="fa-solid fa-trash"></i></span></td>
+                            <td><span className="badge bg-success"><i className="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i className="fa-solid fa-trash"></i></span></td>
                         </tr>
                         <tr>
                             <td><img className='list-avata-user' src="../f9486eb3ce64ea88043728ffe70f0ba1.jpg" alt="avatar" /></td>
@@ -60,7 +60,7 @@ function ListUser () {
                             <td>khoi@gmail.com</td>
                             <td>---</td>
                             <td><span className="badge bg-secondary">USER</span></td>
-                            <td><span className="badge bg-success"><i class="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i class="fa-solid fa-trash"></i></span></td>
+                            <td><span className="badge bg-success"><i className="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i className="fa-solid fa-trash"></i></span></td>
                         </tr>
                         <tr>
                             <td><img className='list-avata-user' src="../f9486eb3ce64ea88043728ffe70f0ba1.jpg" alt="avatar" /></td>
@@ -68,7 +68,7 @@ function ListUser () {
                             <td>phuong@gmail.com</td>
                             <td>---</td>
                             <td><span className="badge bg-secondary">USER</span></td>
-                            <td><span className="badge bg-success"><i class="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i class="fa-solid fa-trash"></i></span></td>
+                            <td><span className="badge bg-success"><i className="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i></span> | <span className="badge bg-danger detele"><i className="fa-solid fa-trash"></i></span></td>
                         </tr>
                     </tbody>
                 </table>
