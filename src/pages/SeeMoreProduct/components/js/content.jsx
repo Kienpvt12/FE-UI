@@ -27,7 +27,7 @@ function Content() {
   }, []);
 
   useEffect(() => {
-    GetListMovies({ category: 'anime', sort: 'latest' }) // Nếu API hỗ trợ filter
+    GetListMovies({}) // Nếu API hỗ trợ filter
       .then((response) => {
         if (response?.data) {
           setLatestAnime(response.data);

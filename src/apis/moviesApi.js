@@ -1,8 +1,9 @@
+import axiosInstance from '../utils/axios.util.js';
 import axios from 'axios';
 
 async function GetListMovies(request) {
   try {
-    const res = await axios.post('http://localhost:3333/api/movies', request);
+    const res = await axiosInstance.post('/api/movies', request);
     return res.data;
   } catch (err) {
     console.log('🚀 ~ Product ~ err:', err.message);

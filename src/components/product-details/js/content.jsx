@@ -17,7 +17,7 @@ function Content() {
 
   // Fetch danh sách phim
   useEffect(() => {
-    GetListMovies()
+    GetListMovies({})
       .then((response) => {
         if (response?.data) {
           setMovies(response.data);
