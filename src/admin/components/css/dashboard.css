@@ -1,19 +1,19 @@
 /* Main Content */
 .admin-main-content {
-    display: flex;
-    flex-direction: column !important;
-    margin-left: 260px;
-    padding: 20px;
-    transition: all 0.3s;
-    color: white;
+  display: flex;
+  flex-direction: column !important;
+  margin-left: 260px;
+  padding: 20px;
+  transition: all 0.3s;
+  color: white;
 }
 
 .card {
-    border: none;
-    border-radius: 10px;
+  border: none;
+  border-radius: 10px;
 }
 
 .card h5 {
-    font-size: 24px;
-    font-weight: bold;
+  font-size: 24px;
+  font-weight: bold;
 }

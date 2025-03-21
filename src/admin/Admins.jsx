@@ -1,9 +1,9 @@
-import ShowDashboard from './components/ShowDashboard'
+import ShowDashboard from './components/ShowDashboard';
 
 function Admin() {
   return (
     <>
-        <ShowDashboard></ShowDashboard>
+      <ShowDashboard></ShowDashboard>
     </>
   );
 }

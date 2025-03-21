@@ -1,16 +1,17 @@
 /* Tuỳ chỉnh badge */
 .badge {
-    font-size: 0.9em;
-    padding: 5px 10px;
+  font-size: 0.9em;
+  padding: 5px 10px;
 }
 
 /* Định dạng bảng */
-.table th, .table td {
-    text-align: center;
-    vertical-align: middle;
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
 }
 
 /* Hiệu ứng hover */
 .table-hover tbody tr:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }

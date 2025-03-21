@@ -1,5 +1,5 @@
-import React from "react";
-import "../css/login.css"; // Đảm bảo đường dẫn file CSS đúng
+import React from 'react';
+import '../css/login.css'; // Đảm bảo đường dẫn file CSS đúng
 
 function Register({ closeModal, switchToLogin }) {
   return (
@@ -19,10 +19,12 @@ function Register({ closeModal, switchToLogin }) {
             <label className="form-label">Password</label>
             <input type="password" className="form-control" placeholder="Enter your password" />
           </div>
-          <button type="submit" className="btn btn-success w-100">Register</button>
+          <button type="submit" className="btn btn-success w-100">
+            Register
+          </button>
         </form>
         <p className="text-center mt-3">
-          Already have an account?{" "}
+          Already have an account?{' '}
           <a
             href="#"
             className="text-decoration-none"

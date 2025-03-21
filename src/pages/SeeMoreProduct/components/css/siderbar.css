@@ -1,284 +1,283 @@
-
 /* siderbar */
 .row-right {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .sidebar {
-    padding: 10px !important;
+  padding: 10px !important;
 }
 /* Box của sidebar */
 .sidebar-box {
-    background: #121212; /* Màu nền tối */
-    padding: 15px;
-    border-radius: 10px;
-    color: #ddd;
+  background: #121212; /* Màu nền tối */
+  padding: 15px;
+  border-radius: 10px;
+  color: #ddd;
 }
 
 /* Tiêu đề */
 .sidebar-box .title {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 /* Gạch ngang nhỏ */
 .sidebar-box .underline {
-    width: 30px;
-    height: 3px;
-    background: #a2ff00; /* Màu xanh lá */
-    margin-bottom: 10px;
+  width: 30px;
+  height: 3px;
+  background: #a2ff00; /* Màu xanh lá */
+  margin-bottom: 10px;
 }
 
 /* Đoạn mô tả */
 .sidebar-box p {
-    font-size: 14px;
-    color: #aaa;
+  font-size: 14px;
+  color: #aaa;
 }
 
 /* Nút đỏ */
 .sidebar-box .btn {
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
 }
 
 /* Chữ "Ngẫu Nhiên" có màu đặc biệt */
 .sidebar-box .highlight {
-    color: white;
-    font-weight: bold;
+  color: white;
+  font-weight: bold;
 }
 
 /* ad-section */
 /* Phần quảng cáo */
 .ad-section {
-    margin-top: 20px;
-    border-radius: 8px;
-    text-align: center;
+  margin-top: 20px;
+  border-radius: 8px;
+  text-align: center;
 }
 
 .ad-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 8px;
 }
 
 .ad-container {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    border-radius: 10px;
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 /* Video quảng cáo */
 .ad-video {
-    width: 100%;
-    height: 200%;
-    object-fit: fill;
-    display: block;
+  width: 100%;
+  height: 200%;
+  object-fit: fill;
+  display: block;
 }
 
 /* Banner fallback (khi video không load) */
 .ad-banner {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
 }
 
 /* Hiệu ứng hover */
 .ad-container:hover .ad-video {
-    transform: scale(1.05);
-    transition: transform 0.5s ease;
+  transform: scale(1.05);
+  transition: transform 0.5s ease;
 }
 
 /* ANIME-UPDATE */
 /* Box của sidebar */
 .anime-update {
-    background: #121212; /* Màu nền tối */
-    padding: 15px;
-    border-radius: 10px;
-    color: #ddd;
+  background: #121212; /* Màu nền tối */
+  padding: 15px;
+  border-radius: 10px;
+  color: #ddd;
 }
 
 /* Tiêu đề */
 .anime-update .title {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 /* Gạch ngang nhỏ */
 .anime-update .underline {
-    width: 30px;
-    height: 3px;
-    background: #a2ff00; /* Màu xanh lá */
-    margin-bottom: 10px;
+  width: 30px;
+  height: 3px;
+  background: #a2ff00; /* Màu xanh lá */
+  margin-bottom: 10px;
 }
 
 /* Danh sách anime */
 .anime-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .anime-list li {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 0;
 }
 
 /* Tên anime */
 .anime-list a {
-    color: #ddd;
-    text-decoration: none;
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  color: #ddd;
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Hover */
 .anime-list a:hover {
-    color: #a2ff00; /* Màu xanh lá */
+  color: #a2ff00; /* Màu xanh lá */
 }
 
 /* Số tập */
 .anime-list .episode {
-    font-size: 14px;
-    color: #888;
-    font-style: italic;
+  font-size: 14px;
+  color: #888;
+  font-style: italic;
 }
 
 /* Link "Xem thêm" */
 .more-link {
-    display: block;
-    text-align: left;
-    margin-top: 10px;
-    color: #a2ff00;
-    font-size: 14px;
+  display: block;
+  text-align: left;
+  margin-top: 10px;
+  color: #a2ff00;
+  font-size: 14px;
 }
 
 .more-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* hot tuần */
 /* Thanh điều hướng */
 .hot-week {
-    padding: 0 12px !important;
+  padding: 0 12px !important;
 }
 
 .hot-navigation {
-    display: flex;
-    gap: 15px;
-    font-size: 16px;
-    font-weight: bold;
+  display: flex;
+  gap: 15px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .hot-navigation .active-tab {
-    color: white;
-    position: relative;
+  color: white;
+  position: relative;
 }
 
 .hot-navigation .active-tab::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: yellow;
-    bottom: -5px;
-    left: 0;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: yellow;
+  bottom: -5px;
+  left: 0;
 }
 
 .hot-navigation .tab {
-    color: red;
-    cursor: pointer;
+  color: red;
+  cursor: pointer;
 }
 
 /* Danh sách anime */
 .hot-anime-list {
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 /* Item trong danh sách */
 .hot-anime-item {
-    display: flex;
-    align-items: center;
-    background: #111;
-    padding: 8px;
-    margin-bottom: 5px;
-    border-radius: 5px;
+  display: flex;
+  align-items: center;
+  background: #111;
+  padding: 8px;
+  margin-bottom: 5px;
+  border-radius: 5px;
 }
 
 .hot-anime-item:hover {
-    background: #333;
+  background: #333;
 }
 
 /* Rank */
 .rank {
-    background: yellow;
-    color: black;
-    font-weight: bold;
-    padding: 5px;
-    border-radius: 3px;
-    width: 30px;
-    text-align: center;
-    margin-right: 10px;
+  background: yellow;
+  color: black;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 3px;
+  width: 30px;
+  text-align: center;
+  margin-right: 10px;
 }
 
 /* Ảnh anime */
 .hot-anime-item img {
-    width: 50px;
-    height: 75px;
-    border-radius: 5px;
-    margin-right: 10px;
+  width: 50px;
+  height: 75px;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
 /* Thông tin anime */
 .hot-anime-info {
-    color: white;
-    flex: 1;
+  color: white;
+  flex: 1;
 }
 
 .hot-anime-info h6 {
-    font-size: 14px;
-    font-weight: bold;
-    margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
 }
 
 /* Đánh giá, ngày phát hành */
 .hot-anime-info p {
-    font-size: 12px;
-    margin: 5px 0 0;
-    display: flex;
-    gap: 5px;
-    align-items: center;
+  font-size: 12px;
+  margin: 5px 0 0;
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }
 
 .rating {
-    color: #6df23f;
-    font-weight: bold;
-    font-size: 13px !important;
+  color: #6df23f;
+  font-weight: bold;
+  font-size: 13px !important;
 }
 
-.date, .year {
-    color: #aaa;
+.date,
+.year {
+  color: #aaa;
 }
 
 .quality {
-    background: red;
-    color: white;
-    font-weight: bold;
-    padding: 2px 5px;
-    border-radius: 3px;
+  background: red;
+  color: white;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 3px;
 }
-

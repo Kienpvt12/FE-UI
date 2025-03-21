@@ -1,26 +1,26 @@
 /* Tăng bo tròn góc slider */
 .carousel {
-    border-radius: 10px;
-    overflow: hidden;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 /* Chỉnh nền mờ cho text */
 .carousel-caption {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 10px;
-    bottom: 10%;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-radius: 10px;
+  bottom: 10%;
 }
 
 /* Chỉnh tiêu đề anime */
 .carousel-caption h5 {
-    font-size: 1.5rem;
-    font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 /* Chỉnh nút xem phim */
 .carousel-caption .btn {
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
 }

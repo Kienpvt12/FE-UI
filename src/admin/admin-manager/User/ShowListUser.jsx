@@ -1,13 +1,13 @@
 import Navbar from '../../components/js/navbar';
 import Siderbar from '../../components/js/siderbar';
-import ListUser from './js/ListUser'
+import ListUser from './js/ListUser';
 
 function ShowListUser() {
   return (
     <>
-        <Navbar></Navbar>
-        <Siderbar></Siderbar>
-        <ListUser></ListUser>
+      <Navbar></Navbar>
+      <Siderbar></Siderbar>
+      <ListUser></ListUser>
     </>
   );
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import "../css/login.css";
+import React from 'react';
+import '../css/login.css';
 
 function Login({ closeModal, switchToRegister }) {
   return (
@@ -15,10 +15,12 @@ function Login({ closeModal, switchToRegister }) {
             <label className="form-label">Password</label>
             <input type="password" className="form-control" placeholder="Enter your password" />
           </div>
-          <button type="submit" className="btn btn-primary w-100">Login</button>
+          <button type="submit" className="btn btn-primary w-100">
+            Login
+          </button>
         </form>
         <p className="text-center mt-3">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <a
             href="#"
             className="text-decoration-none"

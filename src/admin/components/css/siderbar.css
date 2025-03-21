@@ -1,46 +1,46 @@
 .admin-sidebar {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    background: #181818;
-    padding-top: 20px;
-    transition: all 0.3s;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  background: #181818;
+  padding-top: 20px;
+  transition: all 0.3s;
 }
 
 .admin-sidebar h4 {
-    color: #fff;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 18px;
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
 }
 
 .admin-sidebar a {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    transition: 0.3s;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s;
 }
 
 .admin-sidebar a i {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .admin-sidebar a:hover,
 .admin-sidebar .active {
-    background: #007bff;
-    border-left: 5px solid #fff;
+  background: #007bff;
+  border-left: 5px solid #fff;
 }
 
 /* Dropdown */
 .admin-sidebar .dropdown .dropdown-item {
-    padding-left: 40px;
-    font-size: 14px;
-    color: white;
+  padding-left: 40px;
+  font-size: 14px;
+  color: white;
 }
 
 .admin-sidebar .dropdown .dropdown-item:hover {
-    background: #007bff;
+  background: #007bff;
 }

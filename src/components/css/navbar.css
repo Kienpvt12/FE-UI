@@ -1,134 +1,133 @@
 .navbar {
-    background-color: #000000 !important;
-    padding: 10px 20px;
-    color: white;
-    display: flex;
-    justify-content: center; /* Căn giữa nội dung */
-    align-items: center;
-    z-index: 1000;
-    position: fixed;
+  background-color: #000000 !important;
+  padding: 10px 20px;
+  color: white;
+  display: flex;
+  justify-content: center; /* Căn giữa nội dung */
+  align-items: center;
+  z-index: 1000;
+  position: fixed;
 }
 
 .container-fluid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Canh giữa logo và phần còn lại */
-    width: 100%;
-    max-width: 1300px; /* Giới hạn độ rộng */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Canh giữa logo và phần còn lại */
+  width: 100%;
+  max-width: 1300px; /* Giới hạn độ rộng */
 }
 
 /* Logo */
 .navbar-brand img {
-    height: 35px;
+  height: 35px;
 }
 
 /* Hamburger menu (ẩn trên màn hình lớn) */
 .hamburger-menu {
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: none;
 }
 
 /* Menu chính */
 .nav-links {
-    display: flex;
-    flex-grow: 1;
-    justify-content: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
 }
 
 .nav-links ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
 }
 
 .nav-links ul li {
-    position: relative;
-    padding: 10px 15px;
+  position: relative;
+  padding: 10px 15px;
 }
 
 .nav-links ul li a {
-    text-decoration: none;
-    color: rgb(255, 255, 255);
-    font-size: 14px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
 }
 
 /* Bỏ hover xanh */
 .nav-links ul li a:hover {
-    color: #a2ff00; /* Giữ nguyên màu trắng */
+  color: #a2ff00; /* Giữ nguyên màu trắng */
 }
 
 /* Dropdown menu */
 .dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: #222;
-    top: 100%;
-    left: 0;
-    min-width: 150px;
-    border-radius: 5px;
+  display: none;
+  position: absolute;
+  background-color: #222;
+  top: 100%;
+  left: 0;
+  min-width: 150px;
+  border-radius: 5px;
 }
 
 .dropdown-menu li {
-    padding: 2px;
+  padding: 2px;
 }
 
-
 .dropdown:hover .dropdown-menu {
-    display: block;
+  display: block;
 }
 
 /* Tìm kiếm & nút đăng nhập */
 .nav-buttons {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .search-box {
-    background: #222;
-    border: none;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: 10px;
+  background: #222;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
 /* Responsive: Màn hình nhỏ */
 @media (max-width: 991px) {
-    .hamburger-menu {
-        display: block;
-    }
+  .hamburger-menu {
+    display: block;
+  }
 
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background: #111;
-        padding: 10px;
-    }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: #111;
+    padding: 10px;
+  }
 
-    .nav-links ul {
-        flex-direction: column;
-    }
+  .nav-links ul {
+    flex-direction: column;
+  }
 
-    .nav-links ul li {
-        padding: 10px;
-    }
+  .nav-links ul li {
+    padding: 10px;
+  }
 
-    /* Khi mở menu */
-    .nav-links.open {
-        display: flex;
-    }
+  /* Khi mở menu */
+  .nav-links.open {
+    display: flex;
+  }
 
-    /* Ẩn ô tìm kiếm trên mobile */
-    .search-box {
-        display: none;
-    }
+  /* Ẩn ô tìm kiếm trên mobile */
+  .search-box {
+    display: none;
+  }
 }

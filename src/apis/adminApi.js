@@ -1,5 +1,3 @@
-import axinos from 'axios'
+import axinos from 'axios';
 
-const getAdminInfo = async => {
-    
-}
+const getAdminInfo = (async) => {};
