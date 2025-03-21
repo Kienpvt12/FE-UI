@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// Tạo API slice
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
@@ -9,12 +8,12 @@ export const userApi = createApi({
   }),
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => 'users',
+      query: () => '/users',
     }),
 
     login: builder.mutation({
       query: (data) => ({
-        url: 'login',
+        url: '/users/login',
         method: 'POST',
         body: data,
       }),
@@ -22,7 +21,7 @@ export const userApi = createApi({
 
     addUser: builder.mutation({
       query: (data) => ({
-        url: 'users',
+        url: '/users',
         method: 'POST',
         body: data,
       }),
@@ -30,7 +29,7 @@ export const userApi = createApi({
 
     updateUser: builder.mutation({
       query: ({ id, ...data }) => ({
-        url: `users/${id}`,
+        url: `/users/${id}`,
         method: 'PATCH',
         body: data,
       }),
@@ -38,11 +37,12 @@ export const userApi = createApi({
 
     deleteUser: builder.mutation({
       query: (id) => ({
-        url: `users/${id}`,
+        url: `/users/${id}`,
         method: 'DELETE',
       }),
     }),
   }),
 });
 
-export const { useGetUsersQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation } = userApi;
+export const { useLoginMutation, useGetUsersQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation } =
+  userApi;

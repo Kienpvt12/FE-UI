@@ -3,7 +3,7 @@ import axios from 'axios';
 
 async function GetListMovies(request) {
   try {
-    const res = await axiosInstance.post('/api/movies', request);
+    const res = await axiosInstance.post('/movies', request);
     return res.data;
   } catch (err) {
     console.log('🚀 ~ Product ~ err:', err.message);
