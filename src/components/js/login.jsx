@@ -15,6 +15,9 @@ function Login({ closeModal, switchToRegister }) {
   };
 
   const handleLogin = async (e) => {
+    if (!e.target.checkValidity()) {
+      return;
+    }
     e.preventDefault();
     try {
       const response = await login(user).unwrap();
@@ -28,7 +31,7 @@ function Login({ closeModal, switchToRegister }) {
     <div className="auth-modal active" onClick={closeModal}>
       <div className="auth-box" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-center">Login</h2>
-        <form>
+        <form onSubmit={handleLogin}>
           {error && <div className="alert alert-danger">Invalid account! Please check again!</div>}
           <div className="mb-3">
             <label className="form-label">Username or email</label>
@@ -39,6 +42,7 @@ function Login({ closeModal, switchToRegister }) {
               onChange={handleChange}
               className="form-control"
               placeholder="Enter your username or email"
+              required
             />
           </div>
           <div className="mb-3 position-relative">
@@ -50,9 +54,10 @@ function Login({ closeModal, switchToRegister }) {
               onChange={handleChange}
               className="form-control"
               placeholder="Enter your password"
+              required
             />
           </div>
-          <button type="submit" onClick={handleLogin} disabled={isLoading} className="btn btn-primary w-100">
+          <button type="submit" disabled={isLoading} className="btn btn-primary w-100">
             Login
           </button>
         </form>
