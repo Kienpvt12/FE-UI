@@ -6,6 +6,7 @@ import { useState } from 'react';
 function Login({ closeModal, switchToRegister }) {
   const [login, { isLoading, error }] = useLoginMutation();
   const [user, setUser] = useState({ email: '', password: '' });
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     setUser((prevUser) => ({
@@ -23,7 +24,7 @@ function Login({ closeModal, switchToRegister }) {
       const response = await login(user).unwrap();
       console.log('Login Success:', response);
     } catch (err) {
-      console.error('Login Failed:', err);
+      setMessage(err.data.message);
     }
   };
 
@@ -32,11 +33,11 @@ function Login({ closeModal, switchToRegister }) {
       <div className="auth-box" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-center">Login</h2>
         <form onSubmit={handleLogin}>
-          {error && <div className="alert alert-danger">Invalid account! Please check again!</div>}
+          {error && <div className="alert alert-danger">{message}</div>}
           <div className="mb-3">
             <label className="form-label">Username or email</label>
             <input
-              type="email"
+              type="text"
               name="email"
               value={user.email}
               onChange={handleChange}
