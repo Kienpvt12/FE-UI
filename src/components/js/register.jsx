@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import '../css/login.css';
 import { useRegisterMutation } from '../../apis/userApi';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../redux/reducers/user';
 
 function Register({ closeModal, switchToLogin }) {
   const [login, { isLoading, error }] = useRegisterMutation();
   const [user, setUser] = useState({ email: '', password: '', confirmPassword: '' });
   const [isMatchPassword, setIsMatchPassword] = useState(true);
   const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     if (e.target.name === 'confirmPassword') {
@@ -29,7 +32,7 @@ function Register({ closeModal, switchToLogin }) {
     }
     try {
       const response = await login(user).unwrap();
-      console.log('Login Success:', response);
+      dispatch(addUser(response.user));
     } catch (err) {
       setMessage(err.data.message);
     }

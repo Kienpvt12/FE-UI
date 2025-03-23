@@ -2,11 +2,14 @@ import React from 'react';
 import '../css/login.css';
 import { useLoginMutation } from '../../apis/userApi';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../redux/reducers/user';
 
 function Login({ closeModal, switchToRegister }) {
   const [login, { isLoading, error }] = useLoginMutation();
   const [user, setUser] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setUser((prevUser) => ({
@@ -22,7 +25,7 @@ function Login({ closeModal, switchToRegister }) {
     e.preventDefault();
     try {
       const response = await login(user).unwrap();
-      console.log('Login Success:', response);
+      dispatch(addUser(response.user));
     } catch (err) {
       setMessage(err.data.message);
     }
