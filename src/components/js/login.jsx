@@ -27,6 +27,7 @@ function Login({ closeModal, switchToRegister }) {
       const response = await login(user).unwrap();
       dispatch(addUser(response.user));
       setMessage(response.message);
+      closeModal();
     } catch (err) {
       setMessage(err.message);
     }
