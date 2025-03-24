@@ -1,22 +1,32 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import axiosBaseQuery from '../utils/axios.util';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({
+  baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_API,
-    credentials: 'include',
+    credentials: true,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   }),
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => '/users',
     }),
 
-    getCurrentUser: builder.query({
-      query: () => '/users/current',
+    getCurrentUser: builder.mutation({
+      query: () => ({
+        url: '/users/current',
+        method: 'GET',
+      }),
     }),
 
-    refreshToken: builder.query({
-      query: () => '/auth/refresh',
+    refreshToken: builder.mutation({
+      query: () => ({
+        url: '/auth/refresh',
+        method: 'GET',
+      }),
     }),
 
     login: builder.mutation({
@@ -64,8 +74,8 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGetUsersQuery,
-  useGetCurrentUserQuery,
-  useRefreshTokenQuery,
+  useGetCurrentUserMutation,
+  useRefreshTokenMutation,
   useAddUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,

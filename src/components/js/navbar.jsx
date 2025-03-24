@@ -4,7 +4,7 @@ import '../css/navbar.css';
 import Login from './login';
 import Register from './register';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetCurrentUserQuery, useRefreshTokenQuery } from '../../apis/userApi';
+import { useGetCurrentUserMutation, useRefreshTokenMutation } from '../../apis/userApi';
 import { addUser } from '../../redux/reducers/user';
 
 function Navbar() {
@@ -15,8 +15,8 @@ function Navbar() {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const user = useSelector((state) => state.user);
-  const [getCurrentUser] = useGetCurrentUserQuery();
-  const [refreshToken] = useRefreshTokenQuery();
+  const [getCurrentUser] = useGetCurrentUserMutation();
+  const [refreshToken] = useRefreshTokenMutation();
   const dispatch = useDispatch();
 
   // Chuyển từ login sang Register
@@ -70,14 +70,14 @@ function Navbar() {
   const handleAuth = useCallback(async () => {
     try {
       const response = await getCurrentUser().unwrap();
-      dispatch(addUser(response.user));
+      dispatch(addUser(response.data.user));
     } catch (err) {
       if (err.status === 401) {
         try {
           const response = await refreshToken().unwrap();
           dispatch(addUser(response.user));
         } catch {
-          console.log('Login failed');
+          console.log('Unauthorized');
         }
       }
     }
