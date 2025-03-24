@@ -70,7 +70,7 @@ function Navbar() {
   const handleAuth = useCallback(async () => {
     try {
       const response = await getCurrentUser().unwrap();
-      dispatch(addUser(response.data.user));
+      dispatch(addUser(response.user));
     } catch (err) {
       if (err.status === 401) {
         try {
@@ -265,7 +265,7 @@ function Navbar() {
                 aria-expanded="false"
               >
                 <img
-                  src="./avatar.png"
+                  src={user.avatar || './default-avatar.png'}
                   alt="Avatar"
                   className="rounded-circle me-2"
                   style={{ width: '30px', height: '30px' }}
@@ -273,7 +273,7 @@ function Navbar() {
                 {user.username || user.email}
               </button>
               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                <li>
+                <li style={{ cursor: 'pointer' }}>
                   <a className="dropdown-item">Hồ sơ</a>
                 </li>
                 <li>

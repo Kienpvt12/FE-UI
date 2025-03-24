@@ -26,8 +26,9 @@ function Login({ closeModal, switchToRegister }) {
     try {
       const response = await login(user).unwrap();
       dispatch(addUser(response.user));
+      setMessage(response.message);
     } catch (err) {
-      setMessage(err.data.message);
+      setMessage(err.message);
     }
   };
 
@@ -37,6 +38,7 @@ function Login({ closeModal, switchToRegister }) {
         <h2 className="text-center">Login</h2>
         <form onSubmit={handleLogin}>
           {error && <div className="alert alert-danger">{message}</div>}
+          {!error && message && <div className="alert alert-success">{message}</div>}
           <div className="mb-3">
             <label className="form-label">Username or email</label>
             <input

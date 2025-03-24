@@ -33,7 +33,7 @@ export const userApi = createApi({
       query: (data) => ({
         url: '/users/login',
         method: 'POST',
-        body: data,
+        data,
       }),
     }),
 
@@ -41,7 +41,7 @@ export const userApi = createApi({
       query: (data) => ({
         url: '/users/register',
         method: 'POST',
-        body: data,
+        data,
       }),
     }),
 
@@ -49,7 +49,7 @@ export const userApi = createApi({
       query: (data) => ({
         url: '/users',
         method: 'POST',
-        body: data,
+        data,
       }),
     }),
 
@@ -57,7 +57,7 @@ export const userApi = createApi({
       query: ({ id, ...data }) => ({
         url: `/users/${id}`,
         method: 'PATCH',
-        body: data,
+        data,
       }),
     }),
 
