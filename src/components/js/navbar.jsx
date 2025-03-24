@@ -4,8 +4,8 @@ import '../css/navbar.css';
 import Login from './login';
 import Register from './register';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetCurrentUserMutation, useRefreshTokenMutation } from '../../apis/userApi';
-import { addUser } from '../../redux/reducers/user';
+import { useGetCurrentUserMutation, useLogoutMutation, useRefreshTokenMutation } from '../../apis/userApi';
+import { addUser, removeUser } from '../../redux/reducers/user';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ function Navbar() {
   const user = useSelector((state) => state.user);
   const [getCurrentUser] = useGetCurrentUserMutation();
   const [refreshToken] = useRefreshTokenMutation();
+  const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
 
   // Chuyển từ login sang Register
@@ -88,6 +89,15 @@ function Navbar() {
       handleAuth();
     }
   }, [user, handleAuth]);
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      dispatch(removeUser());
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
@@ -277,7 +287,7 @@ function Navbar() {
                   <a className="dropdown-item">Hồ sơ</a>
                 </li>
                 <li>
-                  <button className="dropdown-item" onClick={() => alert('Đăng xuất')}>
+                  <button className="dropdown-item" onClick={() => handleLogout}>
                     Đăng xuất
                   </button>
                 </li>
