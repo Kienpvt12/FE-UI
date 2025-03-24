@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/navbar.css';
 import Login from './login';
 import Register from './register';
+import { useDispatch, useSelector } from 'react-redux';
+import { useGetCurrentUserQuery, useRefreshTokenQuery } from '../../apis/userApi';
+import { addUser } from '../../redux/reducers/user';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -11,6 +14,10 @@ function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const user = useSelector((state) => state.user);
+  const [getCurrentUser] = useGetCurrentUserQuery();
+  const [refreshToken] = useRefreshTokenQuery();
+  const dispatch = useDispatch();
 
   // Chuyển từ login sang Register
   const switchToRegister = () => {
@@ -59,6 +66,28 @@ function Navbar() {
       if (registerBtn) registerBtn.removeEventListener('click', () => setShowRegister(true));
     };
   }, []);
+
+  const handleAuth = useCallback(async () => {
+    try {
+      const response = await getCurrentUser().unwrap();
+      dispatch(addUser(response.user));
+    } catch (err) {
+      if (err.status === 401) {
+        try {
+          const response = await refreshToken().unwrap();
+          dispatch(addUser(response.user));
+        } catch {
+          console.log('Login failed');
+        }
+      }
+    }
+  }, [dispatch, getCurrentUser, refreshToken]);
+
+  useEffect(() => {
+    if (!user.id) {
+      handleAuth();
+    }
+  }, [user, handleAuth]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
@@ -217,24 +246,48 @@ function Navbar() {
             />
           </form>
 
-          <button className="btn btn-danger me-2" onClick={() => setShowLogin(true)}>
-            Đăng nhập
-          </button>
-          <button className="btn btn-danger" onClick={() => setShowRegister(true)}>
-            Đăng ký
-          </button>
+          {!user.id ? (
+            <>
+              <button className="btn btn-danger me-2" onClick={() => setShowLogin(true)}>
+                Đăng nhập
+              </button>
+              <button className="btn btn-danger" onClick={() => setShowRegister(true)}>
+                Đăng ký
+              </button>
+            </>
+          ) : (
+            <div className="dropdown">
+              <button
+                className="btn btn-danger dropdown-toggle d-flex align-items-center"
+                type="button"
+                id="userDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="./avatar.png"
+                  alt="Avatar"
+                  className="rounded-circle me-2"
+                  style={{ width: '30px', height: '30px' }}
+                />
+                {user.username || user.email}
+              </button>
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li>
+                  <a className="dropdown-item">Hồ sơ</a>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => alert('Đăng xuất')}>
+                    Đăng xuất
+                  </button>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
 
         {showLogin && <Login closeModal={() => setShowLogin(false)} switchToRegister={switchToRegister} />}
-        {showRegister && (
-          <Register
-            closeModal={() => setShowRegister(false)}
-            switchToLogin={() => {
-              setShowRegister(false);
-              setShowLogin(true);
-            }}
-          />
-        )}
+        {showRegister && <Register closeModal={() => setShowRegister(false)} switchToLogin={switchToLogin} />}
       </div>
     </nav>
   );

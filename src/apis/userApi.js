@@ -11,6 +11,14 @@ export const userApi = createApi({
       query: () => '/users',
     }),
 
+    getCurrentUser: builder.query({
+      query: () => '/users/current',
+    }),
+
+    refreshToken: builder.query({
+      query: () => '/auth/refresh',
+    }),
+
     login: builder.mutation({
       query: (data) => ({
         url: '/users/login',
@@ -56,6 +64,8 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGetUsersQuery,
+  useGetCurrentUserQuery,
+  useRefreshTokenQuery,
   useAddUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
