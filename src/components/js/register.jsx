@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../css/login.css';
-import { useRegisterMutation } from '../../apis/userApi';
+import { useRegisterMutation } from '../../apis/user-api';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../redux/reducers/user';
+import { updateUser } from '../../redux/reducers/user';
 
 function Register({ closeModal, switchToLogin }) {
   const [login, { isLoading, error }] = useRegisterMutation();
@@ -32,7 +32,7 @@ function Register({ closeModal, switchToLogin }) {
     }
     try {
       const response = await login(user).unwrap();
-      dispatch(addUser(response.user));
+      dispatch(updateUser(response.user));
       setMessage(response.message);
       closeModal();
     } catch (err) {

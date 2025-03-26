@@ -1,9 +1,9 @@
 import React from 'react';
 import '../css/login.css';
-import { useLoginMutation } from '../../apis/userApi';
+import { useLoginMutation } from '../../apis/user-api';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../redux/reducers/user';
+import { updateUser } from '../../redux/reducers/user';
 
 function Login({ closeModal, switchToRegister }) {
   const [login, { isLoading, error }] = useLoginMutation();
@@ -25,7 +25,7 @@ function Login({ closeModal, switchToRegister }) {
     e.preventDefault();
     try {
       const response = await login(user).unwrap();
-      dispatch(addUser(response.user));
+      dispatch(updateUser(response.user));
       setMessage(response.message);
       closeModal();
     } catch (err) {

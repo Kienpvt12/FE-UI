@@ -4,9 +4,10 @@ import '../css/navbar.css';
 import Login from './login';
 import Register from './register';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetCurrentUserMutation, useLogoutMutation, useRefreshTokenMutation } from '../../apis/userApi';
-import { addUser, removeUser } from '../../redux/reducers/user';
-import { useGetGenresQuery } from '../../apis/genreApi';
+import { useGetCurrentUserMutation, useLogoutMutation, useRefreshTokenMutation } from '../../apis/user-api';
+import { updateUser, removeUser } from '../../redux/reducers/user';
+import { useGetGenresQuery } from '../../apis/genre-api';
+import { updateStatus } from '../../redux/reducers/status';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function Navbar() {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const user = useSelector((state) => state.user);
+  const isFirstLoad = useSelector((state) => state.status.isFirstLoad);
   const [getCurrentUser] = useGetCurrentUserMutation();
   const [refreshToken] = useRefreshTokenMutation();
   const [logout] = useLogoutMutation();
@@ -73,12 +75,12 @@ function Navbar() {
   const handleAuth = useCallback(async () => {
     try {
       const response = await getCurrentUser().unwrap();
-      dispatch(addUser(response.user));
+      dispatch(updateUser(response.user));
     } catch (err) {
       if (err.status === 401) {
         try {
           const response = await refreshToken().unwrap();
-          dispatch(addUser(response.user));
+          dispatch(updateUser(response.user));
         } catch {
           console.log('Unauthorized');
         }
@@ -87,10 +89,11 @@ function Navbar() {
   }, [dispatch, getCurrentUser, refreshToken]);
 
   useEffect(() => {
-    if (!user.id) {
+    if (!user.id && isFirstLoad) {
+      dispatch(updateStatus({ isFirstLoad: false }));
       handleAuth();
     }
-  }, [user, handleAuth]);
+  }, [user, isFirstLoad, handleAuth, dispatch]);
 
   const handleLogout = async () => {
     try {
