@@ -5,12 +5,14 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Slider from "./slider";
 import Siderbar from "./siderbar";
 import Product from "./product";
-import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
+import { GetListMovies, GetListMoviesTop } from "../../../../apis/moviesApi.js";
+import { useGetMoviesMutation } from '../../../../apis/movieApi.js';
 
 function Content() {
     const [movies, setMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const [getMovies, { isLoading, error }] = useGetMoviesMutation();
 
     useEffect(() => {
         GetListMoviesTop({})
@@ -25,6 +27,22 @@ function Content() {
             });
     }, []);
     
+  useEffect(() => {
+    const filter = {
+      page: 1,
+      limit: 10,
+    };
+    getMovies(filter)
+      .then((response) => {
+        console.log('🚀 ~ fetchMovies ~ response:', response);
+        if (response.movies) {
+          setMovies(response.movies);
+        }
+      })
+      .catch((err) => {
+        console.error('🚀 ~ GetListMovies ~ err:', err);
+      });
+  }, [getMovies]);
 
     // Hàm thay đổi trang
     const handlePageChange = (page) => {
