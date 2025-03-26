@@ -4,17 +4,8 @@ import Select from "react-select";
 import { useNavigate } from 'react-router-dom';
 
 
-function UpdateFilm() {
+function UpdateFilm({synopsis, setSynopsis, title, setTitle, genreOptions, selectedGenres, setSelectedGenres, selectedImage, setSelectedImage, selectedType, handleTypeChange}) {
     const navigate = useNavigate();
-
-    const genreOptions = [
-        { value: 1, label: "Kinh dị" },
-        { value: 2, label: "Hành động" },
-        { value: 3, label: "Hài" },
-        { value: 4, label: "Chính kịch" },
-        { value: 5, label: "Khoa học viễn tưởng" },
-        { value: 6, label: "Lãng mạn" }
-    ];
 
     // Danh sách ngôn ngữ
     const languageOptions = [
@@ -24,9 +15,7 @@ function UpdateFilm() {
         { value: "tieng-trung", label: "Tiếng Trung" }
     ];
 
-    const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
-    const [selectedImage, setSelectedImage] = useState(null);
 
     // Xử lý khi chọn ảnh
     const handleImageChange = (event) => {
@@ -35,10 +24,7 @@ function UpdateFilm() {
             setSelectedImage(URL.createObjectURL(file));
         }
     };
-
-
     const data = { title: "Phim ABC", releaseYear: 2020 };
-
 
     return (
         <>
@@ -69,14 +55,13 @@ function UpdateFilm() {
                             <div className="col-md-8">
                                 <div className="mb-3">
                                     <label className="form-label">Tên phim</label>
-                                    <input type="text" className="form-control" />
+                                    <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
                                 </div>
-
                                 <div className="mb-3">
                                     <label className="form-label">Mô tả ngắn</label>
-                                    <textarea className="form-control" rows="4">Tác phẩm dựa theo những sự kiện kỳ quái có thật ở Fukushima...</textarea>
+                                    <textarea 
+                                    className="form-control" rows="4" value={synopsis} onChange={(e) => setSynopsis(e.target.value)}/>
                                 </div>
-
                                 <div className="mb-3">
                                     <label className="form-label">Đạo diễn</label>
                                     <input type="text" className="form-control" placeholder="Nhập tên đạo diễn" />
@@ -95,7 +80,6 @@ function UpdateFilm() {
                                         classNamePrefix="select"
                                     />
                                 </div>
-
                                 {/* Ngôn ngữ - Multi Select */}
                                 <div className="mb-3">
                                     <label className="form-label">Ngôn Ngữ</label>
@@ -134,18 +118,20 @@ function UpdateFilm() {
                                         value={data.releaseYear}
                                     />
                                 </div>
-
                                 <div className="mb-3">
                                     <label className="form-label">Loại phim</label>
-                                    <select className="form-select">
-                                        <option value="Phim bộ" selected>Phim bộ</option>
-                                        <option value="Phim lẻ">Phim lẻ</option>
+                                    <select className="form-select" value={selectedType} onChange={handleTypeChange}>
+                                        <option value="TV">TV</option>
+                                        <option value="TV Special">TV Special</option>
+                                        <option value="Movie">Movie</option>
+                                        <option value="OVA">OVA</option>
+                                        <option value="ONA">ONA</option>
+                                        <option value="Music">Music</option>
                                     </select>
                                 </div>
                                 <div className="mb-3 text-center">
                                     <label className="form-label d-block">Ảnh bìa phim</label>
-
-                                    {/* Hiển thị ảnh đã chọn hoặc ảnh mặc định */}
+                                    {/* Hiển thị ảnh đã chọn hoặc ảnh từ API */}
                                     <img
                                         src={selectedImage || "./f9486eb3ce64ea88043728ffe70f0ba1.jpg"}
                                         className="img-thumbnail"

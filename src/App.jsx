@@ -7,7 +7,7 @@ import CreateUser from './admin/admin-manager/User/CreateUser';
 import ListUser from './admin/admin-manager/User/ShowListUser';
 import Dashboard from './admin/components/ShowDashboard';
 import ShowUpdateUser from './admin/admin-manager/User/ShowUpdateUser';
-import ListFilm from './admin/admin-manager/Film/Show/ShowListFilm';
+import ListFilm from './admin/admin-manager/Film/Show/js/ShowListFilm';
 import UpdateFilm from './admin/admin-manager/Film/Update/ShowUpdateFilm';
 import UpdateEpisodeList from './admin/admin-manager/Film/Update/UpdateEpisodeList';
 import UpdateReview from './admin/admin-manager/Film/Update/UpdateReview';
@@ -28,7 +28,7 @@ function App() {
             <Route path="/admin/update-user" element={<ShowUpdateUser />} />
             <Route path="/admin/dasboard" element={<Dashboard />} />
             <Route path="/admin/listfilm" element={<ListFilm />} />
-            <Route path="/admin/update-Film" element={<UpdateFilm />} />
+            <Route path="/admin/update-Film/:id" element={<UpdateFilm />} />
             <Route path="/admin/update-Film/update-episode-list" element={<UpdateEpisodeList />} />
             <Route path="/admin/update-Film/update-review" element={<UpdateReview />} />
             <Route path="/admin/Create-Film/" element={<CreateFilm />} />

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-async function GetListMovies(request){
+async function GetListMoviesTop(request){
     try {
-       const res = await axios.post("http://localhost:3333/api/movies", request)
+       const res = await axios.get("https://api.jikan.moe/v4/top/anime", request)
        return res.data
     }
     catch (err) {
@@ -10,7 +10,8 @@ async function GetListMovies(request){
     }
 }
 
-async function GetListVideo(request){
+
+async function GetListMoviesID(request){
     try {
        const res = await axios.get("https://api.jikan.moe/v4/anime/15/videos", request)
        return res.data
@@ -21,6 +22,6 @@ async function GetListVideo(request){
 }
 
 export {
-    GetListMovies,
-    GetListVideo
+    GetListMoviesTop,
+    GetListMoviesID,
 }

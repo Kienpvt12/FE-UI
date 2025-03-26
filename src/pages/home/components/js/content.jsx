@@ -5,7 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Slider from "./slider";
 import Siderbar from "./siderbar";
 import Product from "./product";
-import { GetListMovies } from "../../../../apis/moviesApi.js";
+import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
 
 function Content() {
     const [movies, setMovies] = useState([]);
@@ -13,7 +13,7 @@ function Content() {
     const itemsPerPage = 10;
 
     useEffect(() => {
-        GetListMovies({})
+        GetListMoviesTop({})
             .then((response) => {
                 console.log("🚀 ~ fetchMovies ~ response:", response);
                 if (response?.data) {
@@ -24,6 +24,7 @@ function Content() {
                 console.error("🚀 ~ GetListMovies ~ err:", err);
             });
     }, []);
+    
 
     // Hàm thay đổi trang
     const handlePageChange = (page) => {
@@ -35,7 +36,7 @@ function Content() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentProducts = movies.slice(startIndex, startIndex + itemsPerPage);
 
-    const sidebarProducts = movies.slice(0, 5);
+    const sidebarProducts = movies.slice(0, 10);
 
     return (
         <div className="all-content container mt-4">

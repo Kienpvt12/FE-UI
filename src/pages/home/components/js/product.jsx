@@ -48,7 +48,7 @@ function Product({ movies }) {
                 </div>
                 <div className="list-product row mt-3 gap-3">
                     {movies.map((product) => (
-                        <div key={product._id} className="product-card col-6 col-sm-4 col-md-3 col-lg-2"  onClick={() => navigate(`/videos/${product.mal_id}`)}>
+                        <div key={product.mal_id} className="product-card col-6 col-sm-4 col-md-3 col-lg-2"  onClick={() => navigate(`/videos/${product.mal_id}`)}>
                             <div className="anime-card position-relative">
                                 <img  src={product.images.jpg.image_url} className="img-fluid rounded w-100" alt={product.title} />
                                 <div className="position-absolute top-0 start-0 m-2 p-1 badge-rating">
@@ -78,7 +78,7 @@ function Product({ movies }) {
                 </div>
                 <div className="list-product row mt-3 gap-3">
                     {movies.map((product) => (
-                        <div key={product._id} className="product-card col-6 col-sm-4 col-md-3 col-lg-2" onClick={() => navigate(`/videos/${product.mal_id}`)} >
+                        <div key={product.mal_id} className="product-card col-6 col-sm-4 col-md-3 col-lg-2" onClick={() => navigate(`/videos/${product.mal_id}`)} >
                             <div className="anime-card position-relative">
                                 <img src={product.images.jpg.image_url} className="img-fluid rounded w-100" alt={product.title} />
                                 <div className="position-absolute top-0 start-0 m-2 p-1 badge-rating">

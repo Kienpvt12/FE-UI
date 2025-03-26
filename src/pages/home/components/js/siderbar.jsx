@@ -4,7 +4,6 @@ import "../css/siderbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import videoFile from "../../../../components/image/anime.mp4";
-import { GetListMovies } from "../../../../apis/moviesApi";
 
 function Siderbar({ movies }) {
     const navigate = useNavigate();
@@ -35,9 +34,9 @@ function Siderbar({ movies }) {
                     <h5 className="title">ANIME MỚI CẬP NHẬT</h5>
                     <div className="underline"></div>
                     <ul className="anime-list">
-                        {movies.slice(0, 10).map((movie, index) => (
-                            <li  key={index} onClick={() => navigate('/seemore')}>
-                                <a href="#">{movie.title}</a> <span className="episode">Tập {movie.episodes}</span>
+                        {movies.slice(0, 10).map((movie) => (
+                            <li key={movie.mal_id} onClick={() => navigate(`/videos/${movie.mal_id}`)}>
+                                <a  href="#">{movie.title}</a> <span className="episode">Tập {movie.episodes}</span>
                             </li>
                         ))}
                     </ul>
@@ -53,7 +52,7 @@ function Siderbar({ movies }) {
                     <div className="tab">Movie/OVA</div>
                 </div>
                 {movies.map((product) => (
-                    <div key={product._id} className="hot-anime-list mt-3">
+                    <div onClick={() => navigate(`/videos/${product.mal_id}`)} key={product.mal_id} className="hot-anime-list mt-3">
                         <div className="hot-anime-item d-flex">
                             <div className="rank">#{product.hotRank}</div>
                             <img src={product.images.jpg.image_url} alt={product.title} />

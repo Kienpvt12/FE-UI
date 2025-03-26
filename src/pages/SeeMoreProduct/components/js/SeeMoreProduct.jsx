@@ -21,7 +21,7 @@ function SeeMoreProduct({ movies, currentPage, totalPages, onPageChange }) {
                     {movies.map((product) => (
                         <div key={product.mal_id} className="product-card col-6 col-sm-4 col-md-3 col-lg-2">
                             <div className="anime-card position-relative">
-                                <img onClick={() => navigate('/videos')} src={product.images.jpg.image_url} className="img-fluid rounded w-100" alt={product.title} />
+                                <img onClick={() => navigate(`/videos/${product.mal_id}`)} src={product.images.jpg.image_url} className="img-fluid rounded w-100" alt={product.title} />
                                 <div className="position-absolute top-0 start-0 m-2 p-1 badge-rating">
                                     <i className="fa-solid fa-star"></i> <strong>{product.score}</strong>
                                 </div>

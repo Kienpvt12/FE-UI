@@ -5,7 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Slider from "./slider";
 import Siderbar from "./siderbar";
 import SeeMoreProduct from "./SeeMoreProduct";
-import { GetListMovies } from "../../../../apis/moviesApi.js";
+import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
 
 function Content() {
     const [movies, setMovies] = useState([]);
@@ -15,7 +15,7 @@ function Content() {
     
 
     useEffect(() => {
-        GetListMovies({})
+        GetListMoviesTop({})
             .then((response) => {
                 console.log("🚀 ~ fetchMovies ~ response:", response);
                 if (response?.data) {
@@ -29,7 +29,7 @@ function Content() {
 
 
     useEffect(() => {
-        GetListMovies({ category: "anime", sort: "latest" }) // Nếu API hỗ trợ filter
+        GetListMoviesTop({ category: "anime", sort: "latest" })
             .then((response) => {
                 if (response?.data) {
                     setLatestAnime(response.data);
@@ -48,7 +48,7 @@ function Content() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentProducts = movies.slice(startIndex, startIndex + itemsPerPage);
 
-    const sidebarProducts = movies.slice(0, 5); //gioi hạn truyen vào sp siderbar
+    const sidebarProducts = movies.slice(0, 10); //gioi hạn truyen vào sp siderbar
 
     return (
         <div className="all-content container mt-4">

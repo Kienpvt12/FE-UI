@@ -5,7 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Siderbar from "../../../pages/home/components/js/siderbar";
 import Video from "./video";
 import Comment from "./comment";
-import { GetListMovies, GetListVideo } from "../../../apis/moviesApi";
+import { GetListMoviesTop, GetListMoviesID } from "../../../apis/moviesApi";
 import { useParams } from "react-router-dom";
 
 function Content() {
@@ -17,7 +17,7 @@ function Content() {
 
     // Fetch danh sách phim
     useEffect(() => {
-        GetListMovies()
+        GetListMoviesTop({})
             .then((response) => {
                 if (response?.data) {
                     setMovies(response.data);
@@ -29,7 +29,7 @@ function Content() {
     // Fetch danh sách video của phim dựa trên movieId
     useEffect(() => {
         if (!movieId) return;
-        GetListVideo({ movieId })
+        GetListMoviesID({ movieId })
             .then((response) => {
                 if (response?.data) {
                     setVideoList(response.data);

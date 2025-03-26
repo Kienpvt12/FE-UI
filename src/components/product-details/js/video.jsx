@@ -18,11 +18,11 @@ function Videos({ activeEpisode, onChangeEpisode, nextEpisode, scrollToComments,
 
     if (!movie) return <p>Đang tải...</p>;
 
-    // Xử lý danh sách tập (mặc định hiển thị 20 tập)
+    //(mặc định hiển thị 20 tập)
     const episodes = Array.from({ length: movie.episodes || 12 }, (_, i) => i + 1);
     const visibleEpisodes = showAll ? episodes : episodes.slice(0, 20);
 
-    // Xử lý mô tả phim (giới hạn 200 ký tự)
+    //(giới hạn 200 ký tự)
     const shortDescription = movie.synopsis?.length > 200 ? movie.synopsis.slice(0, 200) + "..." : movie.synopsis;
 
     return (
