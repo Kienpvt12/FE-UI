@@ -7,6 +7,7 @@ import Video from "./video";
 import Comment from "./comment";
 import { GetListMoviesTop, GetListMoviesID } from "../../../apis/moviesApi";
 import { useParams } from "react-router-dom";
+import { GetListVideo } from '../../../apis/moviesApi';
 
 function Content() {
     const { movieId } = useParams(); // Lấy ID phim từ URL
@@ -15,16 +16,16 @@ function Content() {
     const [movies, setMovies] = useState([]);
     const [videoList, setVideoList] = useState([]);
 
-    // Fetch danh sách phim
-    useEffect(() => {
-        GetListMoviesTop({})
-            .then((response) => {
-                if (response?.data) {
-                    setMovies(response.data);
-                }
-            })
-            .catch((err) => console.error("Lỗi khi lấy danh sách phim:", err));
-    }, []);
+  // Fetch danh sách phim
+  // useEffect(() => {
+  //   GetListMovies({})
+  //     .then((response) => {
+  //       if (response?.data) {
+  //         setMovies(response.data);
+  //       }
+  //     })
+  //     .catch((err) => console.error('Lỗi khi lấy danh sách phim:', err));
+  // }, []);
 
     // Fetch danh sách video của phim dựa trên movieId
     useEffect(() => {

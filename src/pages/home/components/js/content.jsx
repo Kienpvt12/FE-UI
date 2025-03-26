@@ -6,7 +6,7 @@ import Slider from "./slider";
 import Siderbar from "./siderbar";
 import Product from "./product";
 import { GetListMovies, GetListMoviesTop } from "../../../../apis/moviesApi.js";
-import { useGetMoviesMutation } from '../../../../apis/movieApi.js';
+import { useGetMoviesMutation } from '../../../../apis/movie-api.js';
 
 function Content() {
     const [movies, setMovies] = useState([]);
@@ -34,9 +34,9 @@ function Content() {
     };
     getMovies(filter)
       .then((response) => {
-        console.log('🚀 ~ fetchMovies ~ response:', response);
-        if (response.movies) {
-          setMovies(response.movies);
+        console.log('🚀 ~ fetchMovies ~ response:', response.data);
+        if (response.data.movies) {
+          setMovies(response.data.movies);
         }
       })
       .catch((err) => {
@@ -56,26 +56,22 @@ function Content() {
 
     const sidebarProducts = movies.slice(0, 10);
 
-    return (
-        <div className="all-content container mt-4">
-            <div className="row">
-                <div className="row-left col-lg-8">
-                    <Slider />
-                    {/* Truyền dữ liệu xuống Product */}
-                    <Product 
-                        movies={currentProducts} 
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={handlePageChange}  
-                    />
-                </div>
-                <div className="row-right all-sidebar col-lg-3">
-                    <Siderbar 
-                        movies={sidebarProducts}  />
-                </div>
-            </div>
+  return (
+    <div className="all-content container mt-4">
+      <div className="row">
+        <div className="row-left col-lg-8">
+          <Slider />
+          <Product
+            movies={currentProducts}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
-    );
+        <div className="row-right all-sidebar col-lg-3">{/* <Siderbar movies={sidebarProducts} /> */}</div>
+      </div>
+    </div>
+  );
 }
 
 export default Content;

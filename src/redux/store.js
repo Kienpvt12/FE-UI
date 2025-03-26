@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './reducers/user';
 import statusReducer from './reducers/status';
-import { userApi } from '../apis/userApi';
-import { genreApi } from '../apis/genreApi';
-import { movieApi } from '../apis/movieApi';
+import { userApi } from '../apis/user-api';
+import { genreApi } from '../apis/genre-api';
+import { movieApi } from '../apis/movie-api';
 
 export default configureStore({
   reducer: {

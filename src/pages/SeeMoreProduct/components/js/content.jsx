@@ -27,6 +27,28 @@ function Content() {
             });
     }, []);
 
+  // useEffect(() => {
+  //   GetListMovies({})
+  //     .then((response) => {
+  //       console.log('🚀 ~ fetchMovies ~ response:', response);
+  //       if (response?.data) {
+  //         setMovies(response.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.error('🚀 ~ GetListMovies ~ err:', err);
+  //     });
+  // }, []);
+
+  // useEffect(() => {
+  //   GetListMovies({}) // Nếu API hỗ trợ filter
+  //     .then((response) => {
+  //       if (response?.data) {
+  //         setLatestAnime(response.data);
+  //       }
+  //     })
+  //     .catch((err) => console.error('🚀 ~ fetchLatestAnime ~ err:', err));
+  // }, []);
 
     useEffect(() => {
         GetListMoviesTop({ category: "anime", sort: "latest" })

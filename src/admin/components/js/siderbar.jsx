@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import '../../components/css/siderbar.css';
 
 function Sidebar() {
   const navigate = useNavigate();

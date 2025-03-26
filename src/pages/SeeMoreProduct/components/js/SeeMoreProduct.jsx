@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Pagination from "./pagination";
 
-
 function SeeMoreProduct({ movies, currentPage, totalPages, onPageChange }) {
     const navigate = useNavigate();
     
