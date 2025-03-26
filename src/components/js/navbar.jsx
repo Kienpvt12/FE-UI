@@ -6,6 +6,7 @@ import Register from './register';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetCurrentUserMutation, useLogoutMutation, useRefreshTokenMutation } from '../../apis/userApi';
 import { addUser, removeUser } from '../../redux/reducers/user';
+import { useGetGenresQuery } from '../../apis/genreApi';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function Navbar() {
   const [refreshToken] = useRefreshTokenMutation();
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
+  const { genres } = useGetGenresQuery().data || [];
 
   // Chuyển từ login sang Register
   const switchToRegister = () => {
@@ -191,41 +193,13 @@ function Navbar() {
                 THỂ LOẠI
               </a>
               <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Drama
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Game
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Fantasy
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Echi
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Harem
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Comedy
-                  </a>
-                </li>
+                {genres?.map((genre) => (
+                  <li key={genre.id}>
+                    <a className="dropdown-item" href="#">
+                      {genre.name}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </li>
             <li className="nav-item">
