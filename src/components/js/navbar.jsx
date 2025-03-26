@@ -264,7 +264,7 @@ function Navbar() {
                   <a className="dropdown-item">Hồ sơ</a>
                 </li>
                 <li>
-                  <button className="dropdown-item" onClick={() => handleLogout}>
+                  <button className="dropdown-item" onClick={() => handleLogout()}>
                     Đăng xuất
                   </button>
                 </li>

@@ -8,8 +8,15 @@ function MovieCard({ movie }) {
       className="product-card col-6 col-sm-4 col-md-3 col-lg-2"
       onClick={() => navigate(`/movies/${movie.slug}/episodes`)}
     >
-      <div className="anime-card position-relative">
-        <img src={movie.poster} className="img-fluid rounded w-100" alt={movie.title} />
+      <div className="anime-card position-relative" style={{ height: '100%' }}>
+        <div style={{ position: 'relative', paddingTop: '150%', overflow: 'hidden' }}>
+          <img
+            src={movie.poster}
+            className="img-fluid rounded w-100"
+            alt={movie.title}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
         <div className="position-absolute top-0 start-0 m-2 p-1 badge-rating">
           <i className="fa-solid fa-star"></i> <strong>{movie.rating}</strong>
         </div>
