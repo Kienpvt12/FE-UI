@@ -1,14 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import videoFile from '../../../../components/image/anime.mp4';
+import '../css/siderbar.css';
+import videoFile from '../../../components/image/anime.mp4';
 
 function Siderbar({ movies }) {
   const navigate = useNavigate();
 
   return (
-    <div className="sidebar p-3 w-100">
+    <div className="sidebar p-3">
       <div className="sidebar-box">
-        <h5 className="title text-truncate">Hôm nay xem gì?</h5>
+        <h5 className="title">Hôm nay xem gì?</h5>
         <div className="underline"></div>
         <p>Nếu bạn buồn phiền không biết xem gì hôm nay. Hãy để chúng tôi chọn cho bạn</p>
         <a href="#" className="btn btn-danger">
@@ -28,15 +29,12 @@ function Siderbar({ movies }) {
       {/* Phim mới cập nhật */}
       <div className="sidebar p-3 mt-3">
         <div className="anime-update sidebar-box">
-          <h5 className="title text-truncate">ANIME MỚI CẬP NHẬT</h5>
+          <h5 className="title">ANIME MỚI CẬP NHẬT</h5>
           <div className="underline"></div>
           <ul className="anime-list">
             {movies.slice(0, 10).map((movie) => (
-              <li key={movie._id} onClick={() => navigate(`/videos/${movie.slug}`)}>
-                <a href="#" className="text-truncate d-inline-block w-75">
-                  {movie.title}
-                </a>
-                <span className="episode">Tập {movie.episode_num}</span>
+              <li key={movie.mal_id} onClick={() => navigate(`/videos/${movie.mal_id}`)}>
+                <a href="#">{movie.title}</a> <span className="episode">Tập {movie.episodes}</span>
               </li>
             ))}
           </ul>
@@ -53,19 +51,19 @@ function Siderbar({ movies }) {
           <div className="tab">TV/Series</div>
           <div className="tab">Movie/OVA</div>
         </div>
-        {movies.map((movie, index) => (
-          <div onClick={() => navigate(`/videos/${movie._id}`)} key={movie._id} className="hot-anime-list mt-3">
+        {movies.map((product) => (
+          <div onClick={() => navigate(`/videos/${product.mal_id}`)} key={product._id} className="hot-anime-list mt-3">
             <div className="hot-anime-item d-flex">
-              <div className="rank px-1">#{index + 1}</div>
-              <img src={movie.poster} alt={movie.title} className="img-fluid" />
+              <div className="rank">#{product.hotRank}</div>
+              <img src={product.images.jpg.image_url} alt={product.title} />
               <div className="hot-anime-info">
-                <p className="fw-bold text-truncate">{movie.title}</p>
+                <h6>{product.title}</h6>
                 <p>
                   <span className="rating">
-                    <i className="fa-solid fa-star"></i> {movie.rating}
+                    <i className="fa-solid fa-star"></i> {product.score}
                   </span>
-                  <span className="date">📅 {new Date(movie.releaseDate).toLocaleDateString()}</span>
-                  <span className="year">🗓 {movie.year}</span>
+                  <span className="date">📅 {product.releaseDate}</span>
+                  <span className="year">🗓 {product.year}</span>
                   <span className="quality">HD</span>
                 </p>
               </div>

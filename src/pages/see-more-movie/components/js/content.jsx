@@ -1,37 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import Slider from './slider';
-import Siderbar from './siderbar';
-import Movie from './movie';
-// import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
+import React, { useState, useEffect } from 'react';
+import Slider from './slider.jsx';
+import Siderbar from './siderbar.jsx';
+import SeeMoreProduct from './see-more-movie.jsx';
 import { useGetMoviesMutation } from '../../../../apis/movie-api.js';
 
 function Content() {
   const [movies, setMovies] = useState([]);
+  const [latestAnime, setLatestAnime] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
   const [getMovies, { isLoading, error }] = useGetMoviesMutation();
-
-  // useEffect(() => {
-  //     GetListMoviesTop({})
-  //         .then((response) => {
-  //             console.log("🚀 ~ fetchMovies ~ response:", response);
-  //             if (response?.data) {
-  //                 setMovies(response.data); // Lưu dữ liệu phim vào state
-  //             }
-  //         })
-  //         .catch((err) => {
-  //             console.error("🚀 ~ GetListMovies ~ err:", err);
-  //         });
-  // }, []);
 
   useEffect(() => {
     const filter = {
-      page: 1,
-      limit: 10,
+      page: currentPage,
+      limit: itemsPerPage,
     };
     getMovies(filter)
       .then((response) => {
-        console.log('🚀 ~ fetchMovies ~ response:', response.data);
+        if (response.data.movies) {
+          setLatestAnime(response.data.movies);
+        }
+      })
+      .catch((err) => {
+        console.error('🚀 ~ GetListMovies ~ err:', err);
+      });
+    getMovies(filter)
+      .then((response) => {
         if (response.data.movies) {
           setMovies(response.data.movies);
         }
@@ -39,7 +34,7 @@ function Content() {
       .catch((err) => {
         console.error('🚀 ~ GetListMovies ~ err:', err);
       });
-  }, [getMovies]);
+  }, [getMovies, currentPage]);
 
   // Hàm thay đổi trang
   const handlePageChange = (page) => {
@@ -51,14 +46,14 @@ function Content() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentProducts = movies.slice(startIndex, startIndex + itemsPerPage);
 
-  const sidebarProducts = movies.slice(0, 10);
+  const sidebarProducts = movies.slice(0, 10); //gioi hạn truyen vào sp siderbar
 
   return (
     <div className="all-content container mt-4">
       <div className="row">
         <div className="row-left col-lg-8">
           <Slider />
-          <Movie
+          <SeeMoreProduct
             movies={currentProducts}
             currentPage={currentPage}
             totalPages={totalPages}
@@ -66,7 +61,7 @@ function Content() {
           />
         </div>
         <div className="row-right all-sidebar col-lg-3">
-          <Siderbar movies={sidebarProducts} />
+          <Siderbar movies={sidebarProducts} latestAnime={latestAnime} />
         </div>
       </div>
     </div>

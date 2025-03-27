@@ -1,12 +1,8 @@
-import React from "react";
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import "../css/product.css";
-import "../css/pagination.css"
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import MovieCard from './movie-card';
+import MovieCard from '../../../../components/js/movie-card';
 
-function Product({ movies }) {
+function Movie({ movies }) {
   const navigate = useNavigate();
   return (
     <>
@@ -68,4 +64,4 @@ function Product({ movies }) {
   );
 }
 
-export default Product;
+export default Movie;

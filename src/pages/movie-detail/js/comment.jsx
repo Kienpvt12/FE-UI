@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Login from '../../js/login';
-import Register from '../../js/register';
+import Login from '../../../components/js/login';
+import Register from '../../../components/js/register';
 import '../css/comment.css';
 
 function Comment() {
