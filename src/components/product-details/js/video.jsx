@@ -42,8 +42,7 @@ function Videos({ activeEpisode, onChangeEpisode, nextEpisode, scrollToComments,
           <div className="ratio ratio-16x9">
             <ReactPlayer
               url={movie.episodes?.length ? movie.episodes[activeEpisode - 1].url.split('url=')[1] : ''}
-              width={800}
-              height={450}
+              className="w-100 h-auto"
               controls
             />
           </div>
