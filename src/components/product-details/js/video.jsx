@@ -68,16 +68,15 @@ function Videos({ activeEpisode, onChangeEpisode, nextEpisode, scrollToComments,
           <div className="episode container mt-4">
             <h5>Danh sách tập</h5>
             <div className="episode-list d-flex flex-wrap gap-2">
-              {!isLoading &&
-                visibleEpisodes.map((v) => (
-                  <button
-                    key={v.episode}
-                    className={`btn ${activeEpisode === v.episode ? 'active btn-primary' : ''}`}
-                    onClick={() => onChangeEpisode(v.episode)}
-                  >
-                    {v.episode}
-                  </button>
-                ))}
+              {visibleEpisodes?.map((v) => (
+                <button
+                  key={v.episode}
+                  className={`btn ${activeEpisode === v.episode ? 'active btn-primary' : ''}`}
+                  onClick={() => onChangeEpisode(v.episode)}
+                >
+                  {v.episode}
+                </button>
+              ))}
               {!showAll && movie.episodes?.length > 20 && (
                 <span onClick={() => setShowAll(true)} className="more-episodes">
                   Xem thêm tập...
