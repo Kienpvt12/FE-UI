@@ -41,9 +41,8 @@ function Videos({ activeEpisode, onChangeEpisode, nextEpisode, scrollToComments,
           {/* Phần Video */}
           <div className="ratio ratio-16x9">
             <ReactPlayer
-              url={movie.episodes?.length ? movie.episodes[activeEpisode - 1].url.split('url=')[1] : ''}
-              width={800}
-              height={450}
+              url={movie.episodes?.length ? movie.episodes[activeEpisode - 1].url : ''}
+              className="w-100 h-auto"
               controls
             />
           </div>
@@ -71,7 +70,7 @@ function Videos({ activeEpisode, onChangeEpisode, nextEpisode, scrollToComments,
               {visibleEpisodes?.map((v) => (
                 <button
                   key={v.episode}
-                  className={`btn ${activeEpisode === v.episode ? 'active btn-primary' : ''}`}
+                  className={`btn ${activeEpisode == v.episode ? 'active btn-primary' : ''}`}
                   onClick={() => onChangeEpisode(v.episode)}
                 >
                   {v.episode}

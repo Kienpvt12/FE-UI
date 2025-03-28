@@ -13,10 +13,12 @@ import UpdateEpisodeList from './admin/admin-manager/Film/Update/UpdateEpisodeLi
 import UpdateReview from './admin/admin-manager/Film/Update/UpdateReview';
 import CreateFilm from './admin/admin-manager/Film/Create/ShowCreateFilm';
 import CreateEpisodeFilm from './admin/admin-manager/Film/Create/ShowCreateEpisodeList';
+import ScrollToTop from './components/js/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/seemore" element={<SeeMore />} />
