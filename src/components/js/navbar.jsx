@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Login from './login';
 import Register from './register';
+import { useDispatch, useSelector } from 'react-redux';
+import { useGetCurrentUserMutation, useLogoutMutation, useRefreshTokenMutation } from '../../apis/userApi';
+import { updateUser, removeUser } from '../../redux/reducers/user';
+import { useGetGenresQuery } from '../../apis/genreApi';
+import { updateStatus } from '../../redux/reducers/status';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -13,6 +18,13 @@ function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const user = useSelector((state) => state.user);
+  const isFirstLoad = useSelector((state) => state.status.isFirstLoad);
+  const [getCurrentUser] = useGetCurrentUserMutation();
+  const [refreshToken] = useRefreshTokenMutation();
+  const [logout] = useLogoutMutation();
+  const dispatch = useDispatch();
+  const { genres } = useGetGenresQuery().data || [];
 
   // Chuyển từ login sang Register
   const switchToRegister = () => {
@@ -61,6 +73,39 @@ function Navbar() {
       if (registerBtn) registerBtn.removeEventListener('click', () => setShowRegister(true));
     };
   }, []);
+
+  const handleAuth = useCallback(async () => {
+    try {
+      const response = await getCurrentUser().unwrap();
+      dispatch(updateUser(response.user));
+    } catch (err) {
+      if (err.status === 401) {
+        try {
+          const response = await refreshToken().unwrap();
+          dispatch(updateUser(response.user));
+        } catch (err) {
+          console.log(err.data);
+        }
+      }
+      console.log(err.data);
+    }
+  }, [dispatch, getCurrentUser, refreshToken]);
+
+  useEffect(() => {
+    if (!user.id && isFirstLoad) {
+      dispatch(updateStatus({ isFirstLoad: false }));
+      handleAuth();
+    }
+  }, [user, isFirstLoad, handleAuth, dispatch]);
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      dispatch(removeUser());
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
@@ -154,41 +199,13 @@ function Navbar() {
                 THỂ LOẠI
               </a>
               <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Drama
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Game
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Fantasy
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Echi
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Harem
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Comedy
-                  </a>
-                </li>
+                {genres?.map((genre) => (
+                  <li key={genre.id}>
+                    <a className="dropdown-item" href="#">
+                      {genre.name}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </li>
             <li className="nav-item">
@@ -219,12 +236,35 @@ function Navbar() {
             />
           </form>
 
-          <button className="btn btn-danger me-2" onClick={() => setShowLogin(true)}>
-            Đăng nhập
-          </button>
-          <button className="btn btn-danger" onClick={() => setShowRegister(true)}>
-            Đăng ký
-          </button>
+          {!user.id ? (
+            <>
+              <button className="btn btn-danger me-2" onClick={() => setShowLogin(true)}>
+                Đăng nhập
+              </button>
+              <button className="btn btn-danger" onClick={() => setShowRegister(true)}>
+                Đăng ký
+              </button>
+            </>
+          ) : (
+            <div className="dropdown">
+              <img
+                src={user.avatar || './default-avatar.png'}
+                alt="Avatar"
+                className="rounded-circle me-2"
+                style={{ width: '1em', height: '1em' }}
+              />
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li style={{ cursor: 'pointer' }}>
+                  <a className="dropdown-item">{user.username || user.email}</a>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => handleLogout()}>
+                    Đăng xuất
+                  </button>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
 
         {showLogin && <Login closeModal={() => setShowLogin(false)} switchToRegister={switchToRegister} />}
