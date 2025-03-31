@@ -5,10 +5,6 @@ export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_API,
-    credentials: true,
-    headers: {
-      'Content-Type': 'application/json',
-    },
   }),
   endpoints: (builder) => ({
     getUsers: builder.query({
@@ -19,6 +15,7 @@ export const userApi = createApi({
       query: () => ({
         url: '/users/current',
         method: 'GET',
+        credentials: true,
       }),
     }),
 
@@ -26,6 +23,7 @@ export const userApi = createApi({
       query: () => ({
         url: '/auth/refresh',
         method: 'GET',
+        credentials: true,
       }),
     }),
 
@@ -34,6 +32,7 @@ export const userApi = createApi({
         url: '/users/login',
         method: 'POST',
         data,
+        credentials: true,
       }),
     }),
 
@@ -41,6 +40,7 @@ export const userApi = createApi({
       query: () => ({
         url: '/users/logout',
         method: 'POST',
+        credentials: true,
       }),
     }),
 
@@ -57,6 +57,7 @@ export const userApi = createApi({
         url: '/users',
         method: 'POST',
         data,
+        credentials: true,
       }),
     }),
 
@@ -65,6 +66,7 @@ export const userApi = createApi({
         url: `/users/${id}`,
         method: 'PATCH',
         data,
+        credentials: true,
       }),
     }),
 
@@ -72,6 +74,7 @@ export const userApi = createApi({
       query: (id) => ({
         url: `/users/${id}`,
         method: 'DELETE',
+        credentials: true,
       }),
     }),
   }),

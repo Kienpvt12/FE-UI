@@ -26,7 +26,7 @@ function Navbar() {
   const [refreshToken] = useRefreshTokenMutation();
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
-  const { genres } = useGetGenresQuery().data || [];
+  const { data: genres } = useGetGenresQuery();
 
   // Chuyển từ login sang Register
   const switchToRegister = () => {
