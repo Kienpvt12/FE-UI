@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { useGetMoviesMutation } from '../../../apis/movieApi';
 
 function Content() {
-  const { movieId } = useParams(); // Lấy ID phim từ URL
+  const { slug } = useParams();
   const [activeEpisode, setActiveEpisode] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [movies, setMovies] = useState([]);
@@ -115,7 +115,7 @@ function Content() {
             toggleFullscreen={toggleFullscreen}
             isFullscreen={isFullscreen}
           />
-          <Comment />
+          <Comment movieSlug={slug} />
         </div>
         <div className="row-right all-sidebar col-lg-3">
           <Siderbar movies={movies} />
