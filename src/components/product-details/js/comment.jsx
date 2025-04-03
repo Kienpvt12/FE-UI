@@ -3,42 +3,42 @@ import Login from '../../js/login';
 import Register from '../../js/register';
 import '../css/comment.css';
 
-function Comment() {
+function Comment({ movieSlug }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      img: './f9486eb3ce64ea88043728ffe70f0ba1.jpg',
-      user: 'Lâm Huy',
-      level: 'Lv.48',
-      levelClass: 'text-warning',
-      text: 'Người dân trong này hơn nhiên thật 🤣🤣😂',
-      time: '6 giờ trước',
-      replies: [],
-    },
-    {
-      id: 2,
-      img: './HD-wallpaper-red-eye-anime-girl.jpg',
-      user: 'Joker tàn phá',
-      level: 'Lv.39',
-      levelClass: 'text-primary',
-      text: 'Lâm Huy tại vì mỗi người dân đều mạnh hơn slur...',
-      time: '25 phút trước',
-      replies: [],
-    },
-    {
-      id: 3,
-      img: './HD-wallpaper-red-eye-anime-girl.jpg',
-      user: 'Panda',
-      level: 'Lv.48 VIP',
-      levelClass: 'text-warning',
-      text: 'slur boss lv1 😅',
-      time: '10 giờ trước',
-      replies: [],
-    },
-  ]);
-
+  // const [comments, setComments] = useState([
+  //   {
+  //     id: 1,
+  //     img: './f9486eb3ce64ea88043728ffe70f0ba1.jpg',
+  //     user: 'Lâm Huy',
+  //     level: 'Lv.48',
+  //     levelClass: 'text-warning',
+  //     text: 'Người dân trong này hơn nhiên thật 🤣🤣😂',
+  //     time: '6 giờ trước',
+  //     replies: [],
+  //   },
+  //   {
+  //     id: 2,
+  //     img: './HD-wallpaper-red-eye-anime-girl.jpg',
+  //     user: 'Joker tàn phá',
+  //     level: 'Lv.39',
+  //     levelClass: 'text-primary',
+  //     text: 'Lâm Huy tại vì mỗi người dân đều mạnh hơn slur...',
+  //     time: '25 phút trước',
+  //     replies: [],
+  //   },
+  //   {
+  //     id: 3,
+  //     img: './HD-wallpaper-red-eye-anime-girl.jpg',
+  //     user: 'Panda',
+  //     level: 'Lv.48 VIP',
+  //     levelClass: 'text-warning',
+  //     text: 'slur boss lv1 😅',
+  //     time: '10 giờ trước',
+  //     replies: [],
+  //   },
+  // ]);
+  const [comments, setComments] = useState([]);
   const [replyText, setReplyText] = useState({});
   const [showReplyInput, setShowReplyInput] = useState({});
 
