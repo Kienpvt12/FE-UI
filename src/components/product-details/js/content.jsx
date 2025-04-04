@@ -7,7 +7,7 @@ import Video from './video';
 import Comment from './comment';
 // import { GetListMoviesTop, GetListMoviesID } from "../../../apis/moviesApi";
 import { useParams } from 'react-router-dom';
-import { useGetMoviesMutation } from '../../../apis/movieApi';
+import { useGetMoviesMutation } from '../../../apis/index';
 
 function Content() {
   const { slug } = useParams();
