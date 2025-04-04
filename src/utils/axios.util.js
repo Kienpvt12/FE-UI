@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const axiosBaseQuery =
   ({ baseUrl } = { baseUrl: '' }) =>
-  async ({ url, method, data, params, headers, credentials }) => {
+  async ({ url, method, data, params, headers, credentials = false }) => {
     try {
       const result = await axios({
         url: baseUrl + url,

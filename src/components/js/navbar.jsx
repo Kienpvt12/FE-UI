@@ -10,6 +10,8 @@ import { useGetCurrentUserMutation, useLogoutMutation, useRefreshTokenMutation }
 import { updateUser, removeUser } from '../../redux/reducers/user';
 import { useGetGenresQuery } from '../../apis/genreApi';
 import { updateStatus } from '../../redux/reducers/status';
+import defaultAvatar from '../../assets/default-avatar.png';
+import logo from '../../assets/logo.png';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ function Navbar() {
   const [refreshToken] = useRefreshTokenMutation();
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
-  const { genres } = useGetGenresQuery().data || [];
+  const { data: genres } = useGetGenresQuery();
 
   // Chuyển từ login sang Register
   const switchToRegister = () => {
@@ -40,12 +42,13 @@ function Navbar() {
 
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (searchQuery.trim() === '') {
+      e.preventDefault();
+      if (searchQuery.trim()) {
+        // Chuyển đến trang tìm kiếm với query
+        navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+      } else {
         alert('Vui lòng nhập từ khóa để tìm kiếm!');
-        return;
       }
-      console.log('Tìm kiếm:', searchQuery);
-      window.location.href = `/search?query=${encodeURIComponent(searchQuery)}`;
     }
   };
 
@@ -110,9 +113,9 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="" onClick={() => navigate('/')}>
-          <img src="./logo.png" alt="Logo" />
-        </a>
+        <logo className="navbar-brand cursor-pointer" onClick={() => navigate('/')}>
+          <img src={logo} alt="Logo" />
+        </logo>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon"></span>
@@ -224,7 +227,6 @@ function Navbar() {
               </a>
             </li>
           </ul>
-
           <form className="d-none d-lg-block me-2">
             <input
               type="text"
@@ -235,7 +237,6 @@ function Navbar() {
               onKeyDown={handleSearchKeyDown}
             />
           </form>
-
           {!user.id ? (
             <>
               <button className="btn btn-danger me-2" onClick={() => setShowLogin(true)}>
@@ -248,12 +249,16 @@ function Navbar() {
           ) : (
             <div className="dropdown">
               <img
-                src={user.avatar || './default-avatar.png'}
+                src={user.avatar || defaultAvatar}
                 alt="Avatar"
                 className="rounded-circle me-2"
-                style={{ width: '1em', height: '1em' }}
+                style={{ width: '2em', height: '2em' }}
               />
-              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <ul
+                style={{ right: 0, left: 'auto' }}
+                className="dropdown-menu dropdown-menu-end"
+                aria-labelledby="userDropdown"
+              >
                 <li style={{ cursor: 'pointer' }}>
                   <a className="dropdown-item">{user.username || user.email}</a>
                 </li>

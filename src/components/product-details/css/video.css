@@ -70,6 +70,7 @@ iframe {
   border-radius: 10px;
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.2); /* Viền nhẹ */
+  padding: 7px;
 }
 
 /* Lớp overlay */
@@ -107,4 +108,15 @@ iframe {
   align-items: center;
   gap: 15px;
   margin-top: 10px;
+}
+
+.ad-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  z-index: 10;
+}
+
+.add-container {
+  width: 500px;
+  text-align: center;
 }

@@ -27,22 +27,16 @@ function Comment() {
       time: '25 phút trước',
       replies: [],
     },
-    {
-      id: 3,
-      img: './HD-wallpaper-red-eye-anime-girl.jpg',
-      user: 'Panda',
-      level: 'Lv.48 VIP',
-      levelClass: 'text-warning',
-      text: 'slur boss lv1 😅',
-      time: '10 giờ trước',
-      replies: [],
-    },
   ]);
 
   const [replyText, setReplyText] = useState({});
   const [showReplyInput, setShowReplyInput] = useState({});
+  const [visibleCount, setVisibleCount] = useState(2);
+  const [newComment, setNewComment] = useState(''); // Ô nhập bình luận mới
 
-  // Hàm mở ô nhập trả lời
+  const COMMENTS_INCREMENT = 2;
+
+  // Mở ô nhập trả lời
   const toggleReplyInput = (commentId) => {
     setShowReplyInput((prev) => ({
       ...prev,
@@ -50,7 +44,7 @@ function Comment() {
     }));
   };
 
-  // Hàm thêm trả lời vào bình luận
+  // Thêm trả lời vào bình luận
   const handleReplySubmit = (commentId) => {
     if (!replyText[commentId]) return;
 
@@ -72,9 +66,32 @@ function Comment() {
       )
     );
 
-    // Reset ô nhập
     setReplyText((prev) => ({ ...prev, [commentId]: '' }));
     setShowReplyInput((prev) => ({ ...prev, [commentId]: false }));
+  };
+
+  // Tải thêm bình luận
+  const loadMoreComments = () => {
+    setVisibleCount((prev) => prev + COMMENTS_INCREMENT);
+  };
+
+  // Gửi bình luận mới
+  const handleNewComment = () => {
+    if (!newComment.trim()) return;
+
+    const newCommentData = {
+      id: comments.length + 1,
+      img: './user-avatar.jpg', // Ảnh mặc định cho người dùng
+      user: 'Bạn',
+      level: 'Lv.1',
+      levelClass: 'text-secondary',
+      text: newComment,
+      time: 'Vừa xong',
+      replies: [],
+    };
+
+    setComments([newCommentData, ...comments]); // Thêm bình luận mới vào đầu danh sách
+    setNewComment(''); // Xóa nội dung ô nhập
   };
 
   return (
@@ -89,10 +106,23 @@ function Comment() {
           </button>
         </div>
 
+        {/* Ô nhập bình luận */}
+        <div className="new-comment-box mt-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Viết bình luận..."
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          <button className="btn btn-primary mt-2" onClick={handleNewComment}>
+            Gửi
+          </button>
+        </div>
+
         <div className="comment-list">
-          {comments.map((comment) => (
+          {comments.slice(0, visibleCount).map((comment) => (
             <div key={comment.id} className="comment-container">
-              {/* Bình luận chính */}
               <div className="comment d-flex">
                 <img src={comment.img} alt="Avatar" />
                 <div className="comment-body">
@@ -142,7 +172,12 @@ function Comment() {
           ))}
         </div>
 
-        <button className="btn btn-load mt-3">Tải thêm bình luận</button>
+        {/* Nút tải thêm bình luận */}
+        {visibleCount < comments.length && (
+          <button className="btn btn-load mt-3" onClick={loadMoreComments}>
+            Tải thêm bình luận
+          </button>
+        )}
       </div>
 
       {/* Modal Login */}

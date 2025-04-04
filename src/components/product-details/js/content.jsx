@@ -43,7 +43,7 @@ function Content() {
   useEffect(() => {
     const filter = {
       page: 1,
-      limit: 5,
+      limit: 10,
       sortField: 'view',
       sortOrder: 'desc',
     };

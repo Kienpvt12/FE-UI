@@ -96,6 +96,68 @@
   margin-right: 10px;
 }
 
+/* danh sách tìm kiếm */
+.suggestion-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #1e1e1e; /* Màu nền tối */
+  border: 1px solid #444;
+  border-radius: 5px;
+  max-height: 250px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin-top: 5px;
+  z-index: 9999;
+}
+
+.suggestion-list li {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #333;
+  color: white;
+}
+
+.suggestion-list li img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.suggestion-list li:hover {
+  background: #333;
+}
+
+/* Tùy chỉnh thanh cuộn cho Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 10px;
+}
+
+/* Track của thanh cuộn */
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+  border-radius: 10px;
+}
+
+/* Thanh trượt */
+::-webkit-scrollbar-thumb {
+  background: #ff4d4d;
+  border-radius: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+/* Hover vào thanh trượt */
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6666;
+}
+
 /* Responsive: Màn hình nhỏ */
 @media (max-width: 991px) {
   .hamburger-menu {

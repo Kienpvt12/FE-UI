@@ -1,14 +1,18 @@
 import '../css/updatefilm.css';
 import { useNavigate } from 'react-router-dom';
 
-function EpisodeList() {
+function EpisodeList({ movie }) {
   const navigate = useNavigate();
+
+  if (!movie) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
       <div className="admin-main-content p-4">
         <div className="d-flex justify-content-between mb-3">
-          <button className="btn btn-secondary">
+          <button className="btn btn-secondary" onClick={() => navigate(-1)}>
             <i className="fas fa-arrow-left"></i> Quay lại
           </button>
           <button className="btn btn-primary">
@@ -19,17 +23,20 @@ function EpisodeList() {
         <div className="card p-4 shadow-sm mt-4">
           <ul className="nav nav-tabs mb-3">
             <li className="nav-item">
-              <span className="nav-link" onClick={() => navigate('/admin/update-Film')}>
+              <span className="nav-link" onClick={() => navigate(`/admin/update-Film/${movie.slug}`)}>
                 Thông tin phim
               </span>
             </li>
             <li className="nav-item">
-              <span className="nav-link active" onClick={() => navigate('/admin/update-Film/update-episode-list')}>
+              <span
+                className="nav-link active"
+                onClick={() => navigate(`/admin/update-Film/update-episode-list/${movie.slug}`)}
+              >
                 Danh sách video phim
               </span>
             </li>
             <li className="nav-item">
-              <span className="nav-link" onClick={() => navigate('/admin/update-Film/update-review')}>
+              <span className="nav-link" onClick={() => navigate(`/admin/update-Film/update-review/${movie.slug}`)}>
                 Review
               </span>
             </li>
@@ -50,106 +57,38 @@ function EpisodeList() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Tập 1</td>
-                  <td>/api/videos/5179fe2a-7799-410e-b2b1-d4784816ddd</td>
-                  <td>00:02:19</td>
-                  <td>
-                    <span className="badge bg-success">Công khai</span>
-                  </td>
-                  <td>
-                    <button className="btn btn-warning btn-sm">
-                      <i className="fas fa-edit"></i>
-                    </button>
-                    <button className="btn btn-primary btn-sm">
-                      <i className="fas fa-play"></i>
-                    </button>
-                    <button className="btn btn-danger btn-sm">
-                      <i className="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Tập 2</td>
-                  <td>/api/videos/25a1f728-9f4a-4e2e-80b9-8c0a18c9fd2</td>
-                  <td>00:01:38</td>
-                  <td>
-                    <span className="badge bg-success">Công khai</span>
-                  </td>
-                  <td>
-                    <button className="btn btn-warning btn-sm">
-                      <i className="fas fa-edit"></i>
-                    </button>
-                    <button className="btn btn-primary btn-sm">
-                      <i className="fas fa-play"></i>
-                    </button>
-                    <button className="btn btn-danger btn-sm">
-                      <i className="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Tập 3</td>
-                  <td>/api/videos/0041070-e85b-4bec-ba06-765f89fac6f2</td>
-                  <td>00:02:09</td>
-                  <td>
-                    <span className="badge bg-success">Công khai</span>
-                  </td>
-                  <td>
-                    <button className="btn btn-warning btn-sm">
-                      <i className="fas fa-edit"></i>
-                    </button>
-                    <button className="btn btn-primary btn-sm">
-                      <i className="fas fa-play"></i>
-                    </button>
-                    <button className="btn btn-danger btn-sm">
-                      <i className="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Tập 4</td>
-                  <td>/api/videos/f4cd6d6f-f7cf-41f1-9132-e809c51b7fae</td>
-                  <td>00:03:12</td>
-                  <td>
-                    <span className="badge bg-success">Công khai</span>
-                  </td>
-                  <td>
-                    <button className="btn btn-warning btn-sm">
-                      <i className="fas fa-edit"></i>
-                    </button>
-                    <button className="btn btn-primary btn-sm">
-                      <i className="fas fa-play"></i>
-                    </button>
-                    <button className="btn btn-danger btn-sm">
-                      <i className="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Tập 5</td>
-                  <td>/api/videos/05e18a46-be94-48ab-8a93-2abe15f3eba1</td>
-                  <td>00:02:27</td>
-                  <td>
-                    <span className="badge bg-success">Công khai</span>
-                  </td>
-                  <td>
-                    <button className="btn btn-warning btn-sm">
-                      <i className="fas fa-edit"></i>
-                    </button>
-                    <button className="btn btn-primary btn-sm">
-                      <i className="fas fa-play"></i>
-                    </button>
-                    <button className="btn btn-danger btn-sm">
-                      <i className="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
+                {movie.episodes_num && movie.episodes_num.length > 0 ? (
+                  movie.episodes_num.map((episode, index) => (
+                    <tr key={episode.id}>
+                      <td>{index + 1}</td>
+                      <td>{episode.title}</td>
+                      <td>{episode.url}</td>
+                      <td>{episode.duration}</td>
+                      <td>
+                        <span className={`badge ${episode.status === 'public' ? 'bg-success' : 'bg-warning'}`}>
+                          {episode.status === 'public' ? 'Công khai' : 'Riêng tư'}
+                        </span>
+                      </td>
+                      <td>
+                        <button className="btn btn-warning btn-sm">
+                          <i className="fas fa-edit"></i>
+                        </button>
+                        <button className="btn btn-primary btn-sm">
+                          <i className="fas fa-play"></i>
+                        </button>
+                        <button className="btn btn-danger btn-sm">
+                          <i className="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="text-center">
+                      Chưa có tập phim nào
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

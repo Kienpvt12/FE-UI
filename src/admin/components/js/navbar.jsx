@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <>
       <nav className="admin-navbar navbar-expand-lg bg-dark shadow-sm px-3">
-        <h4 className="text-white" onClick={() => navigate('/admin/listuser')}>
+        <h4 className="text-white" onClick={() => navigate('/admin/dasboard')}>
           <i className="fas fa-tv"></i> ADMIN
         </h4>
 

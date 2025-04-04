@@ -1,32 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../../../components/js/navbar.jsx';
 import Siderbar from '../../../../components/js/siderbar.jsx';
-import Listfilm from './listfilm.jsx'
-import { GetListMoviesTop } from "../../../../../apis/moviesApi.js";
-
-
+import Listfilm from './listfilm.jsx';
+import { useGetMoviesMutation } from '../../../../../apis/movieApi.js';
 
 function ShowListFilm() {
   const [movies, setMovies] = useState([]);
 
+  const [getMovies] = useGetMoviesMutation();
+
   useEffect(() => {
-    GetListMoviesTop({})
-        .then((response) => {
-            console.log("🚀 ~ fetchMovies ~ response:", response);
-            if (response?.data) {
-                setMovies(response.data); // Lưu dữ liệu phim vào state
-            }
-        })
-        .catch((err) => {
-            console.error("🚀 ~ GetListMovies ~ err:", err);
-        });
-}, []);
+    const filter = {
+      page: 1,
+      limit: 200,
+    };
+    getMovies(filter)
+      .then((response) => {
+        console.log('🚀 ~ fetchMovies ~ response:', response.data);
+        if (response.data.movies) {
+          setMovies(response.data.movies);
+        }
+      })
+      .catch((err) => {
+        console.error('🚀 ~ GetListMovies ~ err:', err);
+      });
+  }, [getMovies]);
 
   return (
     <>
-        <Navbar></Navbar>
-        <Siderbar></Siderbar>
-        <Listfilm movies={movies}/>
+      <Navbar></Navbar>
+      <Siderbar></Siderbar>
+      <Listfilm movies={movies} />
     </>
   );
 }

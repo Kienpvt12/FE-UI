@@ -13,10 +13,13 @@ import UpdateEpisodeList from './admin/admin-manager/Film/Update/UpdateEpisodeLi
 import UpdateReview from './admin/admin-manager/Film/Update/UpdateReview';
 import CreateFilm from './admin/admin-manager/Film/Create/ShowCreateFilm';
 import CreateEpisodeFilm from './admin/admin-manager/Film/Create/ShowCreateEpisodeList';
+import SearchPage from './pages/home/components/SearchPage';
+import ScrollToTop from './components/js/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/seemore" element={<SeeMore />} />
@@ -27,11 +30,12 @@ function App() {
         <Route path="/admin/update-user" element={<ShowUpdateUser />} />
         <Route path="/admin/dasboard" element={<Dashboard />} />
         <Route path="/admin/listfilm" element={<ListFilm />} />
-        <Route path="/admin/update-Film/:id" element={<UpdateFilm />} />
-        <Route path="/admin/update-Film/update-episode-list" element={<UpdateEpisodeList />} />
-        <Route path="/admin/update-Film/update-review" element={<UpdateReview />} />
+        <Route path="/admin/update-Film/:slug" element={<UpdateFilm />} />
+        <Route path="/admin/update-Film/update-episode-list/:slug" element={<UpdateEpisodeList />} />
+        <Route path="/admin/update-Film/update-review/:slug" element={<UpdateReview />} />
         <Route path="/admin/Create-Film/" element={<CreateFilm />} />
         <Route path="/admin/Create-Film/create-episode" element={<CreateEpisodeFilm />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
     </Router>
   );

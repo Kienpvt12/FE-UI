@@ -1,9 +1,12 @@
 import '../css/updatefilm.css';
 import { useNavigate } from 'react-router-dom';
 
-function Review() {
+function Review({ movie }) {
   const navigate = useNavigate();
 
+  if (!movie) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <div className="admin-main-content p-4">
@@ -19,17 +22,23 @@ function Review() {
         <div className="card p-4 shadow-sm mt-4">
           <ul className="nav nav-tabs mb-3">
             <li className="nav-item">
-              <span className="nav-link" onClick={() => navigate('/admin/update-Film')}>
+              <span className="nav-link" onClick={() => navigate(`/admin/update-Film/${movie.slug}`)}>
                 Thông tin phim
               </span>
             </li>
             <li className="nav-item">
-              <span className="nav-link" onClick={() => navigate('/admin/update-Film/update-episode-list')}>
+              <span
+                className="nav-link"
+                onClick={() => navigate(`/admin/update-Film/update-episode-list/${movie.slug}`)}
+              >
                 Danh sách video phim
               </span>
             </li>
             <li className="nav-item">
-              <span className="nav-link active" onClick={() => navigate('/admin/update-Film/update-review')}>
+              <span
+                className="nav-link active"
+                onClick={() => navigate(`/admin/update-Film/update-review/${movie.slug}`)}
+              >
                 Review
               </span>
             </li>

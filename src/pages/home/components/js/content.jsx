@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Slider from './slider';
 import Siderbar from './siderbar';
-import Product from './product';
+import Product from './product.jsx';
 // import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
 import { useGetMoviesMutation } from '../../../../apis/movieApi.js';
 
@@ -30,11 +30,11 @@ function Content() {
   useEffect(() => {
     const filter = {
       page: 1,
-      limit: 10,
+      limit: 25,
     };
     getMovies(filter)
       .then((response) => {
-        // console.log('🚀 ~ fetchMovies ~ response:', response.data);
+        console.log('🚀 ~ fetchMovies ~ response:', response.data);
         if (response.data.movies) {
           setMovies(response.data.movies);
         }

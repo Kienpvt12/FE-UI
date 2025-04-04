@@ -9,26 +9,37 @@ function Videos({ activeEpisode, onChangeEpisode, nextEpisode, scrollToComments,
   const { slug } = useParams();
   const [movie, setMovie] = useState({});
   const [showAll, setShowAll] = useState(false);
-  const [showFullDesc, setShowFullDesc] = useState(false); // Trạng thái hiển thị mô tả đầy đủ
+  const [showFullDesc, setShowFullDesc] = useState(false);
+  const [watchedTime, setWatchedTime] = useState(0);
+  const [lastAdTime, setLastAdTime] = useState(0);
+  const [showAd, setShowAd] = useState(false);
   const { data, isLoading } = useGetEpisodesQuery(slug);
-
-  // useEffect(() => {
-  //   fetch(`https://api.jikan.moe/v4/anime/${id}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setMovie(data.data))
-  //     .catch((err) => console.error('Lỗi khi lấy dữ liệu:', err));
-  // }, [id]);
 
   useEffect(() => {
     if (data) {
       setMovie(data);
     }
-  }, [data, movie]);
+  }, [data]);
 
-  //(mặc định hiển thị 20 tập)
+  const AD_INTERVAL = 1; // 5 phút = 300 giây
+
+  const handleProgress = ({ playedSeconds }) => {
+    setWatchedTime(playedSeconds);
+  };
+
+  const handlePause = () => {
+    // Kiểm tra nếu đã đủ 5 phút kể từ lần cuối quảng cáo
+    if (watchedTime >= lastAdTime + AD_INTERVAL) {
+      setShowAd(true);
+      setLastAdTime(watchedTime);
+    }
+  };
+
+  const handleResume = () => {
+    setShowAd(false);
+  };
+
   const visibleEpisodes = showAll ? movie.episodes : movie.episodes?.slice(0, 20);
-
-  //(giới hạn 200 ký tự)
   const shortDescription =
     movie.description?.length > 200 ? movie.description.slice(0, 200) + '...' : movie.description;
 
@@ -38,19 +49,34 @@ function Videos({ activeEpisode, onChangeEpisode, nextEpisode, scrollToComments,
         <p>Loading...</p>
       ) : (
         <div className="video-container">
-          {/* Phần Video */}
           <div className="ratio ratio-16x9">
+            {showAd && (
+              <div className="ad-overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75">
+                <div className="ad-content text-white text-center">
+                  <p>🎬 Quảng cáo đang hiển thị...</p>
+                  <button className="btn btn-primary" onClick={handleResume}>
+                    Tiếp tục xem
+                  </button>
+                </div>
+              </div>
+            )}
+
             <ReactPlayer
-              url={movie.episodes?.length ? movie.episodes[activeEpisode - 1].url.split('url=')[1] : ''}
-              width={800}
-              height={450}
+              url={movie.episodes?.length ? movie.episodes[activeEpisode - 1].url : ''}
+              className="w-100 h-auto"
               controls
+              playing={!showAd}
+              onProgress={handleProgress}
+              onPause={handlePause} // Khi tạm dừng, kiểm tra điều kiện quảng cáo
             />
           </div>
 
-          {/* Nút Điều Khiển */}
           <div className="mt-3 d-flex flex-wrap gap-2">
-            <button className="btn btn-light" onClick={nextEpisode}>
+            <button
+              className="btn btn-light"
+              onClick={nextEpisode}
+              disabled={!movie.episodes || activeEpisode >= movie.episodes.length}
+            >
               <i className="fa-solid fa-play"></i> Tập tiếp
             </button>
             <button className="btn btn-light" onClick={scrollToComments}>
@@ -64,14 +90,13 @@ function Videos({ activeEpisode, onChangeEpisode, nextEpisode, scrollToComments,
             </button>
           </div>
 
-          {/* Danh sách tập phim */}
           <div className="episode container mt-4">
             <h5>Danh sách tập</h5>
             <div className="episode-list d-flex flex-wrap gap-2">
               {visibleEpisodes?.map((v) => (
                 <button
                   key={v.episode}
-                  className={`btn ${activeEpisode === v.episode ? 'active btn-primary' : ''}`}
+                  className={`btn ${activeEpisode == v.episode ? 'active btn-primary' : ''}`}
                   onClick={() => onChangeEpisode(v.episode)}
                 >
                   {v.episode}
@@ -85,7 +110,6 @@ function Videos({ activeEpisode, onChangeEpisode, nextEpisode, scrollToComments,
             </div>
           </div>
 
-          {/* Thông tin phim */}
           <div className="Movie-information container mt-4">
             <div className="information row">
               <div className="poster-move col-md-3">

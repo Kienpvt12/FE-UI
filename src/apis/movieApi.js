@@ -5,10 +5,6 @@ export const movieApi = createApi({
   reducerPath: 'movieApi',
   baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_API,
-    credentials: true,
-    headers: {
-      'Content-Type': 'application/json',
-    },
   }),
   endpoints: (builder) => ({
     getMovies: builder.mutation({
