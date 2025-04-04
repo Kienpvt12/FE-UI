@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from '../../js/login';
 import Register from '../../js/register';
 import '../css/comment.css';
+import { useGetCommentsMutation } from '../../../apis/index';
+import defaultAvatar from '../../../assets/default-avatar.png';
+import moment from 'moment';
 
 function Comment({ movieSlug }) {
   const [showLogin, setShowLogin] = useState(false);
@@ -41,6 +44,7 @@ function Comment({ movieSlug }) {
   const [comments, setComments] = useState([]);
   const [replyText, setReplyText] = useState({});
   const [showReplyInput, setShowReplyInput] = useState({});
+  const [getComments] = useGetCommentsMutation();
 
   // Hàm mở ô nhập trả lời
   const toggleReplyInput = (commentId) => {
@@ -77,6 +81,23 @@ function Comment({ movieSlug }) {
     setShowReplyInput((prev) => ({ ...prev, [commentId]: false }));
   };
 
+  useEffect(() => {
+    const filter = {
+      page: 1,
+      limit: 5,
+      slug: movieSlug,
+    };
+    getComments(filter)
+      .then((response) => {
+        if (response.data) {
+          setComments(response.data.comments);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, [getComments, movieSlug]);
+
   return (
     <div className="all-comment container mt-4" id="comment-section">
       <div className="comment-box">
@@ -91,24 +112,25 @@ function Comment({ movieSlug }) {
 
         <div className="comment-list">
           {comments.map((comment) => (
-            <div key={comment.id} className="comment-container">
+            <div key={comment._id} className="comment-container">
               {/* Bình luận chính */}
               <div className="comment d-flex">
-                <img src={comment.img} alt="Avatar" />
+                <img src={comment.avatar || defaultAvatar} alt="Avatar" />
                 <div className="comment-body">
                   <span className="comment-user">
-                    {comment.user} <span className={comment.levelClass}>{comment.level}</span>
+                    {comment.username || comment.email}
+                    {/* <span className={comment.levelClass}>{comment.level}</span> */}
                   </span>
-                  <p className="comment-text">{comment.text}</p>
-                  <span className="comment-time">{comment.time}</span>
+                  <p className="comment-text">{comment.content}</p>
+                  <span className="comment-time">{moment(comment.createdAt).fromNow()}</span>
 
                   {/* Nút trả lời */}
-                  <button className="btn btn-reply" onClick={() => toggleReplyInput(comment.id)}>
+                  {/* <button className="btn btn-reply" onClick={() => toggleReplyInput(comment.id)}>
                     Trả lời
-                  </button>
+                  </button> */}
 
                   {/* Ô nhập trả lời */}
-                  {showReplyInput[comment.id] && (
+                  {/* {showReplyInput[comment.id] && (
                     <div className="reply-input mt-2">
                       <input
                         type="text"
@@ -121,12 +143,12 @@ function Comment({ movieSlug }) {
                         Gửi
                       </button>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
 
               {/* Danh sách câu trả lời */}
-              <div className="replies">
+              {/* <div className="replies">
                 {comment.replies.map((reply, index) => (
                   <div key={index} className="comment reply d-flex">
                     <img src="./logo.png" className="avata-replay" alt="Avatar" />
@@ -137,7 +159,7 @@ function Comment({ movieSlug }) {
                     </div>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

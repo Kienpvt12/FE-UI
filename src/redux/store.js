@@ -13,5 +13,5 @@ export default configureStore({
     status: statusReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(userApi.middleware, genreApi.middleware, movieApi.middleware),
+    getDefaultMiddleware().concat(userApi.middleware, genreApi.middleware, movieApi.middleware, commentApi.middleware),
 });
