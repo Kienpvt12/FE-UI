@@ -6,22 +6,26 @@ import { useGetCommentsMutation, usePostCommentMutation } from '../../../apis/in
 import defaultAvatar from '../../../assets/default-avatar.png';
 import moment from 'moment';
 
-function Comment({ movieSlug }) {
+function Comment({ movieId }) {
   const initialFilter = {
     page: 1,
     limit: 5,
-    slug: movieSlug,
+    movieId: movieId,
+  };
+  const initialNewComment = {
+    content: '',
+    movieId: movieId,
   };
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [comments, setComments] = useState([]);
   const [replyText, setReplyText] = useState({});
   const [showReplyInput, setShowReplyInput] = useState({});
-  const [visibleCount, setVisibleCount] = useState(2);
-  const [newComment, setNewComment] = useState(''); // Ô nhập bình luận mới
+  const [newComment, setNewComment] = useState(initialNewComment); // Ô nhập bình luận mới
   const [getComments] = useGetCommentsMutation();
-  const [postComment] = usePostCommentMutation();
+  const [postComment, { isLoading }] = usePostCommentMutation();
   const [commentFilter, setCommentFilter] = useState(initialFilter);
+  const [commentPagination, setCommentPagination] = useState({});
 
   // Mở ô nhập trả lời
   // const toggleReplyInput = (commentId) => {
@@ -59,23 +63,15 @@ function Comment({ movieSlug }) {
 
   // Tải thêm bình luận
   const loadMoreComments = () => {
-    setCommentFilter((prev) => ({
-      ...prev,
-      page: prev.page + 1,
-    }));
+    setCommentFilter((prev) => ({ ...prev, page: prev.page + 1 }));
   };
 
   // Gửi bình luận mới
   const handleNewComment = () => {
-    if (!newComment.trim()) {
+    if (!newComment.content.trim()) {
       return;
     }
-    const comment = {
-      content: newComment,
-      slug: movieSlug,
-    };
-
-    postComment(comment)
+    postComment(newComment)
       .then((res) => {
         if (res.data) {
           setComments((prev) => [res.data, ...prev]);
@@ -84,7 +80,7 @@ function Comment({ movieSlug }) {
       .catch((err) => {
         console.log(err.message);
       });
-    setNewComment(''); // Xóa nội dung ô nhập
+    setNewComment(initialNewComment); // Xóa nội dung ô nhập
   };
 
   useEffect(() => {
@@ -92,6 +88,7 @@ function Comment({ movieSlug }) {
       .then((res) => {
         if (res.data) {
           setComments((prev) => [...prev, ...res.data.comments]);
+          setCommentPagination(res.data.pagination);
         }
       })
       .catch((err) => {
@@ -104,7 +101,7 @@ function Comment({ movieSlug }) {
       <div className="comment-box">
         <div className="comment-header">
           <h5>
-            <i className="fa-solid fa-comments"></i> Bình luận ({comments.length})
+            <i className="fa-solid fa-comments"></i> Bình luận ({commentPagination.total})
           </h5>
           <button className="btn btn-danger btn-login" onClick={() => setShowLogin(true)}>
             Đăng nhập để bình luận
@@ -117,10 +114,10 @@ function Comment({ movieSlug }) {
             type="text"
             className="form-control"
             placeholder="Viết bình luận..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
+            value={newComment.content}
+            onChange={(e) => setNewComment((prev) => ({ ...prev, content: e.target.value }))}
           />
-          <button className="btn btn-primary mt-2" onClick={handleNewComment}>
+          <button disabled={isLoading} className="btn btn-primary mt-2" onClick={handleNewComment}>
             Gửi
           </button>
         </div>
@@ -180,7 +177,7 @@ function Comment({ movieSlug }) {
         </div>
 
         {/* Nút tải thêm bình luận */}
-        {visibleCount < comments.length && (
+        {commentPagination.hasNextPage && (
           <button className="btn btn-load mt-3" onClick={loadMoreComments}>
             Tải thêm bình luận
           </button>
