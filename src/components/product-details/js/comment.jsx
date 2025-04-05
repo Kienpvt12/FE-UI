@@ -5,6 +5,7 @@ import '../css/comment.css';
 import { useGetCommentsMutation, usePostCommentMutation } from '../../../apis/index';
 import defaultAvatar from '../../../assets/default-avatar.png';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 function Comment({ movieId }) {
   const initialFilter = {
@@ -26,6 +27,7 @@ function Comment({ movieId }) {
   const [postComment, { isLoading }] = usePostCommentMutation();
   const [commentFilter, setCommentFilter] = useState(initialFilter);
   const [commentPagination, setCommentPagination] = useState({});
+  const user = useSelector((state) => state.user);
 
   // Mở ô nhập trả lời
   // const toggleReplyInput = (commentId) => {
@@ -109,18 +111,20 @@ function Comment({ movieId }) {
         </div>
 
         {/* Ô nhập bình luận */}
-        <div className="new-comment-box mt-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Viết bình luận..."
-            value={newComment.content}
-            onChange={(e) => setNewComment((prev) => ({ ...prev, content: e.target.value }))}
-          />
-          <button disabled={isLoading} className="btn btn-primary mt-2" onClick={handleNewComment}>
-            Gửi
-          </button>
-        </div>
+        {user.id && (
+          <div className="new-comment-box mt-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Viết bình luận..."
+              value={newComment.content}
+              onChange={(e) => setNewComment((prev) => ({ ...prev, content: e.target.value }))}
+            />
+            <button disabled={isLoading} className="btn btn-primary mt-2" onClick={handleNewComment}>
+              Gửi
+            </button>
+          </div>
+        )}
 
         <div className="comment-list">
           {comments.map((comment) => (
