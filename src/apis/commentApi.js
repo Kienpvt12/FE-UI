@@ -12,6 +12,7 @@ export const commentApi = createApi({
         url: '/comments',
         method: 'POST',
         data,
+        credentials: true,
       }),
     }),
 
