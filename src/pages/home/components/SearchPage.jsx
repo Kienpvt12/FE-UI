@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useGetMoviesMutation } from '../../../apis/movieApi.js';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useGetMoviesMutation } from '../../../apis/index.js';
 import Navbar from '../../../components/js/navbar';
 import Footer from '../../../components/js/footer';
 import Slider from './js/slider';
@@ -7,25 +8,33 @@ import Siderbar from '../../../pages/home/components/js/siderbar.jsx';
 import Search from './js/Search';
 
 function SearchPage() {
+  const [searchParams] = useSearchParams();
+  const initialFilter = {
+    page: 1,
+    limit: 20,
+  };
   const [movies, setMovies] = useState([]);
-  const [getMovies] = useGetMoviesMutation();
+  const [getMovies, { isLoading, error }] = useGetMoviesMutation();
+  const [moviePagination, setMoviePagination] = useState({});
+  const [movieFilter, setMovieFilter] = useState(initialFilter);
 
   useEffect(() => {
-    const filter = {
-      page: 1,
-      limit: 25,
-    };
-    getMovies(filter)
-      .then((response) => {
-        console.log('🚀 ~ fetchMovies ~ response:', response.data);
-        if (response.data.movies) {
-          setMovies(response.data.movies);
+    const searchQuery = searchParams.get('query');
+    setMovieFilter((prev) => ({ ...prev, title: searchQuery }));
+  }, [searchParams]);
+
+  useEffect(() => {
+    getMovies(movieFilter)
+      .then((res) => {
+        if (res.data) {
+          setMovies(res.data.movies);
+          setMoviePagination(res.data.pagination);
         }
       })
       .catch((err) => {
-        console.error('🚀 ~ GetListMovies ~ err:', err);
+        console.log(err.message);
       });
-  }, [getMovies]);
+  }, [movieFilter, getMovies]);
 
   return (
     <>
@@ -34,10 +43,10 @@ function SearchPage() {
         <div className="row">
           <div className="row-left col-lg-8">
             <Slider />
-            <Search movies={movies} />
+            <Search movies={movies} isLoading={isLoading} error={error} searchQuery={movieFilter.title} />
           </div>
           <div className="row-right all-sidebar col-lg-3">
-            <Siderbar />
+            <Siderbar movies={movies} />
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import Slider from './slider';
 import Siderbar from '../../../home/components/js/siderbar.jsx';
 import SeeMoreProduct from './SeeMoreProduct.jsx';
 // import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
-import { useGetMoviesMutation } from '../../../../apis/movieApi.js';
+import { useGetMoviesMutation } from '../../../../apis/index';
 
 function Content() {
   const initialFilter = {
