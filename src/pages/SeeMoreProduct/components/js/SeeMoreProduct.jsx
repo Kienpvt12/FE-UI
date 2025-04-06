@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../css/product.css';
 import '../css/pagination.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,9 +6,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Pagination from './pagination';
 import MovieCard from '../../../../components/js/MovieCard.jsx';
 
-function SeeMoreProduct({ movies, currentPage, totalPages, onPageChange }) {
-  const navigate = useNavigate();
-
+function SeeMoreProduct({ movies, pagination, onPageChange }) {
   return (
     <>
       <div className="update-new-anime container mt-5">
@@ -24,7 +21,7 @@ function SeeMoreProduct({ movies, currentPage, totalPages, onPageChange }) {
             <MovieCard key={movie._id} movie={movie} />
           ))}
         </div>
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
+        <Pagination currentPage={pagination.page} totalPages={pagination.totalPages} onPageChange={onPageChange} />
       </div>
     </>
   );

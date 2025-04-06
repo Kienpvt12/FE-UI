@@ -6,20 +6,24 @@ import Slider from './slider';
 import Siderbar from '../../../home/components/js/siderbar.jsx';
 import SeeMoreProduct from './SeeMoreProduct.jsx';
 // import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
-import { useGetMoviesMutation } from '../../../../apis/movieApi.js';
+import { useGetMoviesMutation } from '../../../../apis/index';
 
 function Content() {
+  const initialFilter = {
+    page: 1,
+    limit: 20,
+  };
   const [movies, setMovies] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
   const [getMovies] = useGetMoviesMutation();
+  const [moviePagination, setMoviePagination] = useState({});
+  const [movieFilter, setMovieFilter] = useState(initialFilter);
 
   // useEffect(() => {
   //     GetListMoviesTop({})
-  //         .then((response) => {
-  //             console.log("🚀 ~ fetchMovies ~ response:", response);
-  //             if (response?.data) {
-  //                 setMovies(response.data); // Lưu dữ liệu phim vào state
+  //         .then((res) => {
+  //             console.log("🚀 ~ fetchMovies ~ res:", res);
+  //             if (res?.data) {
+  //                 setMovies(res.data); // Lưu dữ liệu phim vào state
   //             }
   //         })
   //         .catch((err) => {
@@ -28,31 +32,22 @@ function Content() {
   // }, []);
 
   useEffect(() => {
-    const filter = {
-      page: 1,
-      limit: 200,
-    };
-    getMovies(filter)
-      .then((response) => {
-        console.log('🚀 ~ fetchMovies ~ response:', response.data);
-        if (response.data.movies) {
-          setMovies(response.data.movies);
+    getMovies(movieFilter)
+      .then((res) => {
+        if (res.data) {
+          setMovies(res.data.movies);
+          setMoviePagination(res.data.pagination);
         }
       })
       .catch((err) => {
-        console.error('🚀 ~ GetListMovies ~ err:', err);
+        console.log(err.message);
       });
-  }, [getMovies]);
+  }, [getMovies, movieFilter]);
 
   // Hàm thay đổi trang
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    setMovieFilter((prev) => ({ ...prev, page: page }));
   };
-
-  // Tính toán phân trang
-  const totalPages = Math.ceil(movies.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentProducts = movies.slice(startIndex, startIndex + itemsPerPage);
 
   const sidebarProducts = movies.slice(0, 10);
 
@@ -62,12 +57,7 @@ function Content() {
         <div className="row-left col-lg-8">
           <Slider />
           {/* Truyền dữ liệu xuống Product */}
-          <SeeMoreProduct
-            movies={currentProducts}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+          <SeeMoreProduct movies={movies} pagination={moviePagination} onPageChange={handlePageChange} />
         </div>
         <div className="row-right all-sidebar col-lg-3">
           <Siderbar movies={sidebarProducts} />

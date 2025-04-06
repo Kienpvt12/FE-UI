@@ -113,9 +113,9 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
-        <logo className="navbar-brand cursor-pointer" onClick={() => navigate('/')}>
+        <div className="navbar-brand cursor-pointer" onClick={() => navigate('/')}>
           <img src={logo} alt="Logo" />
-        </logo>
+        </div>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon"></span>
