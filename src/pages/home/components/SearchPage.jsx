@@ -8,6 +8,8 @@ import Search from './js/Search';
 
 function SearchPage() {
   const [movies, setMovies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const [getMovies] = useGetMoviesMutation();
 
   useEffect(() => {
@@ -27,6 +29,16 @@ function SearchPage() {
       });
   }, [getMovies]);
 
+  // Hàm thay đổi trang
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Tính toán phân trang
+  const totalPages = Math.ceil(movies.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentProducts = movies.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <>
       <Navbar></Navbar>
@@ -34,7 +46,12 @@ function SearchPage() {
         <div className="row">
           <div className="row-left col-lg-8">
             <Slider />
-            <Search movies={movies} />
+            <Search
+              movies={currentProducts}
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
           </div>
           <div className="row-right all-sidebar col-lg-3">
             <Siderbar />

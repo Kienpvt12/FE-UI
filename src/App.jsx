@@ -15,6 +15,7 @@ import CreateFilm from './admin/admin-manager/Film/Create/ShowCreateFilm';
 import CreateEpisodeFilm from './admin/admin-manager/Film/Create/ShowCreateEpisodeList';
 import SearchPage from './pages/home/components/SearchPage';
 import ScrollToTop from './components/js/ScrollToTop';
+import HistoryPage from './pages/home/components/HistoryPage';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/admin/Create-Film/" element={<CreateFilm />} />
         <Route path="/admin/Create-Film/create-episode" element={<CreateEpisodeFilm />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/history" element={<HistoryPage />} />
       </Routes>
     </Router>
   );
