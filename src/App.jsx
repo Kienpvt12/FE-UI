@@ -13,9 +13,9 @@ import UpdateEpisodeList from './admin/admin-manager/Film/Update/UpdateEpisodeLi
 import UpdateReview from './admin/admin-manager/Film/Update/UpdateReview';
 import CreateFilm from './admin/admin-manager/Film/Create/ShowCreateFilm';
 import CreateEpisodeFilm from './admin/admin-manager/Film/Create/ShowCreateEpisodeList';
-import SearchPage from './pages/home/components/SearchPage';
+import SearchPage from './pages/home/components/js/SearchPage';
 import ScrollToTop from './components/js/ScrollToTop';
-import HistoryPage from './pages/home/components/HistoryPage';
+import HistoryPage from './pages/home/components/js/HistoryPage';
 
 function App() {
   return (

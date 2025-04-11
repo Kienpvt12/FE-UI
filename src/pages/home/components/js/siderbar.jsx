@@ -4,6 +4,7 @@ import '../css/siderbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import videoFile from '../../../../components/image/anime.mp4';
+import moment from 'moment';
 
 function Siderbar({ movies }) {
   const navigate = useNavigate();
@@ -74,8 +75,8 @@ function Siderbar({ movies }) {
                   <span className="rating">
                     <i className="fa-solid fa-star"></i> {movie.rating}
                   </span>
-                  <span className="date">📅 {new Date(movie.releaseDate).toLocaleDateString()}</span>
-                  <span className="year">🗓 {new Date(movie.releaseDate).getFullYear()}</span>
+                  <span className="date">📅 {moment(movie.releaseDate).format('L')}</span>
+                  <span className="year">🗓 {moment(movie.releaseDate).year()}</span>
                   {/* <span className="quality">HD</span> */}
                 </p>
               </div>

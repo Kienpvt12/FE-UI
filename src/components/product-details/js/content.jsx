@@ -7,15 +7,17 @@ import Video from './video';
 import Comment from './comment';
 // import { GetListMoviesTop, GetListMoviesID } from "../../../apis/moviesApi";
 import { useParams } from 'react-router-dom';
-import { useGetMoviesMutation } from '../../../apis/movieApi';
+import { useGetMoviesMutation, useGetEpisodesQuery } from '../../../apis/index';
 
 function Content() {
-  const { movieId } = useParams(); // Lấy ID phim từ URL
+  const { slug } = useParams();
   const [activeEpisode, setActiveEpisode] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [movies, setMovies] = useState([]);
   const [videoList, setVideoList] = useState([]);
   const [getMovies] = useGetMoviesMutation();
+  // const [movie, setMovie] = useState({});
+  const { data: movie, isLoading } = useGetEpisodesQuery(slug);
 
   // Fetch danh sách phim
   // useEffect(() => {
@@ -103,25 +105,32 @@ function Content() {
   }, []);
 
   return (
-    <div className="all-content container mt-4">
-      <div className="row">
-        <div className="row-left col-lg-8">
-          <Video
-            // videoList={videoList}
-            activeEpisode={activeEpisode}
-            onChangeEpisode={handleChangeEpisode}
-            nextEpisode={nextEpisode}
-            scrollToComments={scrollToComments}
-            toggleFullscreen={toggleFullscreen}
-            isFullscreen={isFullscreen}
-          />
-          <Comment />
+    <>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="all-content container mt-4">
+          <div className="row">
+            <div className="row-left col-lg-8">
+              <Video
+                slug={slug}
+                movie={movie}
+                activeEpisode={activeEpisode}
+                onChangeEpisode={handleChangeEpisode}
+                nextEpisode={nextEpisode}
+                scrollToComments={scrollToComments}
+                toggleFullscreen={toggleFullscreen}
+                isFullscreen={isFullscreen}
+              />
+              <Comment movieId={movie._id} />
+            </div>
+            <div className="row-right all-sidebar col-lg-3">
+              <Siderbar movies={movies} />
+            </div>
+          </div>
         </div>
-        <div className="row-right all-sidebar col-lg-3">
-          <Siderbar movies={movies} />
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

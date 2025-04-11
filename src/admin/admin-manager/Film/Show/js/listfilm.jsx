@@ -45,11 +45,11 @@ function ListUser({ movies }) {
                     <td>{movie.type}</td>
                     <td>{movie.releaseDate}</td>
                     <td>
-                      {/* {movie.genres.map((genre, i) => (
-                                                <span key={i} className="badge bg-info me-1">
-                                                    {genre.name}
-                                                </span>
-                                            ))} */}
+                      {movie?.genre?.map((genre) => (
+                        <span key={genre.id} className="badge bg-info me-1">
+                          {genre.name}
+                        </span>
+                      ))}
                     </td>
                     <td>{movie.view}</td>
                     <td>{movie.rating}</td>

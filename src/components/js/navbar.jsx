@@ -113,9 +113,9 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
-        <logo className="navbar-brand cursor-pointer" onClick={() => navigate('/')}>
+        <div className="navbar-brand cursor-pointer" onClick={() => navigate('/')}>
           <img src={logo} alt="Logo" />
-        </logo>
+        </div>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon"></span>
@@ -247,7 +247,7 @@ function Navbar() {
               </button>
             </>
           ) : (
-            <div className="dropdown">
+            <div className="dropdown ">
               <img
                 src={user.avatar || defaultAvatar}
                 alt="Avatar"
@@ -256,15 +256,20 @@ function Navbar() {
               />
               <ul
                 style={{ right: 0, left: 'auto' }}
-                className="dropdown-menu dropdown-menu-end"
+                className="dropdown-menu dropdown-menu-end justify-content-center align-items-center"
                 aria-labelledby="userDropdown"
               >
                 <li style={{ cursor: 'pointer' }}>
-                  <a className="dropdown-item">{user.username || user.email}</a>
+                  <a className="dropdown-item">Tên: {user.username || user.email}</a>
                 </li>
                 <li>
                   <button className="dropdown-item" onClick={() => handleLogout()}>
                     Đăng xuất
+                  </button>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => navigate('/history')}>
+                    History
                   </button>
                 </li>
               </ul>

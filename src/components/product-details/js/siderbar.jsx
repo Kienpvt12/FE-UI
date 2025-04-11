@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/siderbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import videoFile from '../../image/video.mp4';
+import videoFile from '../../image/anime.mp4';
 
 function Siderbar({ movies }) {
   const navigate = useNavigate();
