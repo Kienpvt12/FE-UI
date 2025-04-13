@@ -62,8 +62,17 @@ export const userApi = createApi({
     }),
 
     updateUser: builder.mutation({
-      query: ({ id, ...data }) => ({
-        url: `/users/${id}`,
+      query: (data) => ({
+        url: `/users`,
+        method: 'PATCH',
+        data,
+        credentials: true,
+      }),
+    }),
+
+    updateProfile: builder.mutation({
+      query: (data) => ({
+        url: `/users/profile`,
         method: 'PATCH',
         data,
         credentials: true,
@@ -90,4 +99,5 @@ export const {
   useUpdateUserMutation,
   useDeleteUserMutation,
   useLogoutMutation,
+  useUpdateProfileMutation,
 } = userApi;
