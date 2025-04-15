@@ -3,7 +3,7 @@ import { useGetMoviesMutation } from '../../../../apis/movieApi.js';
 import Navbar from '../../../../components/js/navbar.jsx';
 import Footer from '../../../../components/js/footer.jsx';
 import Slider from './slider.jsx';
-import Siderbar from './Siderbar.jsx';
+import Siderbar from './siderbar.jsx';
 import History from './history.jsx';
 
 function HistoryPage() {
