@@ -4,7 +4,7 @@ import { useGetMoviesMutation } from '../../../../apis/index.js';
 import Navbar from '../../../../components/js/navbar';
 import Footer from '../../../../components/js/footer';
 import Slider from './slider';
-import Siderbar from './siderbar.jsx';
+import Siderbar from './sidebar';
 import Search from './Search';
 
 function SearchPage() {
