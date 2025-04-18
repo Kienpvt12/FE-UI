@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../css/content.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Siderbar from '../../../pages/home/components/js/siderbar';
+import Siderbar from './siderbar';
 import Video from './video';
 import Comment from './comment';
 // import { GetListMoviesTop, GetListMoviesID } from "../../../apis/moviesApi";
