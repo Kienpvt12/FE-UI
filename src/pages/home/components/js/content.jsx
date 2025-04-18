@@ -3,7 +3,7 @@ import '../css/content.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Slider from './slider';
-import Siderbar from './Siderbar.jsx';
+import Siderbar from './sidebar';
 import Product from './product.jsx';
 // import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
 import { useGetMoviesMutation } from '../../../../apis/movieApi.js';
