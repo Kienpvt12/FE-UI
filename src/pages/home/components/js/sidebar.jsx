@@ -25,7 +25,7 @@ function Siderbar({ movies }) {
           <video className="ad-video" autoPlay muted loop>
             <source src={videoFile} type="video/mp4" />
           </video>
-          <img className="ad-banner" src="../videoframe_6283.png" alt="Quảng cáo" />
+          {/* <img className="ad-banner" src="../videoframe_6283.png" alt="Quảng cáo" /> */}
         </div>
       </div>
 

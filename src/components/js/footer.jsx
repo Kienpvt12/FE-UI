@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/footer.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import logo from '../../assets/logo.png';
 
 function Footer() {
   return (
@@ -10,7 +11,7 @@ function Footer() {
         <div className="row align-items-center justify-content-end">
           {/* Logo + Navigation */}
           <div className="col-lg-8 d-flex justify-content-end align-items-center">
-            <img src="./logo.png" alt="Logo" className="footer-logo" />
+            <img className="footer-logo" src={logo || '/placeholder.svg'} alt="Logo" />
             <ul className="footer-nav d-flex">
               <li>
                 <a href="#">XEM PHIM</a>

@@ -14,7 +14,7 @@ function Videos({ movie, slug, activeEpisode, onChangeEpisode, nextEpisode, scro
   const playerRef = useRef(null);
   const resumeTimeRef = useRef(0);
 
-  const AD_INTERVAL = 5;
+  const AD_INTERVAL = 0.01;
 
   const formatTime = (timeInMinutes) => {
     const totalSeconds = Math.floor(timeInMinutes * 60);
@@ -104,21 +104,20 @@ function Videos({ movie, slug, activeEpisode, onChangeEpisode, nextEpisode, scro
           </div>
         </div>
       )}
-
-      {/* Quảng cáo */}
-      {showAd && (
-        <div className="ad-overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75">
-          <div className="ad-content text-white text-center">
-            <p>🎬 Quảng cáo đang hiển thị...</p>
-            <button className="btn btn-primary" onClick={handleResume}>
-              Tiếp tục xem
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Video */}
       <div className="ratio ratio-16x9">
+        {/* Quảng cáo */}
+        {showAd && (
+          <div className="ad-overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75">
+            <div className="ad-content text-white text-center">
+              <p>🎬 Quảng cáo đang hiển thị...</p>
+              <button className="btn btn-primary" onClick={handleResume}>
+                Tiếp tục xem
+              </button>
+            </div>
+          </div>
+        )}
+
         <ReactPlayer
           ref={playerRef}
           url={activeEpisodeData?.url || ''}

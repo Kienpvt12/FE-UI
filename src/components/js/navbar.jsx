@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,6 +14,7 @@ import { useGetGenresQuery } from '../../apis/genreApi';
 import { updateStatus } from '../../redux/reducers/status';
 import defaultAvatar from '../../assets/default-avatar.png';
 import logo from '../../assets/logo.png';
+import { BsBell } from 'react-icons/bs';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -27,6 +30,24 @@ function Navbar() {
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
   const { data: genres } = useGetGenresQuery();
+  const [hasNewNotification, setHasNewNotification] = useState(false);
+  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
+
+  // Giả lập có thông báo mới (ví dụ: sau mỗi 10 giây)
+  useEffect(() => {
+    const notificationInterval = setInterval(() => {
+      setHasNewNotification(true); // Cập nhật có thông báo mới
+    }, 10000); // Giả lập thông báo mới mỗi 10 giây
+
+    // Dọn dẹp interval khi component unmount
+    return () => clearInterval(notificationInterval);
+  }, []);
+
+  // Xử lý click vào chuông thông báo
+  const handleBellClick = () => {
+    setHasNewNotification(false); // Xóa chấm đỏ
+    setShowNotificationDropdown((prev) => !prev); // Toggle dropdown
+  };
 
   // Chuyển từ login sang Register
   const switchToRegister = () => {
@@ -114,7 +135,7 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
         <div className="navbar-brand cursor-pointer" onClick={() => navigate('/')}>
-          <img src={logo} alt="Logo" />
+          <img src={logo || '/placeholder.svg'} alt="Logo" />
         </div>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -275,6 +296,26 @@ function Navbar() {
               </ul>
             </div>
           )}
+
+          {/* Thêm chuông thông báo với animation */}
+          <div className={`notification-bell ${hasNewNotification ? 'has-new' : ''}`} onClick={handleBellClick}>
+            <div>
+              <BsBell size={26} />
+            </div>
+            {hasNewNotification && <span className="notification-dot"></span>}
+            {showNotificationDropdown && (
+              <div className="notification-dropdown">
+                <div className="notification-header">Thông báo mới</div>
+                <ul className="notification-list">
+                  <li>🔥 Tập mới của "Jujutsu Kaisen" đã phát hành!</li>
+                  <li>🎉 Anime "Attack on Titan" đã hoàn tất!</li>
+                  <li>📅 Đừng quên xem lịch chiếu hôm nay!</li>
+                  <li>⭐ Bạn đã nhận được 5 sao từ bình luận!</li>
+                  <li>📢 Anime mùa xuân 2024 đã được cập nhật!</li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
 
         {showLogin && <Login closeModal={() => setShowLogin(false)} switchToRegister={switchToRegister} />}

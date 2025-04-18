@@ -158,6 +158,145 @@
   background: #ff6666;
 }
 
+/* Notification Bell Styles */
+.notification-bell {
+  position: relative;
+  margin-left: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.notification-bell:hover {
+  opacity: 0.8;
+}
+
+/* Red dot indicator for new notifications */
+.notification-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #ff3b30;
+  border-radius: 50%;
+  border: 1px solid #212529;
+}
+
+/* Notification dropdown styling */
+.notification-dropdown {
+  position: absolute;
+  top: 100%;
+  right: -10px;
+  width: 300px;
+  background-color: #212529;
+  border: 1px solid #444;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+/* Arrow for dropdown */
+.notification-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 15px;
+  width: 16px;
+  height: 16px;
+  background-color: #212529;
+  transform: rotate(45deg);
+  border-left: 1px solid #444;
+  border-top: 1px solid #444;
+}
+
+/* Header for notification dropdown */
+.notification-header {
+  padding: 12px 15px;
+  font-weight: bold;
+  border-bottom: 1px solid #444;
+  color: white;
+  background-color: #141414;
+}
+
+/* List of notifications */
+.notification-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notification-list li {
+  padding: 12px 15px;
+  border-bottom: 1px solid #333;
+  color: #f8f9fa;
+  transition: background-color 0.2s;
+}
+
+.notification-list li:last-child {
+  border-bottom: none;
+}
+
+.notification-list li:hover {
+  background-color: #2c2c2c;
+}
+
+/* Scrollbar styling for notification list */
+.notification-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notification-list::-webkit-scrollbar-track {
+  background: #212529;
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 6px;
+}
+
+/* Animation for notification bell when new notification arrives */
+@keyframes bellShake {
+  0% {
+    transform: rotate(0);
+  }
+  15% {
+    transform: rotate(5deg);
+  }
+  30% {
+    transform: rotate(-5deg);
+  }
+  45% {
+    transform: rotate(4deg);
+  }
+  60% {
+    transform: rotate(-4deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+  85% {
+    transform: rotate(-2deg);
+  }
+  92% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+.notification-bell.has-new {
+  animation: bellShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
 /* Responsive: Màn hình nhỏ */
 @media (max-width: 991px) {
   .hamburger-menu {
