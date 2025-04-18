@@ -296,7 +296,6 @@ function Navbar() {
               </ul>
             </div>
           )}
-
           {/* Thêm chuông thông báo với animation */}
           <div className={`notification-bell ${hasNewNotification ? 'has-new' : ''}`} onClick={handleBellClick}>
             <div>

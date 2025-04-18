@@ -161,8 +161,8 @@
 /* Notification Bell Styles */
 .notification-bell {
   position: relative;
-  margin-left: 15px;
-  margin-right: 10px;
+  margin-left: 1px;
+  margin-right: 1px;
   cursor: pointer;
   display: flex;
   align-items: center;
