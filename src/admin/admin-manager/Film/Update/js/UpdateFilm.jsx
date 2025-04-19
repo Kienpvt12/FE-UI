@@ -2,6 +2,7 @@ import '../css/updatefilm.css';
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function UpdateFilm({
   movie,
@@ -15,7 +16,7 @@ function UpdateFilm({
   selectedImage,
   setSelectedImage,
   selectedType,
-  handleTypeChange,
+  // handleTypeChange,
 }) {
   const navigate = useNavigate();
 
@@ -28,33 +29,64 @@ function UpdateFilm({
   ];
 
   const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [selectedImageFile, setSelectedImageFile] = useState(null); // Dùng để upload ảnh thực
 
   // Xử lý khi chọn ảnh
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file));
+      setSelectedImage(URL.createObjectURL(file)); // preview ảnh
+      setSelectedImageFile(file); // giữ file thực để upload
     }
   };
-  const data = { title: 'Phim ABC', releaseYear: 2020 };
 
-  if (!movie) {
-    return <div>Loading...</div>;
-  }
+  const handleUpdateMovie = async () => {
+    if (!movie) return;
+
+    try {
+      const formData = new FormData();
+      formData.append('slug', movie.slug); // truyền slug cũ vào để BE tìm
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('type', selectedType);
+      formData.append('genres', JSON.stringify(selectedGenres.map((g) => g.value)));
+      formData.append('languages', JSON.stringify(selectedLanguages.map((l) => l.value)));
+
+      if (selectedImageFile) {
+        formData.append('image', selectedImageFile);
+      }
+
+      await axios.patch(
+        `https://capstone-project-be-production-a0e0.up.railway.app/api/movies/update`, // không dùng /:slug nữa
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      alert('Cập nhật thành công!');
+    } catch (error) {
+      console.error('Lỗi khi cập nhật phim:', error);
+      alert('Cập nhật thất bại!');
+    }
+  };
+
+  if (!movie) return <div>Loading...</div>;
+
   return (
     <>
       <div className="admin-main-content p-4">
-        {/* <!-- Header --> */}
         <div className="d-flex justify-content-between mb-3">
-          <button className="btn btn-secondary">
+          <button className="btn btn-secondary" onClick={() => navigate(-1)}>
             <i className="fas fa-arrow-left"></i> Quay lại
           </button>
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={handleUpdateMovie}>
             <i className="fas fa-save"></i> Cập nhật
           </button>
         </div>
 
-        {/* <!-- Card thông tin phim --> */}
         <div className="card p-4 shadow-sm mt-4">
           <ul className="nav nav-tabs mb-3">
             <li className="nav-item">
@@ -79,7 +111,7 @@ function UpdateFilm({
 
           <form>
             <div className="row">
-              {/* <!-- Cột trái: Nhập thông tin phim --> */}
+              {/* Cột trái */}
               <div className="col-md-8">
                 <div className="mb-3">
                   <label className="form-label">Tên phim</label>
@@ -104,7 +136,7 @@ function UpdateFilm({
                   <input type="text" className="form-control" placeholder="Nhập tên đạo diễn" />
                 </div>
 
-                {/* Thể loại - Multi Select */}
+                {/* Thể loại */}
                 <div className="mb-3">
                   <label className="form-label">Thể loại</label>
                   <Select
@@ -117,7 +149,8 @@ function UpdateFilm({
                     classNamePrefix="select"
                   />
                 </div>
-                {/* Ngôn ngữ - Multi Select */}
+
+                {/* Ngôn ngữ */}
                 <div className="mb-3">
                   <label className="form-label">Ngôn Ngữ</label>
                   <Select
@@ -132,7 +165,7 @@ function UpdateFilm({
                 </div>
               </div>
 
-              {/* <!-- Cột phải: Thông tin bổ sung --> */}
+              {/* Cột phải */}
               <div className="col-md-4">
                 <div className="mb-3">
                   <label className="form-label">Quốc gia:</label>
@@ -149,9 +182,10 @@ function UpdateFilm({
 
                 <div className="mb-3">
                   <label className="form-label">Năm phát hành:</label>
-                  <input type="number" className="form-control" value={data.releaseYear} />
+                  <input type="number" className="form-control" value={movie.releaseYear || ''} readOnly />
                 </div>
-                <div className="mb-3">
+
+                {/* <div className="mb-3">
                   <label className="form-label">Loại phim</label>
                   <select className="form-select" value={selectedType} onChange={handleTypeChange}>
                     <option value="TV">TV</option>
@@ -161,17 +195,16 @@ function UpdateFilm({
                     <option value="ONA">ONA</option>
                     <option value="Music">Music</option>
                   </select>
-                </div>
+                </div> */}
+
                 <div className="mb-3 text-center">
                   <label className="form-label d-block">Ảnh bìa phim</label>
-                  {/* Hiển thị ảnh đã chọn hoặc ảnh từ API */}
                   <img
-                    src={selectedImage || './f9486eb3ce64ea88043728ffe70f0ba1.jpg'}
+                    src={selectedImage || movie.image || './f9486eb3ce64ea88043728ffe70f0ba1.jpg'}
                     className="img-thumbnail"
                     width="150"
                     alt="Ảnh bìa phim"
                   />
-                  {/* Input file để chọn ảnh */}
                   <input type="file" accept="image/*" className="form-control mt-2" onChange={handleImageChange} />
                 </div>
               </div>

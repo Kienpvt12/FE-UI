@@ -22,28 +22,28 @@ export const movieApi = createApi({
       }),
     }),
 
-    // updateMovie: builder.mutation({
-    //   query: ({ id, ...data }) => ({
-    //     url: `/movies/${id}`,
-    //     method: 'PATCH',
-    //     data,
-    //   }),
-    // }),
+    updateMovie: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/movies/${id}`,
+        method: 'PATCH',
+        data,
+      }),
+    }),
 
-    // deleteMovie: builder.mutation({
-    //   query: (id) => ({
-    //     url: `/movies/${id}`,
-    //     method: 'DELETE',
-    //   }),
-    // }),
+    deleteMovie: builder.mutation({
+      query: (id) => ({
+        url: `/movies/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
 export const {
   useGetMoviesMutation,
   useGetEpisodesQuery,
-  //   useAddMovieMutation,
-  //   useUpdateMovieMutation,
-  //   useDeleteMovieMutation,
-  //   useLogoutMutation,
+  // useAddMovieMutation,
+  useUpdateMovieMutation,
+  useDeleteMovieMutation,
+  // useLogoutMutation,
 } = movieApi;

@@ -138,7 +138,7 @@ function ListUser() {
                   </td>
                   <td>
                     <span className="badge bg-success">
-                      <i className="fa-solid fa-pen update" onClick={() => navigate('/admin/update-user')}></i>
+                      <i className="fa-solid fa-pen update" onClick={() => navigate('/admin/updateuser')}></i>
                     </span>{' '}
                     |{' '}
                     <span className="badge bg-danger detele">

@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import '../css/showListfilm.css';
+import ShowListFilm from './ShowListFilm';
 
-function ListUser({ movies }) {
+function Listfilm({ movies, genreOptions, handleDelete }) {
   const navigate = useNavigate();
 
   return (
@@ -29,11 +30,11 @@ function ListUser({ movies }) {
                 <tr>
                   <th>#</th>
                   <th>Tên phim</th>
-                  <th>Loại phim</th>
-                  <th>Năm phát hành</th>
+                  {/* <th>Loại phim</th> */}
                   <th>Thể loại</th>
                   <th>View</th>
                   <th>Rating</th>
+                  <th>Năm phát hành</th>
                   <th>Update/Delete</th>
                 </tr>
               </thead>
@@ -42,17 +43,22 @@ function ListUser({ movies }) {
                   <tr key={movie._id}>
                     <td>{index + 1}</td>
                     <td>{movie.title}</td>
-                    <td>{movie.type}</td>
-                    <td>{movie.releaseDate}</td>
+                    {/* <td>{movie.type}</td> */}
                     <td>
-                      {movie?.genre?.map((genre) => (
-                        <span key={genre.id} className="badge bg-info me-1">
-                          {genre.name}
-                        </span>
-                      ))}
+                      {movie?.genre?.map((g) => {
+                        const matched = genreOptions.find((opt) => opt.value === g.id);
+                        console.log('🎬 Phim:', movie.title, '| Genre item:', g, '| Matched:', matched);
+
+                        return (
+                          <span key={g.id} className="badge bg-info me-1">
+                            {matched ? matched.label : g.name || g}
+                          </span>
+                        );
+                      })}
                     </td>
                     <td>{movie.view}</td>
                     <td>{movie.rating}</td>
+                    <td>{new Date(movie.releaseDate).getFullYear()}</td>
                     <td>
                       <span
                         className="badge bg-success"
@@ -62,7 +68,11 @@ function ListUser({ movies }) {
                         <i className="fa-solid fa-pen"></i>
                       </span>{' '}
                       |{' '}
-                      <span className="badge bg-danger" style={{ cursor: 'pointer' }}>
+                      <span
+                        className="badge bg-danger"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => handleDelete(movie._id, movie.title)}
+                      >
                         <i className="fa-solid fa-trash"></i>
                       </span>
                     </td>
@@ -79,4 +89,4 @@ function ListUser({ movies }) {
   );
 }
 
-export default ListUser;
+export default Listfilm;

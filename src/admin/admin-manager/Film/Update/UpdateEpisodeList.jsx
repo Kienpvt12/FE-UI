@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Navbar from '../../../components/js/navbar';
 import Siderbar from '../../../components/js/siderbar';
