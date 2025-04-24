@@ -63,7 +63,7 @@ export const userApi = createApi({
 
     updateUser: builder.mutation({
       query: ({ id, ...data }) => ({
-        url: `/users/${id}`,
+        url: `/users/${id}/admin`,
         method: 'PATCH',
         data,
         credentials: true,
@@ -72,7 +72,7 @@ export const userApi = createApi({
 
     deleteUser: builder.mutation({
       query: (id) => ({
-        url: `/users/${id}`,
+        url: `/users/${id}/admin`,
         method: 'DELETE',
         credentials: true,
       }),
