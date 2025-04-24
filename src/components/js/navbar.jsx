@@ -292,6 +292,9 @@ function Navbar() {
                   <button className="dropdown-item" onClick={() => navigate('/history')}>
                     History
                   </button>
+                  <button className="dropdown-item" onClick={() => navigate('/admin')}>
+                    admin
+                  </button>
                 </li>
               </ul>
             </div>
