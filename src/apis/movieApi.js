@@ -12,6 +12,7 @@ export const movieApi = createApi({
         url: '/movies',
         method: 'POST',
         data,
+        credentials: true,
       }),
     }),
 
@@ -27,6 +28,7 @@ export const movieApi = createApi({
         url: `/movies/${id}`,
         method: 'PATCH',
         data,
+        credentials: true,
       }),
     }),
 
@@ -34,6 +36,7 @@ export const movieApi = createApi({
       query: (id) => ({
         url: `/movies/${id}`,
         method: 'DELETE',
+        credentials: true,
       }),
     }),
   }),

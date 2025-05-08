@@ -73,6 +73,7 @@ function Comment({ movieId }) {
     if (!newComment.content.trim()) {
       return;
     }
+    console.log(newComment);
     postComment(newComment)
       .then((res) => {
         if (res.data) {

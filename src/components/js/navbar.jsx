@@ -15,6 +15,7 @@ import { updateStatus } from '../../redux/reducers/status';
 import defaultAvatar from '../../assets/default-avatar.png';
 import logo from '../../assets/logo.png';
 import { BsBell } from 'react-icons/bs';
+import { useGetMoviesMutation, useGetEpisodesQuery } from '../../apis/index';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -32,6 +33,26 @@ function Navbar() {
   const { data: genres } = useGetGenresQuery();
   const [hasNewNotification, setHasNewNotification] = useState(false);
   const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
+  const [getMovies] = useGetMoviesMutation();
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const filter = {
+      page: 1,
+      limit: 10,
+      sortField: 'view',
+      sortOrder: 'desc',
+    };
+    getMovies(filter)
+      .then((response) => {
+        if (response.data.movies) {
+          setMovies(response.data.movies);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, [getMovies]);
 
   // Giả lập có thông báo mới (ví dụ: sau mỗi 10 giây)
   useEffect(() => {
@@ -292,9 +313,13 @@ function Navbar() {
                   <button className="dropdown-item" onClick={() => navigate('/history')}>
                     History
                   </button>
-                  <button className="dropdown-item" onClick={() => navigate('/admin')}>
-                    admin
-                  </button>
+                  {user.role === 0 && (
+                    <li>
+                      <button className="dropdown-item" onClick={() => navigate('/admin')}>
+                        Admin
+                      </button>
+                    </li>
+                  )}
                 </li>
               </ul>
             </div>
@@ -309,11 +334,11 @@ function Navbar() {
               <div className="notification-dropdown">
                 <div className="notification-header">Thông báo mới</div>
                 <ul className="notification-list">
-                  <li>🔥 Tập mới của "Jujutsu Kaisen" đã phát hành!</li>
-                  <li>🎉 Anime "Attack on Titan" đã hoàn tất!</li>
-                  <li>📅 Đừng quên xem lịch chiếu hôm nay!</li>
-                  <li>⭐ Bạn đã nhận được 5 sao từ bình luận!</li>
-                  <li>📢 Anime mùa xuân 2024 đã được cập nhật!</li>
+                  {movies.slice(0, 5).map((movie) => (
+                    <li key={movie.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/movies/${movie.slug}`)}>
+                      📺 Tập {movie.episode_num} của <strong>{movie.title}</strong> đã phát hành!
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}
