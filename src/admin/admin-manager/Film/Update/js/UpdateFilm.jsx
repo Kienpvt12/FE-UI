@@ -45,6 +45,7 @@ function UpdateFilm({
 
     try {
       const formData = new FormData();
+      formData.append('_id', movie._id); // truyền id vào để BE tìm
       formData.append('slug', movie.slug); // truyền slug cũ vào để BE tìm
       formData.append('title', title);
       formData.append('description', description);
@@ -56,15 +57,12 @@ function UpdateFilm({
         formData.append('image', selectedImageFile);
       }
 
-      await axios.patch(
-        `https://capstone-project-be-production-a0e0.up.railway.app/api/movies/update`, // không dùng /:slug nữa
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+      await axios.patch(`https://capstone-project-be-production-a0e0.up.railway.app/api/movies/update`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      });
 
       alert('Cập nhật thành công!');
     } catch (error) {
