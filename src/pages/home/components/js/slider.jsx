@@ -1,46 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/slider.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import axios from 'axios';
 
-function Slider() {
+function Slider({ movies }) {
+  // Giới hạn tối đa 5 phim để hiển thị trong slider
+  const displayMovies = movies.slice(0, 5);
+  const [movieDetails, setMovieDetails] = useState({});
+
+  useEffect(() => {
+    // Fetch chi tiết cho 5 phim
+    const fetchDetails = async () => {
+      const details = {};
+      for (let movie of displayMovies) {
+        try {
+          const response = await axios.get(`http://localhost:3333/api/movies/${movie._id}`);
+          details[movie._id] = response.data.description;
+        } catch (error) {
+          console.error('Lỗi khi lấy thông tin chi tiết:', error);
+        }
+      }
+      setMovieDetails(details);
+    };
+    fetchDetails();
+  }, [movies]);
+
   return (
     <div id="animeSlider" className="carousel slide" data-bs-ride="carousel">
       <div className="carousel-inner">
-        <div className="carousel-item active">
-          <img src="./HD-wallpaper-red-eye-anime-girl.jpg" className="d-block w-100" alt="Anime 1" />
-          <div className="carousel-caption d-md-block">
-            <h5>Hazure Skill Kinomi Master</h5>
-            <p>
-              Trong thế giới này, người ta có thể đạt được những khả năng đặc biệt bằng cách ăn trái kỹ năng chỉ một...
-            </p>
-            <a href="#" className="btn btn-danger">
-              <i className="fa-solid fa-play"></i> Xem Phim
-            </a>
+        {displayMovies.map((movie, index) => (
+          <div key={movie._id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+            <img src={movie.banner} className="d-block w-100" alt={movie.title} />
+            <div className="carousel-caption d-md-block">
+              <h5>{movie.title}</h5>
+              <p>{movieDetails[movie._id] || 'Đang tải mô tả...'}</p>
+              <a href={`/movies/${movie.slug}`} className="btn btn-danger">
+                <i className="fa-solid fa-play"></i> Xem Phim
+              </a>
+            </div>
           </div>
-        </div>
-
-        <div className="carousel-item">
-          <img src="./HD-wallpaper-red-eye-anime-girl.jpg" className="d-block w-100" alt="Anime 2" />
-          <div className="carousel-caption d-md-block">
-            <h5>Anime Phiêu Lưu Mới</h5>
-            <p>Một cuộc hành trình kỳ thú đang chờ đón bạn trong thế giới anime tuyệt đẹp...</p>
-            <a href="#" className="btn btn-danger">
-              <i className="fa-solid fa-play"></i> Xem Phim
-            </a>
-          </div>
-        </div>
-
-        <div className="carousel-item">
-          <img src="./HD-wallpaper-red-eye-anime-girl.jpg" className="d-block w-100" alt="Anime 3" />
-          <div className="carousel-caption d-md-block">
-            <h5>Siêu Năng Lực Đỉnh Cao</h5>
-            <p>Những nhân vật sở hữu năng lực phi thường đang chiến đấu vì công lý...</p>
-            <a href="#" className="btn btn-danger">
-              <i className="fa-solid fa-play"></i> Xem Phim
-            </a>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Nút điều hướng */}
@@ -55,3 +55,4 @@ function Slider() {
 }
 
 export default Slider;
+('');

@@ -5,7 +5,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Slider from './slider';
 import Siderbar from './sidebar';
 import Product from './product.jsx';
-// import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
 import { useGetMoviesMutation } from '../../../../apis/movieApi.js';
 
 function Content() {
@@ -13,19 +12,6 @@ function Content() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [getMovies] = useGetMoviesMutation();
-
-  // useEffect(() => {
-  //     GetListMoviesTop({})
-  //         .then((response) => {
-  //             console.log("🚀 ~ fetchMovies ~ response:", response);
-  //             if (response?.data) {
-  //                 setMovies(response.data); // Lưu dữ liệu phim vào state
-  //             }
-  //         })
-  //         .catch((err) => {
-  //             console.error("🚀 ~ GetListMovies ~ err:", err);
-  //         });
-  // }, []);
 
   useEffect(() => {
     const filter = {
@@ -60,8 +46,8 @@ function Content() {
     <div className="all-content container mt-4">
       <div className="row">
         <div className="row-left col-lg-8">
-          <Slider />
-          {/* Truyền dữ liệu xuống Product */}
+          <Slider movies={currentProducts} />
+
           <Product
             movies={currentProducts}
             currentPage={currentPage}
