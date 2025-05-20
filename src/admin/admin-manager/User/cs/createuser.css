@@ -1,0 +1,25 @@
+.input-create {
+  color: black !important;
+}
+
+.form-control {
+  border: 1px solid rgba(0, 0, 0, 0.199) !important;
+}
+
+.update-avatar-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.update-avatar-container img {
+  width: 70px; /* Điều chỉnh kích thước ảnh */
+  height: 70px;
+  border-radius: 50%; /* Làm tròn ảnh */
+  object-fit: cover;
+  border: 2px solid #ccc; /* Viền ảnh nếu cần */
+}
+
+.update-avatar-container input[type='file'] {
+  display: none; /* Ẩn input file */
+}
