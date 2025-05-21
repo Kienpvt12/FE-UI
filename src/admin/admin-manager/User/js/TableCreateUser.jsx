@@ -114,7 +114,7 @@ function TableCreateUser() {
 
             <form id="createUserForm" onSubmit={handleSubmit}>
               <div className="input-create mb-3">
-                <label className="form-label">Họ tên</label>
+                <label className="form-label">User</label>
                 <input
                   type="text"
                   name="username"

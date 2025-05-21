@@ -179,8 +179,12 @@ function UpdateUser() {
 
     try {
       await updateUser({ id: userId, data: payload }).unwrap();
-      toast.success('Cập nhật người dùng thành công!');
-      navigate('/admin/listuser');
+      // toast.success('Cập nhật người dùng thành công!');
+      // navigate('/admin/listuser');
+      setMessage({ type: 'success', content: 'Cập nhật người dùng thành công!' });
+      setTimeout(() => {
+        navigate('/admin/listuser');
+      }, 1500);
     } catch (err) {
       console.error('Lỗi cập nhật user:', err);
       const errMsg = err.data?.message || err.message || 'Có lỗi khi cập nhật.';
@@ -192,8 +196,12 @@ function UpdateUser() {
     if (!window.confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) return;
     try {
       await deleteUser(userId).unwrap();
-      toast.success('Xóa người dùng thành công!');
-      navigate('/admin/listuser');
+      // toast.success('Xóa người dùng thành công!');
+      // navigate('/admin/listuser');
+      setMessage({ type: 'success', content: 'Xóa người dùng thành công!' });
+      setTimeout(() => {
+        navigate('/admin/listuser');
+      }, 1500);
     } catch (err) {
       console.error('Lỗi khi xóa user:', err);
       const errMsg = err.data?.message || 'Có lỗi khi xóa user.';
@@ -261,7 +269,7 @@ function UpdateUser() {
 
           <form id="updateUserForm" onSubmit={handleSubmit}>
             <div className="input-create mb-3">
-              <label className="form-label">Họ tên</label>
+              <label className="form-label">User</label>
               <input
                 type="text"
                 name="username"
