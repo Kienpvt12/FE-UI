@@ -12,22 +12,25 @@ function ShowListFilm() {
 
   const [getMovies] = useGetMoviesMutation();
 
-  useEffect(() => {
+  const fetchMovies = () => {
     const filter = {
       page: 1,
       limit: 200,
     };
     getMovies(filter)
       .then((response) => {
-        console.log('🚀 ~ fetchMovies ~ response:', response.data);
         if (response.data.movies) {
           setMovies(response.data.movies);
         }
       })
       .catch((err) => {
-        console.error('🚀 ~ GetListMovies ~ err:', err);
+        console.error('Lỗi khi lấy danh sách phim:', err);
       });
-  }, [getMovies]);
+  };
+
+  useEffect(() => {
+    fetchMovies();
+  }, []);
 
   const [genreOptions, setGenreOptions] = useState([]);
 
@@ -60,7 +63,7 @@ function ShowListFilm() {
           .then(() => {
             Swal.fire('Đã xóa!', `Phim "${title}" đã được xóa.`, 'success');
             // Reload lại trang hoặc gọi lại API lấy danh sách phim
-            window.location.reload(); // hoặc bạn có thể dùng callback prop để cập nhật lại danh sách
+            fetchMovies(); // hoặc bạn có thể dùng callback prop để cập nhật lại danh sách
           })
           .catch((err) => {
             console.error('Lỗi xóa phim:', err);
@@ -74,7 +77,7 @@ function ShowListFilm() {
     <>
       <Navbar></Navbar>
       <Siderbar></Siderbar>
-      <Listfilm movies={movies} genreOptions={genreOptions} handleDelete={handleDelete} />
+      <Listfilm movies={movies} genreOptions={genreOptions} handleDelete={handleDelete} fetchMovies={fetchMovies} />
     </>
   );
 }

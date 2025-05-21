@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/showListfilm.css';
 import ShowListFilm from './ShowListFilm';
 
-function Listfilm({ movies, genreOptions, handleDelete }) {
+function Listfilm({ movies, genreOptions, handleDelete, fetchMovies }) {
   const navigate = useNavigate();
 
   return (
@@ -16,7 +16,7 @@ function Listfilm({ movies, genreOptions, handleDelete }) {
             <button className="btn btn-primary" onClick={() => navigate('/admin/create-Film')}>
               <i className="fas fa-plus"></i> Tạo phim
             </button>
-            <button className="btn btn-success">
+            <button className="btn btn-success ms-2" onClick={fetchMovies}>
               <i className="fas fa-sync-alt"></i> Refresh
             </button>
           </div>
