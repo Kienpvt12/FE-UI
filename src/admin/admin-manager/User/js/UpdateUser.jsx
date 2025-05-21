@@ -31,7 +31,7 @@ function UpdateUser() {
     password: '',
     confirmPassword: '',
     phone: '',
-    role: 0,
+    role: 1,
   });
   const [avatarFile, setAvatarFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -91,13 +91,13 @@ function UpdateUser() {
   //   };
 
   //   let payload;
-  //   // if (avatarFile) {
-  //   //   payload = new FormData();
-  //   //   Object.entries(dataToSend).forEach(([key, val]) => payload.append(key, val));
-  //   //   payload.append('avatar', avatarFile);
-  //   // } else {
-  //   //   payload = dataToSend;
-  //   // }
+  //   if (avatarFile) {
+  //     payload = new FormData();
+  //     Object.entries(dataToSend).forEach(([key, val]) => payload.append(key, val));
+  //     payload.append('avatar', avatarFile);
+  //   } else {
+  //     payload = dataToSend;
+  //   }
   //   if (avatarFile) {
   //     payload = new FormData();
   //     payload.append('id', userId); // THÊM DÒNG NÀY
@@ -118,35 +118,76 @@ function UpdateUser() {
   //     toast.error(errMsg);
   //   }
   // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage({ type: '', content: '' });
 
+    if (!userData || !userData.user) {
+      setMessage({ type: 'error', content: 'Không tìm thấy thông tin người dùng để so sánh.' });
+      return;
+    }
+
+    const original = userData.user;
+
+    // Kiểm tra mật khẩu xác nhận
     if (formData.password && formData.password !== formData.confirmPassword) {
       setMessage({ type: 'error', content: 'Mật khẩu xác nhận không khớp!' });
       return;
     }
 
-    // ❌ KHÔNG cần thêm id vào dataToSend
-    const dataToSend = {
-      username: formData.username,
-      email: formData.email,
-      phone: formData.phone,
-      role: formData.role,
-      ...(formData.password ? { password: formData.password } : {}),
-    };
+    const changedFields = {};
+
+    if (formData.username && formData.username !== original.username) {
+      changedFields.username = formData.username;
+    }
+
+    if (formData.email && formData.email !== original.email) {
+      changedFields.email = formData.email;
+    }
+
+    if (formData.phone && formData.phone !== original.phone) {
+      changedFields.phone = formData.phone;
+    }
+
+    if (formData.role !== original.role) {
+      changedFields.role = formData.role;
+    }
+
+    if (formData.password) {
+      changedFields.password = formData.password;
+    }
+
+    let payload;
+
+    if (avatarFile) {
+      payload = new FormData();
+      payload.append('id', userId);
+      Object.entries(changedFields).forEach(([key, val]) => payload.append(key, val));
+      payload.append('avatar', avatarFile);
+    } else {
+      payload = {
+        id: userId,
+        ...changedFields,
+      };
+    }
+
+    if (Object.keys(changedFields).length === 0 && !avatarFile) {
+      setMessage({ type: 'info', content: 'Không có thay đổi nào để cập nhật.' });
+      return;
+    }
 
     try {
-      await updateUser({ id: userId, data: dataToSend }).unwrap(); // ✅ chỉ gửi id ở ngoài
+      await updateUser({ id: userId, data: payload }).unwrap();
       toast.success('Cập nhật người dùng thành công!');
       navigate('/admin/listuser');
     } catch (err) {
+      console.error('Lỗi cập nhật user:', err);
       const errMsg = err.data?.message || err.message || 'Có lỗi khi cập nhật.';
       setMessage({ type: 'error', content: errMsg });
       toast.error(errMsg);
     }
   };
-
   const handleDeleteUser = async () => {
     if (!window.confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) return;
     try {
@@ -284,8 +325,8 @@ function UpdateUser() {
             <div className="input-create mb-3">
               <label className="form-label">Role</label>
               <select name="role" value={formData.role} onChange={handleChange} className="form-select">
-                <option value={0}>USER</option>
-                <option value={1}>ADMIN</option>
+                <option value={1}>USER</option>
+                <option value={0}>ADMIN</option>
               </select>
             </div>
 
