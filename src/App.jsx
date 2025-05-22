@@ -17,12 +17,23 @@ import SearchPage from './pages/home/components/js/SearchPage';
 import ScrollToTop from './components/js/ScrollToTop';
 import HistoryPage from './pages/home/components/js/HistoryPage';
 import AnalyticsTracker from './AnalyticsTracker';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
       <AnalyticsTracker />
+      {/* Các routes hoặc layout khác */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/seemore" element={<SeeMore />} />

@@ -89,7 +89,7 @@ function ListUser() {
                 <thead className="table-dark">
                   <tr>
                     <th>Avatar</th>
-                    <th>Họ tên</th>
+                    <th>User</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
                     <th>Role</th>

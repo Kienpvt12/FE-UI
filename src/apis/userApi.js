@@ -76,13 +76,25 @@ export const userApi = createApi({
         credentials: true,
       }),
     }),
+    // updateUser: builder.mutation({
+    //   query: ({ id, data }) => ({
+    //     url: `/users`,
+    //     method: 'PATCH',
+    //     data: { id, ...data },
+    //     credentials: true,
+    //   }),
+    // }),
     updateUser: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/users`, // ✅ KHÔNG có id trong URL
+        url: `/users`,
         method: 'PATCH',
         data: { id, ...data },
         credentials: true,
       }),
+      invalidatesTags: (result, error, { id }) => [
+        { type: 'User', id },
+        { type: 'User', id: 'LIST' },
+      ],
     }),
 
     deleteUser: builder.mutation({
