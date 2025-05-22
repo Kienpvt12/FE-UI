@@ -16,7 +16,7 @@ function Content() {
   useEffect(() => {
     const filter = {
       page: 1,
-      limit: 25,
+      limit: 200,
     };
     getMovies(filter)
       .then((response) => {
@@ -50,6 +50,7 @@ function Content() {
 
           <Product
             movies={currentProducts}
+            allMovies={movies}
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}

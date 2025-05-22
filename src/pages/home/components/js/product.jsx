@@ -6,11 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import MovieCard from '../../../../components/js/MovieCard';
 
-function Product({ movies }) {
+function Product({ movies, allMovies }) {
   const navigate = useNavigate();
 
   // Sắp xếp đề cử theo rating giảm dần
-  const recommendedMovies = [...movies].sort((a, b) => b.rating - a.rating);
+  const recommendedMovies = [...allMovies].sort((a, b) => b.rating - a.rating).slice(0, 10);
 
   // Sắp xếp sắp chiếu theo releaseDate mới nhất (giảm dần)
   const comingSoonMovies = [...movies].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
