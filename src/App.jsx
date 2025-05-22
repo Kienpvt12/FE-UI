@@ -51,6 +51,7 @@ function App() {
         <Route path="/admin/update-Film/update-review/:slug" element={<UpdateReview />} />
         <Route path="/admin/Create-Film/" element={<CreateFilm />} />
         <Route path="/admin/Create-Film/create-episode" element={<CreateEpisodeFilm />} />
+
         <Route path="/search" element={<SearchPage />} />
         <Route path="/history" element={<HistoryPage />} />
       </Routes>

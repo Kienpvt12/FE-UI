@@ -47,7 +47,7 @@ function Footer() {
                 <i className="fa-brands fa-youtube"></i>
               </a>
             </div>
-            <button className="back-to-top">
+            <button className="back-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <i className="fa-solid fa-arrow-up"></i>
             </button>
           </div>

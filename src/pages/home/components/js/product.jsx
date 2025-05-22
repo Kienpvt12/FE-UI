@@ -9,6 +9,12 @@ import MovieCard from '../../../../components/js/MovieCard';
 function Product({ movies }) {
   const navigate = useNavigate();
 
+  // Sắp xếp đề cử theo rating giảm dần
+  const recommendedMovies = [...movies].sort((a, b) => b.rating - a.rating);
+
+  // Sắp xếp sắp chiếu theo releaseDate mới nhất (giảm dần)
+  const comingSoonMovies = [...movies].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+
   return (
     <>
       {/* phim mới */}
@@ -30,6 +36,7 @@ function Product({ movies }) {
           </button>
         </div>
       </div>
+
       {/* đề cử */}
       <div className="update-new-anime container mt-5">
         <div className="navigation d-flex">
@@ -38,7 +45,7 @@ function Product({ movies }) {
           </div>
         </div>
         <div className="list-product row mt-3 gap-3">
-          {movies.map((movie) => (
+          {recommendedMovies.map((movie) => (
             <MovieCard key={movie._id} movie={movie} />
           ))}
         </div>
@@ -48,15 +55,16 @@ function Product({ movies }) {
           </button>
         </div>
       </div>
+
       {/* sắp chiếu */}
       <div className="update-new-anime container mt-5">
         <div className="navigation d-flex">
           <div className="chill-navigation btn-big active">
-            Sắp Chiếu<i className="fa-solid fa-arrow-right"></i>
+            Sắp Chiếu <i className="fa-solid fa-arrow-right"></i>
           </div>
         </div>
         <div className="list-product row mt-3 gap-3">
-          {movies.map((movie) => (
+          {comingSoonMovies.map((movie) => (
             <MovieCard key={movie._id} movie={movie} />
           ))}
         </div>

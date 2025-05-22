@@ -59,7 +59,7 @@ function SearchPage() {
       <div className="all-content container mt-4">
         <div className="row">
           <div className="row-left col-lg-8">
-            <Slider />
+            <Slider movies={movies} />
             <Search movies={movies} isLoading={isLoading} error={error} searchQuery={movieFilter.title} />
           </div>
           <div className="row-right all-sidebar col-lg-3">

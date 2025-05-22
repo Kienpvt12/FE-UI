@@ -39,8 +39,8 @@ function HistoryPage() {
       <div className="all-content container mt-4">
         <div className="row">
           <div className="row-left col-lg-8">
-            <Slider />
-            {/* Hiển thị lịch sử phim hoặc thông báo nếu đang tải */}
+            <Slider movies={movies} />
+
             {loading ? <div>Đang tải...</div> : <History movies={movies} />}
           </div>
           <div className="row-right all-sidebar col-lg-3">

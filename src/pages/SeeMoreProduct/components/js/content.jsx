@@ -5,7 +5,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Slider from './slider';
 import Siderbar from '../../../home/components/js/sidebar';
 import SeeMoreProduct from './SeeMoreProduct.jsx';
-// import { GetListMoviesTop } from "../../../../apis/moviesApi.js";
 import { useGetMoviesMutation } from '../../../../apis/index';
 
 function Content() {
@@ -17,19 +16,6 @@ function Content() {
   const [getMovies] = useGetMoviesMutation();
   const [moviePagination, setMoviePagination] = useState({});
   const [movieFilter, setMovieFilter] = useState(initialFilter);
-
-  // useEffect(() => {
-  //     GetListMoviesTop({})
-  //         .then((res) => {
-  //             console.log("🚀 ~ fetchMovies ~ res:", res);
-  //             if (res?.data) {
-  //                 setMovies(res.data); // Lưu dữ liệu phim vào state
-  //             }
-  //         })
-  //         .catch((err) => {
-  //             console.error("🚀 ~ GetListMovies ~ err:", err);
-  //         });
-  // }, []);
 
   useEffect(() => {
     getMovies(movieFilter)
@@ -55,7 +41,7 @@ function Content() {
     <div className="all-content container mt-4">
       <div className="row">
         <div className="row-left col-lg-8">
-          <Slider />
+          <Slider movies={movies} />
           {/* Truyền dữ liệu xuống Product */}
           <SeeMoreProduct movies={movies} pagination={moviePagination} onPageChange={handlePageChange} />
         </div>
