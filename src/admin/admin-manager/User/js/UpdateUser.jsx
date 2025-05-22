@@ -71,54 +71,6 @@ function UpdateUser() {
 
   const openFilePicker = () => fileInputRef.current.click();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setMessage({ type: '', content: '' });
-
-  //   // Password confirmation
-  //   if (formData.password && formData.password !== formData.confirmPassword) {
-  //     setMessage({ type: 'error', content: 'Mật khẩu xác nhận không khớp!' });
-  //     return;
-  //   }
-
-  //   // Build payload
-  //   const dataToSend = {
-  //     username: formData.username,
-  //     email: formData.email,
-  //     phone: formData.phone,
-  //     role: formData.role,
-  //     ...(formData.password ? { password: formData.password } : {}),
-  //   };
-
-  //   let payload;
-  //   if (avatarFile) {
-  //     payload = new FormData();
-  //     Object.entries(dataToSend).forEach(([key, val]) => payload.append(key, val));
-  //     payload.append('avatar', avatarFile);
-  //   } else {
-  //     payload = dataToSend;
-  //   }
-  //   if (avatarFile) {
-  //     payload = new FormData();
-  //     payload.append('id', userId); // THÊM DÒNG NÀY
-  //     Object.entries(dataToSend).forEach(([key, val]) => payload.append(key, val));
-  //     payload.append('avatar', avatarFile);
-  //   } else {
-  //     payload = { id: userId, ...dataToSend }; // VÀ CẬP NHẬT Ở ĐÂY
-  //   }
-
-  //   try {
-  //     await updateUser({ id: userId, data: payload }).unwrap();
-  //     toast.success('Cập nhật người dùng thành công!');
-  //     navigate('/admin/listuser');
-  //   } catch (err) {
-  //     console.error('Lỗi cập nhật user:', err);
-  //     const errMsg = err.data?.message || err.message || 'Có lỗi khi cập nhật.';
-  //     setMessage({ type: 'error', content: errMsg });
-  //     toast.error(errMsg);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage({ type: '', content: '' });
@@ -180,7 +132,7 @@ function UpdateUser() {
     try {
       await updateUser({ id: userId, data: payload }).unwrap();
       // toast.success('Cập nhật người dùng thành công!');
-      // navigate('/admin/listuser');
+
       setMessage({ type: 'success', content: 'Cập nhật người dùng thành công!' });
       setTimeout(() => {
         navigate('/admin/listuser');
@@ -197,7 +149,7 @@ function UpdateUser() {
     try {
       await deleteUser(userId).unwrap();
       // toast.success('Xóa người dùng thành công!');
-      // navigate('/admin/listuser');
+
       setMessage({ type: 'success', content: 'Xóa người dùng thành công!' });
       setTimeout(() => {
         navigate('/admin/listuser');

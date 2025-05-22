@@ -7,8 +7,8 @@ function Navbar() {
   return (
     <>
       <nav className="admin-navbar navbar-expand-lg bg-dark shadow-sm px-3">
-        <h4 className="text-white" onClick={() => navigate('/admin/dashboard')}>
-          <i className="fas fa-tv"></i> ADMIN
+        <h4 className="text-white" onClick={() => navigate('/')}>
+          <i className="fas fa-tv"></i> HOME
         </h4>
 
         <div className="ms-auto d-flex align-items-center">

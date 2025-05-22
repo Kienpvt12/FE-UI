@@ -12,7 +12,7 @@ function ListUser() {
 
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
 
-  const API_URL = `${import.meta.env.VITE_BASE_API}/users`;
+  const API_URL = 'https://film-dbb2.onrender.com/api/users';
 
   const fetchUsers = async () => {
     setIsLoading(true);
