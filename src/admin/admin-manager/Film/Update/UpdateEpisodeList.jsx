@@ -12,7 +12,7 @@ function UpdateEpisodeList() {
   useEffect(() => {
     if (!slug) return;
 
-    fetch(`https://capstone-project-be-production-a0e0.up.railway.app/api/movies/${slug}`)
+    fetch(`${import.meta.env.VITE_BASE_API}/movies/${slug}`)
       .then((res) => res.json())
       .then((data) => {
         console.log('Dữ liệu phim nhận được:', data);

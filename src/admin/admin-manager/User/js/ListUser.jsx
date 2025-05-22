@@ -12,7 +12,7 @@ function ListUser() {
 
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
 
-  const API_URL = 'https://capstone-project-be-production-a0e0.up.railway.app/api/users';
+  const API_URL = `${import.meta.env.VITE_BASE_API}/users`;
 
   const fetchUsers = async () => {
     setIsLoading(true);

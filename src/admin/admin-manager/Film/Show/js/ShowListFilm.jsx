@@ -35,7 +35,7 @@ function ShowListFilm() {
   const [genreOptions, setGenreOptions] = useState([]);
 
   useEffect(() => {
-    fetch('https://capstone-project-be-production-a0e0.up.railway.app/api/genres')
+    fetch(`${import.meta.env.VITE_BASE_API}/genres`)
       .then((res) => res.json())
       .then((data) => {
         const options = data.map((genre) => ({

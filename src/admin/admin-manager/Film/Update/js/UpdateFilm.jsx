@@ -57,7 +57,7 @@ function UpdateFilm({
         formData.append('image', selectedImageFile);
       }
 
-      await axios.patch(`https://capstone-project-be-production-a0e0.up.railway.app/api/movies/update`, formData, {
+      await axios.patch(`${import.meta.env.VITE_BASE_API}/movies/update`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
