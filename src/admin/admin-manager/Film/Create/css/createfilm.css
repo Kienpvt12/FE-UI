@@ -1,0 +1,21 @@
+/* Tạo màu tím cho badge diễn viên */
+.bg-purple {
+  background-color: #6f42c1 !important;
+  color: white;
+}
+
+/* Badge đẹp hơn */
+.badge {
+  font-size: 0.9em;
+  padding: 7px 12px;
+  border-radius: 10px;
+}
+
+/* Căn chỉnh nội dung form */
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  color: black;
+}
