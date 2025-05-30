@@ -17,6 +17,9 @@ function UpdateFilm({
   setSelectedImage,
   selectedType,
   // handleTypeChange,
+  selectedImageBaner,
+  setSelectedImageBaner,
+  releaseYear = new Date().getFullYear(), // Mặc định là năm hiện tại
 }) {
   const navigate = useNavigate();
 
@@ -30,6 +33,7 @@ function UpdateFilm({
 
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [selectedImageFile, setSelectedImageFile] = useState(null); // Dùng để upload ảnh thực
+  const [selectedBannerFile, setSelectedBannerFile] = useState(null); // ảnh banner thực
 
   // Xử lý khi chọn ảnh
   const handleImageChange = (event) => {
@@ -40,13 +44,22 @@ function UpdateFilm({
     }
   };
 
+  // Xử lý chọn ảnh banner
+  const handleBannerChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImageBaner(URL.createObjectURL(file)); // preview ảnh banner
+      setSelectedBannerFile(file); // giữ file thực để upload banner
+    }
+  };
+
   const handleUpdateMovie = async () => {
     if (!movie) return;
 
     try {
       const formData = new FormData();
-      formData.append('_id', movie._id); // truyền id vào để BE tìm
-      formData.append('slug', movie.slug); // truyền slug cũ vào để BE tìm
+      formData.append('_id', movie._id);
+      formData.append('slug', movie.slug);
       formData.append('title', title);
       formData.append('description', description);
       formData.append('type', selectedType);
@@ -54,13 +67,15 @@ function UpdateFilm({
       formData.append('languages', JSON.stringify(selectedLanguages.map((l) => l.value)));
 
       if (selectedImageFile) {
-        formData.append('image', selectedImageFile);
+        formData.append('image', selectedImageFile); // ảnh bìa
+      }
+
+      if (selectedBannerFile) {
+        formData.append('banner', selectedBannerFile); // ảnh banner
       }
 
       await axios.patch(`${import.meta.env.VITE_BASE_API}/movies/update`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
         withCredentials: true,
       });
 
@@ -147,54 +162,15 @@ function UpdateFilm({
                     classNamePrefix="select"
                   />
                 </div>
-
-                {/* Ngôn ngữ */}
                 <div className="mb-3">
-                  <label className="form-label">Ngôn Ngữ</label>
-                  <Select
-                    options={languageOptions}
-                    isMulti
-                    value={selectedLanguages}
-                    onChange={setSelectedLanguages}
-                    placeholder="Chọn ngôn ngữ"
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                  />
+                  <label className="form-label">Năm phát hành:</label>
+                  <input type="number" className="form-control" value={releaseYear} readOnly />
                 </div>
               </div>
 
               {/* Cột phải */}
               <div className="col-md-4">
-                <div className="mb-3">
-                  <label className="form-label">Quốc gia:</label>
-                  <select className="form-select">
-                    <option value="Hàn Quốc">Hàn Quốc</option>
-                    <option value="Nhật Bản">Nhật Bản</option>
-                  </select>
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Studio: </label>
-                  <input type="text" className="form-control" />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Năm phát hành:</label>
-                  <input type="number" className="form-control" value={movie.releaseYear || ''} readOnly />
-                </div>
-
-                {/* <div className="mb-3">
-                  <label className="form-label">Loại phim</label>
-                  <select className="form-select" value={selectedType} onChange={handleTypeChange}>
-                    <option value="TV">TV</option>
-                    <option value="TV Special">TV Special</option>
-                    <option value="Movie">Movie</option>
-                    <option value="OVA">OVA</option>
-                    <option value="ONA">ONA</option>
-                    <option value="Music">Music</option>
-                  </select>
-                </div> */}
-
+                {/* Ảnh bìa */}
                 <div className="mb-3 text-center">
                   <label className="form-label d-block">Ảnh bìa phim</label>
                   <img
@@ -204,6 +180,18 @@ function UpdateFilm({
                     alt="Ảnh bìa phim"
                   />
                   <input type="file" accept="image/*" className="form-control mt-2" onChange={handleImageChange} />
+                </div>
+
+                {/* Banner phim */}
+                <div className="mb-3 text-center">
+                  <label className="form-label d-block">Banner phim</label>
+                  <img
+                    src={selectedImageBaner || movie.banner || './f9486eb3ce64ea88043728ffe70f0ba1.jpg'}
+                    className="img-thumbnail"
+                    width="150"
+                    alt="Banner phim"
+                  />
+                  <input type="file" accept="image/*" className="form-control mt-2" onChange={handleBannerChange} />
                 </div>
               </div>
             </div>

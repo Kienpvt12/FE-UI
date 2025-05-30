@@ -35,7 +35,7 @@ function Slider() {
     const fetchDetails = async () => {
       try {
         const detailResponses = await Promise.all(
-          displayMovies.map((movie) => axios.get(`https://film-dbb2.onrender.com/api/movies/${movie._id}`))
+          displayMovies.map((movie) => axios.get(`${import.meta.env.VITE_BASE_API}/movies/${movie._id}`))
         );
 
         const details = {};

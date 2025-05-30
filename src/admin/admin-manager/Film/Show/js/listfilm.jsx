@@ -1,9 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import '../css/showListfilm.css';
+import { useState } from 'react';
 import ShowListFilm from './ShowListFilm';
 
 function Listfilm({ movies, genreOptions, handleDelete, fetchMovies }) {
   const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Lọc phim dựa theo searchTerm
+  const filteredMovies = movies.filter((movie) => movie.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <>
@@ -12,6 +18,14 @@ function Listfilm({ movies, genreOptions, handleDelete, fetchMovies }) {
         {/* Header */}
         <div className="d-flex justify-content-between mb-3">
           <h3>Danh sách phim</h3>
+          <input
+            type="text"
+            className="form-control d-inline-block me-2"
+            placeholder="Tìm tên phim..."
+            style={{ width: '250px' }}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
           <div>
             <button className="btn btn-primary" onClick={() => navigate('/admin/create-Film')}>
               <i className="fas fa-plus"></i> Tạo phim
@@ -39,7 +53,7 @@ function Listfilm({ movies, genreOptions, handleDelete, fetchMovies }) {
                 </tr>
               </thead>
               <tbody>
-                {movies.map((movie, index) => (
+                {filteredMovies.map((movie, index) => (
                   <tr key={movie._id}>
                     <td>{index + 1}</td>
                     <td>{movie.title}</td>

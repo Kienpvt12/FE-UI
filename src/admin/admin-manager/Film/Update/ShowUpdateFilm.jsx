@@ -67,6 +67,13 @@ function ShowUpdateFilm() {
     }
   }, [movie]);
 
+  const [selectedImageBaner, setSelectedImageBaner] = useState(null);
+  useEffect(() => {
+    if (movie?.banner) {
+      setSelectedImageBaner(movie.banner);
+    }
+  }, [movie]);
+
   const [selectedType, setSelectedType] = useState('');
   useEffect(() => {
     if (movie?.type) {
@@ -93,6 +100,9 @@ function ShowUpdateFilm() {
         selectedGenres={selectedGenres}
         setSelectedGenres={setSelectedGenres}
         selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
+        selectedImageBaner={selectedImageBaner}
+        setSelectedImageBaner={setSelectedImageBaner}
         selectedType={selectedType}
         handleTypeChange={handleTypeChange}
       />

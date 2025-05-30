@@ -24,9 +24,6 @@ function Sidebar() {
             <a href="#" className="dropdown-item" onClick={() => navigate('/admin/listfilm')}>
               Danh sách phim
             </a>
-            <a href="#" className="dropdown-item">
-              Tạo phim
-            </a>
           </div>
         </div>
 
