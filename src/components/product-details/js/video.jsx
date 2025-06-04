@@ -137,9 +137,9 @@ function Videos({ movie, slug, activeEpisode, onChangeEpisode, nextEpisode, scro
       </div>
 
       {/* Hiển thị thời gian */}
-      <div className="video-progress mt-3 text-white">
+      {/* <div className="video-progress mt-3 text-white">
         <p>Bạn đã xem: {formatTime(watchedTime)}</p>
-      </div>
+      </div> */}
 
       {/* Các nút thao tác */}
       <div className="mt-3 d-flex flex-wrap gap-2">
