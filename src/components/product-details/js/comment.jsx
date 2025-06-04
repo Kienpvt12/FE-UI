@@ -106,9 +106,11 @@ function Comment({ movieId }) {
           <h5>
             <i className="fa-solid fa-comments"></i> Bình luận ({commentPagination.total})
           </h5>
-          <button className="btn btn-danger btn-login" onClick={() => setShowLogin(true)}>
-            Đăng nhập để bình luận
-          </button>
+          {!user && (
+            <button className="btn btn-danger btn-login" onClick={() => setShowLogin(true)}>
+              Đăng nhập để bình luận
+            </button>
+          )}
         </div>
 
         {/* Ô nhập bình luận */}

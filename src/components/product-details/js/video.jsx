@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../css/video.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactPlayer from 'react-player';
+import qc from '../../image/qc.png';
 
 function Videos({ movie, slug, activeEpisode, onChangeEpisode, nextEpisode, scrollToComments, toggleFullscreen }) {
   const [showAll, setShowAll] = useState(false);
@@ -109,8 +110,8 @@ function Videos({ movie, slug, activeEpisode, onChangeEpisode, nextEpisode, scro
         {/* Quảng cáo */}
         {showAd && (
           <div className="ad-overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75">
-            <div className="ad-content text-white text-center">
-              <p>🎬 Quảng cáo đang hiển thị...</p>
+            <div className="ad-content text-white text-center d-flex flex-column align-items-center">
+              <img src={qc || '/placeholder.svg'} alt="Logo" style={{ width: '300px' }} />
               <button className="btn btn-primary" onClick={handleResume}>
                 Tiếp tục xem
               </button>
