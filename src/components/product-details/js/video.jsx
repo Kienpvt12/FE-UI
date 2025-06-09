@@ -1,21 +1,69 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../css/video.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactPlayer from 'react-player';
 import qc from '../../image/qc.png';
+import LoadingSpinner from '../../LoadingSpinner';
+import { toast } from 'react-toastify';
 
-function Videos({ movie, slug, activeEpisode, onChangeEpisode, nextEpisode, scrollToComments, toggleFullscreen }) {
+function Video({
+  slug,
+  movie,
+  activeEpisode,
+  onChangeEpisode,
+  nextEpisode,
+  scrollToComments,
+  toggleFullscreen,
+  isFullscreen,
+}) {
   const [showAll, setShowAll] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [watchedTime, setWatchedTime] = useState(0);
   const [showAd, setShowAd] = useState(false);
   const [lastAdTime, setLastAdTime] = useState(0);
   const [askResume, setAskResume] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [videoError, setVideoError] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const playerRef = useRef(null);
   const resumeTimeRef = useRef(0);
 
   const AD_INTERVAL = 0.01;
+
+  // Debug logs
+  useEffect(() => {
+    console.log('Video Component Props:', {
+      slug,
+      movie,
+      activeEpisode,
+    });
+    const currentEpisode = movie?.episodes?.find((ep) => ep.episode === activeEpisode);
+    console.log('Current Episode in Video:', currentEpisode);
+  }, [slug, movie, activeEpisode]);
+
+  // Handle autoplay restrictions
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
+
+  const handlePause = () => {
+    setIsPlaying(false);
+    if (watchedTime >= lastAdTime + AD_INTERVAL) {
+      setShowAd(true);
+      setLastAdTime(watchedTime);
+    }
+  };
+
+  const handleReady = () => {
+    setIsLoading(false);
+  };
+
+  const handleError = (error) => {
+    console.error('Video Error:', error);
+    setVideoError(error);
+    toast.error('Lỗi phát video. Vui lòng thử lại sau.');
+  };
 
   const formatTime = (timeInMinutes) => {
     const totalSeconds = Math.floor(timeInMinutes * 60);
@@ -24,56 +72,86 @@ function Videos({ movie, slug, activeEpisode, onChangeEpisode, nextEpisode, scro
     return `${minutes} phút ${seconds} giây`;
   };
 
-  // Load từ localStorage
-  useEffect(() => {
-    const watchedMovies = JSON.parse(localStorage.getItem('watchedMovies')) || [];
-    const episodeKey = `${slug}-ep${activeEpisode}`;
-    const movieProgress = watchedMovies.find((m) => m.key === episodeKey);
-
-    if (movieProgress && movieProgress.time > 0) {
-      resumeTimeRef.current = movieProgress.time;
-      setAskResume(true); // hỏi người dùng
-    } else {
-      resumeTimeRef.current = 0;
-      setWatchedTime(0);
-    }
-  }, [slug, activeEpisode]);
-
-  const handleResumeChoice = (shouldResume) => {
-    setAskResume(false);
-    if (shouldResume) {
-      setWatchedTime(resumeTimeRef.current);
-    } else {
-      resumeTimeRef.current = 0;
-      setWatchedTime(0);
-    }
-  };
-
   const updateProgress = (currentTimeSeconds) => {
     const currentTimeMinutes = currentTimeSeconds / 60;
     setWatchedTime(currentTimeMinutes);
 
+    // Lưu vào localStorage
     const watchedMovies = JSON.parse(localStorage.getItem('watchedMovies')) || [];
     const episodeKey = `${slug}-ep${activeEpisode}`;
     const existingIndex = watchedMovies.findIndex((m) => m.key === episodeKey);
 
+    const progressData = {
+      key: episodeKey,
+      slug,
+      episode: activeEpisode,
+      time: currentTimeMinutes,
+      title: movie.title,
+      poster: movie.poster,
+      lastWatched: new Date().toISOString(),
+    };
+
     if (existingIndex !== -1) {
-      watchedMovies[existingIndex].time = currentTimeMinutes;
+      watchedMovies[existingIndex] = progressData;
     } else {
-      watchedMovies.push({ key: episodeKey, slug, episode: activeEpisode, time: currentTimeMinutes });
+      watchedMovies.push(progressData);
     }
 
     localStorage.setItem('watchedMovies', JSON.stringify(watchedMovies));
   };
 
   const handleProgress = ({ playedSeconds }) => {
-    updateProgress(playedSeconds);
+    // Chỉ lưu tiến độ khi video đã phát được ít nhất 5 giây
+    if (playedSeconds >= 5) {
+      updateProgress(playedSeconds);
+    }
   };
 
-  const handlePause = () => {
-    if (watchedTime >= lastAdTime + AD_INTERVAL) {
-      setShowAd(true);
-      setLastAdTime(watchedTime);
+  // Load từ localStorage khi component mount hoặc khi episode thay đổi
+  useEffect(() => {
+    const watchedMovies = JSON.parse(localStorage.getItem('watchedMovies')) || [];
+    const episodeKey = `${slug}-ep${activeEpisode}`;
+    const movieProgress = watchedMovies.find((m) => m.key === episodeKey);
+
+    // Chỉ hiển thị dialog nếu có dữ liệu và thời gian xem > 0
+    if (movieProgress && movieProgress.time > 0) {
+      resumeTimeRef.current = movieProgress.time;
+      setAskResume(true);
+    } else {
+      // Nếu không có dữ liệu hoặc thời gian = 0, reset về 0
+      resumeTimeRef.current = 0;
+      setWatchedTime(0);
+      setAskResume(false);
+    }
+  }, [slug, activeEpisode]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setVideoError(null);
+    // Simulate loading time for better UX
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [activeEpisode]);
+
+  const handleResumeChoice = (shouldResume) => {
+    setAskResume(false);
+    if (shouldResume && playerRef.current) {
+      // Chuyển đổi từ phút sang giây
+      const resumeTimeInSeconds = resumeTimeRef.current * 60;
+      playerRef.current.seekTo(resumeTimeInSeconds);
+      setWatchedTime(resumeTimeRef.current);
+    } else {
+      // Nếu không muốn tiếp tục, reset về 0
+      resumeTimeRef.current = 0;
+      setWatchedTime(0);
+
+      // Xóa dữ liệu khỏi localStorage
+      const watchedMovies = JSON.parse(localStorage.getItem('watchedMovies')) || [];
+      const episodeKey = `${slug}-ep${activeEpisode}`;
+      const updatedMovies = watchedMovies.filter((m) => m.key !== episodeKey);
+      localStorage.setItem('watchedMovies', JSON.stringify(updatedMovies));
     }
   };
 
@@ -85,129 +163,173 @@ function Videos({ movie, slug, activeEpisode, onChangeEpisode, nextEpisode, scro
   const shortDescription =
     movie.description?.length > 200 ? movie.description.slice(0, 200) + '...' : movie.description;
 
-  const activeEpisodeData = movie.episodes?.[activeEpisode - 1];
+  // Tìm episode đang active
+  const activeEpisodeData = movie.episodes?.find((ep) => ep.episode === activeEpisode);
+
+  if (isLoading) {
+    return (
+      <div className="video-container">
+        <div className="video-wrapper">
+          <LoadingSpinner />
+        </div>
+      </div>
+    );
+  }
+
+  if (!activeEpisodeData) {
+    return (
+      <div className="video-container">
+        <div className="video-wrapper">
+          <div className="alert alert-danger">Không tìm thấy video. Vui lòng thử lại sau.</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Kiểm tra URL video
+  if (!activeEpisodeData.url) {
+    return (
+      <div className="video-container">
+        <div className="video-wrapper">
+          <div className="alert alert-danger">Không tìm thấy URL video. Vui lòng thử lại sau.</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (videoError) {
+    return (
+      <div className="video-container">
+        <div className="video-wrapper">
+          <div className="alert alert-danger">
+            Lỗi phát video: {videoError.message || 'Không xác định'}. Vui lòng thử lại sau.
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="video-container">
-      {/* Thông báo tiếp tục */}
-      {askResume && (
-        <div className="resume-dialog position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75 z-3">
-          <div className="text-white text-center bg-secondary p-4 rounded">
-            <p>Bạn muốn tiếp tục xem từ phút {Math.floor(resumeTimeRef.current)}?</p>
-            <div className="d-flex justify-content-center gap-3">
-              <button className="btn btn-success" onClick={() => handleResumeChoice(true)}>
-                Tiếp tục
-              </button>
-              <button className="btn btn-danger" onClick={() => handleResumeChoice(false)}>
-                Xem từ đầu
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* Video */}
-      <div className="ratio ratio-16x9">
-        {/* Quảng cáo */}
-        {showAd && (
-          <div className="ad-overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75">
-            <div className="ad-content text-white text-center d-flex flex-column align-items-center">
-              <img src={qc || '/placeholder.svg'} alt="Logo" style={{ width: '300px' }} />
-              <button className="btn btn-primary" onClick={handleResume}>
-                Tiếp tục xem
-              </button>
+      <div className="video-wrapper">
+        {/* Thông báo tiếp tục */}
+        {askResume && (
+          <div className="resume-dialog">
+            <div className="resume-content">
+              <p>Bạn muốn tiếp tục xem từ phút {Math.floor(resumeTimeRef.current)}?</p>
+              <div className="resume-buttons">
+                <button className="btn btn-success" onClick={() => handleResumeChoice(true)}>
+                  Tiếp tục
+                </button>
+                <button className="btn btn-danger" onClick={() => handleResumeChoice(false)}>
+                  Xem từ đầu
+                </button>
+              </div>
             </div>
           </div>
         )}
 
-        <ReactPlayer
-          ref={playerRef}
-          url={activeEpisodeData?.url || ''}
-          className="w-100 h-auto"
-          controls
-          playing={!showAd && !askResume}
-          onProgress={handleProgress}
-          onPause={handlePause}
-          onSeek={handleProgress}
-          progressInterval={1000}
-          onReady={() => {
-            if (playerRef.current && resumeTimeRef.current > 0) {
-              playerRef.current.seekTo(resumeTimeRef.current * 60, 'seconds');
-            }
-          }}
-        />
-      </div>
-
-      {/* Hiển thị thời gian */}
-      {/* <div className="video-progress mt-3 text-white">
-        <p>Bạn đã xem: {formatTime(watchedTime)}</p>
-      </div> */}
-
-      {/* Các nút thao tác */}
-      <div className="mt-3 d-flex flex-wrap gap-2">
-        <button
-          className="btn btn-light"
-          onClick={nextEpisode}
-          disabled={!movie.episodes || activeEpisode >= movie.episodes.length}
-        >
-          <i className="fa-solid fa-play"></i> Tập tiếp
-        </button>
-        <button className="btn btn-light" onClick={scrollToComments}>
-          <i className="fa-solid fa-comments"></i> Bình luận
-        </button>
-        <button className="btn btn-light">
-          <i className="fa-solid fa-heart"></i> Theo dõi
-        </button>
-        <button className="btn btn-light" onClick={toggleFullscreen}>
-          <i className="fa-solid fa-expand"></i> Phóng to
-        </button>
-      </div>
-
-      {/* Danh sách tập */}
-      <div className="episode container mt-4">
-        <h5 className="text-white">Danh sách tập</h5>
-        <div className="episode-list d-flex flex-wrap gap-2">
-          {visibleEpisodes?.map((v) => (
-            <button
-              key={v.episode}
-              className={`btn ${activeEpisode == v.episode ? 'active btn-primary' : 'btn-outline-light'}`}
-              onClick={() => onChangeEpisode(v.episode)}
-            >
-              {v.episode}
-            </button>
-          ))}
-          {!showAll && movie.episodes?.length > 20 && (
-            <span onClick={() => setShowAll(true)} className="more-episodes text-white" style={{ cursor: 'pointer' }}>
-              Xem thêm tập...
-            </span>
+        {/* Video Player */}
+        <div className="video-player-container">
+          {/* Quảng cáo */}
+          {showAd && (
+            <div className="ad-overlay">
+              <div className="ad-content">
+                <div className="ad-image">
+                  <img src={qc || '/placeholder.svg'} alt="Logo" />
+                </div>
+                <button className="btn btn-primary" onClick={handleResume}>
+                  Tiếp tục xem
+                </button>
+              </div>
+            </div>
           )}
-        </div>
-      </div>
 
-      {/* Thông tin phim */}
-      <div className="Movie-information container mt-4">
-        <div className="information row">
-          <div className="poster-move col-md-3">
-            <img
-              src={movie.poster || 'https://via.placeholder.com/200'}
-              className="img-fluid rounded"
-              alt={movie.title || 'Không có ảnh'}
+          {/* Loading Spinner */}
+          {isLoading && (
+            <div className="loading-overlay">
+              <LoadingSpinner />
+            </div>
+          )}
+
+          {/* Video Player */}
+          <div className="player-wrapper">
+            <ReactPlayer
+              ref={playerRef}
+              url={activeEpisodeData.url}
+              controls
+              playing={isPlaying && !showAd}
+              onPlay={handlePlay}
+              onPause={handlePause}
+              onReady={handleReady}
+              onProgress={handleProgress}
+              onError={handleError}
+              width="100%"
+              height="100%"
+              config={{
+                file: {
+                  attributes: {
+                    controlsList: 'nodownload',
+                    disablePictureInPicture: true,
+                  },
+                },
+              }}
             />
           </div>
-          <div className="col-md-9">
-            <div className="movie-card">
-              <h2 className="movie-title">{movie.title || 'Không có tiêu đề'}</h2>
-              <p className="movie-desc">
-                {showFullDesc ? movie.description : shortDescription}
-                {movie.description?.length > 200 && (
-                  <span
-                    className="text-white"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => setShowFullDesc(!showFullDesc)}
-                  >
-                    {showFullDesc ? ' Thu gọn' : ' Xem thêm'}
-                  </span>
-                )}
-              </p>
+
+          {/* Play Button Overlay */}
+          {!isPlaying && !isLoading && (
+            <div className="play-overlay">
+              <button className="play-button" onClick={handlePlay}>
+                <i className="fas fa-play"></i>
+                <span>Bắt đầu xem</span>
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Video Controls */}
+        <div className="video-controls">
+          <div className="episode-list">
+            {movie.episodes?.map((episode) => (
+              <button
+                key={`episode-${episode.episode}-${episode._id}`}
+                className={`episode-button ${activeEpisode === episode.episode ? 'active' : ''}`}
+                onClick={() => onChangeEpisode(episode.episode)}
+              >
+                Tập {episode.episode}
+              </button>
+            ))}
+          </div>
+          <div className="control-buttons">
+            <button className="control-button" onClick={nextEpisode} disabled={activeEpisode >= movie.episodes.length}>
+              Tập tiếp theo
+            </button>
+            <button className="control-button" onClick={scrollToComments}>
+              Bình luận
+            </button>
+            <button className="control-button" onClick={toggleFullscreen}>
+              {isFullscreen ? 'Thoát toàn màn hình' : 'Toàn màn hình'}
+            </button>
+          </div>
+        </div>
+
+        {/* Movie Information */}
+        <div className="movie-information">
+          <div className="movie-poster">
+            <img src={movie.poster || 'https://via.placeholder.com/200'} alt={movie.title || 'Không có ảnh'} />
+          </div>
+          <div className="movie-details">
+            <h2 className="movie-title">{movie.title || 'Không có tiêu đề'}</h2>
+            <p className="movie-description">
+              {showFullDesc ? movie.description : shortDescription}
+              {movie.description?.length > 200 && (
+                <button className="toggle-description" onClick={() => setShowFullDesc(!showFullDesc)}>
+                  {showFullDesc ? 'Thu gọn' : 'Xem thêm'}
+                </button>
+              )}
+            </p>
+            <div className="movie-meta">
               <div className="rating">
                 <i className="fa-solid fa-star"></i> {movie.rating || '?'} ({movie.rating || 0} lượt đánh giá)
               </div>
@@ -230,4 +352,4 @@ function Videos({ movie, slug, activeEpisode, onChangeEpisode, nextEpisode, scro
   );
 }
 
-export default Videos;
+export default Video;

@@ -4,7 +4,7 @@ import statusReducer from './reducers/status';
 import { userApi, genreApi, movieApi, commentApi } from '../apis/index';
 import { dashboardApi } from '../apis/dashboardApi';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
     [genreApi.reducerPath]: genreApi.reducer,
@@ -15,11 +15,23 @@ export default configureStore({
     status: statusReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['your-non-serializable-action'],
+        // Ignore these field paths in all actions
+        ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
+        // Ignore these paths in the state
+        ignoredPaths: ['items.dates'],
+      },
+    }).concat(
       userApi.middleware,
       genreApi.middleware,
       movieApi.middleware,
       commentApi.middleware,
       dashboardApi.middleware
     ),
+  devTools: import.meta.env.MODE !== 'production',
 });
+
+export default store;

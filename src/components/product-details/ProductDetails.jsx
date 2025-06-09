@@ -1,15 +1,18 @@
+import React from 'react';
 import Navbar from '../js/navbar';
 import Footer from '../js/footer';
 import Content from './js/content';
+import ErrorBoundary from '../ErrorBoundary';
+import LoadingSpinner from '../LoadingSpinner';
 
-function ProductDetels() {
+function ProductDetails() {
   return (
-    <>
-      <Navbar></Navbar>
-      <Content></Content>
-      <Footer></Footer>
-    </>
+    <ErrorBoundary>
+      <Navbar />
+      <Content />
+      <Footer />
+    </ErrorBoundary>
   );
 }
 
-export default ProductDetels;
+export default ProductDetails;

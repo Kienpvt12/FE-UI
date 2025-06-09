@@ -313,14 +313,14 @@ function Navbar() {
                   <button className="dropdown-item" onClick={() => navigate('/history')}>
                     History
                   </button>
-                  {user.role === 0 && (
-                    <li>
-                      <button className="dropdown-item" onClick={() => navigate('/admin')}>
-                        Admin
-                      </button>
-                    </li>
-                  )}
                 </li>
+                {user.role === 0 && (
+                  <li>
+                    <button className="dropdown-item" onClick={() => navigate('/admin')}>
+                      Admin
+                    </button>
+                  </li>
+                )}
               </ul>
             </div>
           )}

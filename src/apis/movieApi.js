@@ -42,11 +42,4 @@ export const movieApi = createApi({
   }),
 });
 
-export const {
-  useGetMoviesMutation,
-  useGetEpisodesQuery,
-  // useAddMovieMutation,
-  useUpdateMovieMutation,
-  useDeleteMovieMutation,
-  // useLogoutMutation,
-} = movieApi;
+export const { useGetMoviesMutation, useGetEpisodesQuery, useUpdateMovieMutation, useDeleteMovieMutation } = movieApi;
